@@ -11,3 +11,8 @@ Groep Leden:
 - Doornemen Document Eindopdracht.
 - GIT leren, toevoegen
 
+15-11-2023:
+- Overleg Erik Kuiper
+- Overleg groepsgenoten, gebruik branches.
+- Moment ingepland samenvoeging (Iedereen aanwezig)
+
