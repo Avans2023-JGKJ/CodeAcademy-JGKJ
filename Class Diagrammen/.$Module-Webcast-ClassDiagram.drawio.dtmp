@@ -1,26 +1,26 @@
-<mxfile host="Electron" modified="2023-11-17T19:40:18.671Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="QZW24gYQOytZ2comy867" version="22.0.2" type="device">
+<mxfile host="Electron" modified="2023-11-17T20:41:28.906Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="nEHChmjO8nowv6eOC0ne" version="22.0.2" type="device">
   <diagram name="Pagina-1" id="gRhoKnyHHt-XvfdvCB-c">
-    <mxGraphModel dx="1418" dy="828" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="tjh8vK90y-XZd2cWcj1K-1" value="Module" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="40" y="240" width="330" height="200" as="geometry" />
+          <mxGeometry x="40" y="240" width="580" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="tjh8vK90y-XZd2cWcj1K-2" value="- Versie : String&lt;br&gt;- Beschrijving : String&lt;br&gt;- Naam Contactpersoon : String&lt;br&gt;- E-mail Contactpersoon : String&lt;br&gt;- VolgordeNr : byte&amp;nbsp;&lt;br&gt;-----------------------------------------------&lt;br&gt;+ Module(V&lt;br&gt;&amp;nbsp;- contactPersoonControle(naamContact : String) : boolean&lt;br&gt;+ toString() : String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="tjh8vK90y-XZd2cWcj1K-1" vertex="1">
-          <mxGeometry y="50" width="330" height="150" as="geometry" />
+        <mxCell id="tjh8vK90y-XZd2cWcj1K-2" value="- Versie : String&lt;br&gt;- Beschrijving : String&lt;br&gt;- Naam Contactpersoon : String&lt;br&gt;- E-mail Contactpersoon : String&lt;br&gt;- VolgordeNr : byte&amp;nbsp;&lt;br&gt;-----------------------------------------------&lt;br&gt;+ Module(String:versie, String:Beschrijving, String:naamContactPersoon, String:emailContactPersoon)&lt;br&gt;+ Module(String:versie, String:Beschrijving, String:naamContactPersoon)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&amp;nbsp;- contactPersoonControle(naamContact : String) : boolean&lt;br&gt;+ toString() : String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="tjh8vK90y-XZd2cWcj1K-1" vertex="1">
+          <mxGeometry y="50" width="580" height="160" as="geometry" />
         </mxCell>
         <mxCell id="tjh8vK90y-XZd2cWcj1K-3" value="Webcast" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="510" y="240" width="290" height="220" as="geometry" />
+          <mxGeometry x="50" y="570" width="600" height="220" as="geometry" />
         </mxCell>
-        <mxCell id="tjh8vK90y-XZd2cWcj1K-4" value="- Tijdsduur : short&lt;br&gt;- DatumPublicatie : LocalDate&lt;br&gt;- URL : String&lt;br&gt;- Beschrijving : String&lt;br&gt;- NaamSpreker : String&lt;br&gt;- OrganisatieSpreker : String&lt;br&gt;--------------------------------------------------&lt;br&gt;- sprekerControle(naamsprkr : String) : boolean&lt;br&gt;+ toString() : String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="tjh8vK90y-XZd2cWcj1K-3" vertex="1">
-          <mxGeometry y="50" width="290" height="170" as="geometry" />
+        <mxCell id="tjh8vK90y-XZd2cWcj1K-4" value="- Tijdsduur : short&lt;br&gt;- DatumPublicatie : LocalDate&lt;br&gt;- URL : String&lt;br&gt;- Beschrijving : String&lt;br&gt;- NaamSpreker : String&lt;br&gt;- OrganisatieSpreker : String&lt;br&gt;--------------------------------------------------&lt;br&gt;+ Webcast(short:Tijdsduur, LocalDate:DatumPublicatie, String:URL, String:Beschrijving, String:NaamSpreker)&lt;br&gt;- sprekerControle(naamsprkr : String) : boolean&lt;br&gt;+ toString() : String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="tjh8vK90y-XZd2cWcj1K-3" vertex="1">
+          <mxGeometry y="50" width="600" height="170" as="geometry" />
         </mxCell>
         <mxCell id="WHtfwrE5KYZLS8yH8UHX-1" value="Setters &amp;amp; Getters alle atributen" style="shape=note;size=20;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="300" y="170" width="100" height="100" as="geometry" />
+          <mxGeometry x="530" y="170" width="100" height="100" as="geometry" />
         </mxCell>
         <mxCell id="WHtfwrE5KYZLS8yH8UHX-2" value="Setters &amp;amp; Getters alle atributen" style="shape=note;size=20;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="720" y="160" width="100" height="100" as="geometry" />
+          <mxGeometry x="250" y="500" width="100" height="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
