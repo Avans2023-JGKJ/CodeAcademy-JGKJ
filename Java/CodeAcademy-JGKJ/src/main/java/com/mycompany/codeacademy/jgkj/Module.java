@@ -17,11 +17,16 @@ public class Module {
     private String emailContactPersoon;
     private byte volgordeNr;
 
+    // CONSTRUCTORS -----------------------------------------------------------------
     public Module(String versie, String Beschrijving, String naamContactPersoon) {
-        this.versie = versie;
-        this.Beschrijving = Beschrijving;
-        this.naamContactPersoon = naamContactPersoon;
-        this.emailContactPersoon = "CONNECTIE MET DATABASE, COMBINATIE VAN NAAM!";
+        if (contactPersoonControle(naamContactPersoon)) {
+            this.versie = versie;
+            this.Beschrijving = Beschrijving;
+            this.naamContactPersoon = naamContactPersoon;
+            this.emailContactPersoon = "CONNECTIE MET DATABASE, COMBINATIE VAN NAAM!";
+        } else {
+            System.out.println("ERROR contactPersoonControle METHODE");
+        }
     }
 
     public Module(String versie, String Beschrijving, String naamContactPersoon, String emailContactPersoon) {
@@ -30,8 +35,9 @@ public class Module {
             this.Beschrijving = Beschrijving;
             this.naamContactPersoon = naamContactPersoon;
             this.emailContactPersoon = emailContactPersoon;
+        } else {
+            System.out.println("ERROR contactPersoonControle METHODE");
         }
-        else System.out.println("ERROR contactPersoonControle METHODE");
     }
 
     @Override
@@ -39,6 +45,7 @@ public class Module {
         return "Module{" + "versie=" + versie + ", Beschrijving=" + Beschrijving + ", naamContactPersoon=" + naamContactPersoon + ", emailContactPersoon=" + emailContactPersoon + ", volgordeNr=" + volgordeNr + '}';
     }
 
+    // PRIVE METHODE -----------------------------------------------------------------
     private boolean contactPersoonControle(String naamContact) {
         return true;
         // HIER KOMT PROGRAMMA
@@ -46,6 +53,7 @@ public class Module {
         // Indien naam niet aanwezig, return false.
     }
 
+    // GETTERS -----------------------------------------------------------------
     public String getVersie() {
         return versie;
     }
@@ -66,6 +74,7 @@ public class Module {
         return volgordeNr;
     }
 
+    // SETTERS -----------------------------------------------------------------
     public void setVersie(String versie) {
         this.versie = versie;
     }

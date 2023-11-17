@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.codeacademy.jgkj;
 
 import java.time.LocalDate;
@@ -19,9 +14,8 @@ public class Webcast {
     private String Beschrijving;
     private String NaamSpreker;
     private String OrganisatieSpreker;
-    
-// CONSTRUCTORS -----------------------------------------------------------------
 
+// CONSTRUCTORS -----------------------------------------------------------------
     public Webcast(short Tijdsduur, LocalDate DatumPublicatie, String URL, String Beschrijving, String NaamSpreker) {
         this.Tijdsduur = Tijdsduur;
         this.DatumPublicatie = DatumPublicatie;
@@ -31,12 +25,25 @@ public class Webcast {
     }
 
     public Webcast(short Tijdsduur, LocalDate DatumPublicatie, String URL, String Beschrijving, String NaamSpreker, String OrganisatieSpreker) {
-        this.Tijdsduur = Tijdsduur;
-        this.DatumPublicatie = DatumPublicatie;
-        this.URL = URL;
-        this.Beschrijving = Beschrijving;
-        this.NaamSpreker = NaamSpreker;
-        this.OrganisatieSpreker = "CONNECTIE MET DATABASE, COMBINATIE VAN NAAM!";
+        if (sprekerControle(NaamSpreker)) {
+            this.Tijdsduur = Tijdsduur;
+            this.DatumPublicatie = DatumPublicatie;
+            this.URL = URL;
+            this.Beschrijving = Beschrijving;
+            this.NaamSpreker = NaamSpreker;
+            this.OrganisatieSpreker = "CONNECTIE MET DATABASE, COMBINATIE VAN NAAM!";
+        } else {
+            System.out.println("ERROR sprekerControle METHODE");
+        }
+    }
+
+    // PRIVE METHODE -----------------------------------------------------------------
+    private boolean sprekerControle(String NaamSpreker) {
+        return true;
+        // HIER KOMT PROGRAMMA
+        // Naam van spreker wordt gecontroleerd in database, indien aanwezig, geeft true terug. 
+        // Indien naam niet aanwezig, return false.
+
     }
 
 // GETTERS -----------------------------------------------------------------
