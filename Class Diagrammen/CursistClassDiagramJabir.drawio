@@ -1,0 +1,25 @@
+<mxfile host="Electron" modified="2023-11-21T13:48:25.827Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="SjCTjdtAwap5TU2SV28F" version="22.1.2" type="device">
+  <diagram name="Page-1" id="1cbsTb6AsQ7-KG9AT4u6">
+    <mxGraphModel dx="1157" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ACbdnlh96SAqFETdJC7J-1" value="Cursist" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="600" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ACbdnlh96SAqFETdJC7J-4" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="ACbdnlh96SAqFETdJC7J-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint y="160" as="sourcePoint" />
+            <mxPoint x="600" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACbdnlh96SAqFETdJC7J-2" value="- email : String&lt;br&gt;- name : String&lt;br&gt;- birthDate : LocalDate&lt;br&gt;- gender: char&lt;br&gt;- address: String&lt;br&gt;- residence : String&lt;br&gt;- countryCode : int&amp;nbsp;&lt;br&gt;&lt;br&gt;+ Cursist(String:email, String:name, LocalDate:birthDate, char:gender, String:address, String:residence, &lt;br&gt;int:countryCode)&lt;br&gt;+ toString() : String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="ACbdnlh96SAqFETdJC7J-1">
+          <mxGeometry y="50" width="600" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ACbdnlh96SAqFETdJC7J-3" value="Setters &amp;amp; Getters alle atributen" style="shape=note;size=20;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="450" width="100" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
