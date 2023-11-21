@@ -1,23 +1,15 @@
-import java.util.Arrays;
-
 public class Cursus {
     private String naamCursus;
     private short aantalContentItems;
-    // Object veranderen naar ContentItems zodra java bestand gemaakt is
-    private Object[] contentItems;
     private String onderwerp;
     private String introductieTekst;
-    private String niveau;
-
-    public Cursus(String naamCursus, short aantalContentItems, String onderwerp, String introductieTekst, byte niveau) {
+    private Niveau niveau;
+    public Cursus(String naamCursus, short aantalContentItems, String onderwerp, String introductieTekst, Niveau niveau) {
         this.naamCursus = naamCursus;
         this.aantalContentItems = aantalContentItems;
         this.onderwerp = onderwerp;
         this.introductieTekst = introductieTekst;
-        String[] list = new String[]{"Beginner", "Gevorderd", "Expert"};
-        niveau--;
-        this.niveau = list[niveau];
-        this.contentItems = new ContentItems[aantalContentItems];
+        this.niveau = niveau;
     }
 
     public String getNaamCursus() {
@@ -36,8 +28,8 @@ public class Cursus {
         return introductieTekst;
     }
 
-    public String[] getNiveau() {
-        return new String[]{niveau};
+    public Niveau getNiveau() {
+        return niveau;
     }
 
     public void setNaamCursus(String naamCursus) {
@@ -56,18 +48,18 @@ public class Cursus {
         this.introductieTekst = introductieTekst;
     }
 
-    public void setNiveau(String[] niveau) {
-        this.niveau = Arrays.toString(niveau);
+    public void setNiveau(Niveau niveau) {
+        this.niveau = niveau;
     }
 
     @Override
     public String toString() {
-        return "Cursus{" +
-                "naamCursus='" + naamCursus + '\'' +
-                ", aantalContentItems=" + aantalContentItems +
-                ", onderwerp='" + onderwerp + '\'' +
-                ", introductieTekst='" + introductieTekst + '\'' +
-                ", niveau=" + Arrays.toString(new String[]{niveau}) +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Naam cursus: ").append(naamCursus).append("\n");
+        sb.append("Aantal content items: ").append(aantalContentItems).append("\n");
+        sb.append("Onderwerp: ").append(onderwerp).append("\n");
+        sb.append("Introductie tekst: ").append(introductieTekst).append("\n");
+        sb.append("Niveau: ").append(niveau).append("\n");
+        return sb.toString();
     }
 }
