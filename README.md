@@ -11,3 +11,12 @@ Groep Leden:
 - Doornemen Document Eindopdracht.
 - GIT leren, toevoegen
 
+15-11-2023:
+- Overleg Erik Kuiper
+- Overleg groepsgenoten, gebruik branches.
+- Moment ingepland samenvoeging (Iedereen aanwezig)
+
+17-11-2023:
+- Overleg groepje (Jochem, Karim, Gijs)
+- Class Diagram besproken
+- Begin gemaakt aan .java
