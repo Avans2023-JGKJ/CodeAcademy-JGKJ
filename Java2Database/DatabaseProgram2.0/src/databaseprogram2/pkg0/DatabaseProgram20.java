@@ -22,7 +22,9 @@ public class DatabaseProgram20 {
     }
 
     void createConnection() {
-        String url = "jdbc:sqlserver://jochem_laptop;Database=CodeAcademyDatabase;IntegratedSecurity=true;encrypt=false;";
+//        String url = "jdbc:sqlserver://jochem_laptop;Database=CodeAcademyDatabase;IntegratedSecurity=true;encrypt=false;";
+//        String url = "jdbc:sqlserver://192.168.178.109:1433;Database=CodeAcademyDatabase;encrypt=false;";
+        String url = "jdbc:sqlserver://83.82.134.240:1433;Database=CodeAcademyDatabase;encrypt=false;";
         String user = "admin";
         String password = "admin";
 
