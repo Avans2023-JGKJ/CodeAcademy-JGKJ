@@ -3,11 +3,13 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseProgram20 {
+private String url = "jdbc:sqlserver://jochem_laptop;Database=CodeAcademyDatabase;IntegratedSecurity=true;encrypt=false;";
+private String user = "admin";
+private String password = "admin";
 
     public static void main(String[] args) {
         DatabaseProgram20 pro = new DatabaseProgram20();
@@ -23,17 +25,17 @@ public class DatabaseProgram20 {
     }
 
     Connection createConnection() {
-        String url = "jdbc:sqlserver://jochem_laptop;Database=CodeAcademyDatabase;IntegratedSecurity=true;encrypt=false;";
+//        String url = "jdbc:sqlserver://jochem_laptop;Database=CodeAcademyDatabase;IntegratedSecurity=true;encrypt=false;";
 //        String url = "jdbc:sqlserver://192.168.178.109:1433;Database=CodeAcademyDatabase;encrypt=false;";
         // url is opgebouwd uit: jdbc:sqlserver://<naam van sqlserver>:<poort (default 1433)>;Database=<naam van database>;encrypt=false;
-        String user = "admin";
-        String password = "admin";
+//        String user = "admin";
+//        String password = "admin";
         
-        try (Connection con = DriverManager.getConnection(url, user, password)) {
-            System.out.println("Connection successful!");
-            // Add your database operations here
-            Statement st = con.createStatement();
+        try (Connection con = DriverManager.getConnection(this.url, this.user, this.password)) {
+            System.out.println("Connection made successfully!");
             return DriverManager.getConnection(url, user, password);
+            // Add your database operations here
+//            Statement st = con.createStatement();
 //            Scanner first = new Scanner(System.in);
 //            System.out.println("Typ naam, voor insert: ");
 //            String name = first.nextLine();
@@ -44,7 +46,7 @@ public class DatabaseProgram20 {
 //            System.out.println("Input succesvol");
 //            con.close();
         } catch (SQLException e) {
-            System.out.println("Error connecting to the database:");
+            System.out.println("An Error has occured, tyring to connect to the database:");
             e.printStackTrace();
             return null;
         }
@@ -52,8 +54,17 @@ public class DatabaseProgram20 {
     }
 
     public String getUrl() {
-        return "jdbc:sqlserver://jochem_laptop;Database=CodeAcademyDatabase;IntegratedSecurity=true;encrypt=false;";
+        return url;
     }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    
 
     public void addNaam(String naam, String DatabaseTabel) {
         try {
