@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseProgram20 {
-private String url = "jdbc:sqlserver://jochem_laptop;Database=CodeAcademyDatabase;IntegratedSecurity=true;encrypt=false;";
+private String url = "jdbc:sqlserver://192.168.178.109:1433;Database=CodeAcademyDatabase;encrypt=false;";
 private String user = "admin";
 private String password = "admin";
 
@@ -15,7 +15,7 @@ private String password = "admin";
         DatabaseProgram20 pro = new DatabaseProgram20();
 
         try {
-            pro.addNaam("Jochem","firstName");
+            pro.addNaam("Jochemtb","firstName");
 
         } catch (Exception e) {
             System.out.println("ERROR");
@@ -72,6 +72,19 @@ private String password = "admin";
             Statement st = con.createStatement();
             String SQL = "INSERT INTO "+DatabaseTabel+" VALUES ('" + naam + "')";
             st.execute(SQL);
+            System.out.println("Addnaam succesvol...");
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseProgram20.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void removeNaam(String naam, String DatabaseTabel){
+        try {
+            Connection con = createConnection();
+            Statement st = con.createStatement();
+            String SQL = "DELETE FROM "+DatabaseTabel+" WHERE Naam= ('" + naam + "')";
+            st.execute(SQL);
+            System.out.println("Addnaam succesvol...");
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseProgram20.class.getName()).log(Level.SEVERE, null, ex);
         }
