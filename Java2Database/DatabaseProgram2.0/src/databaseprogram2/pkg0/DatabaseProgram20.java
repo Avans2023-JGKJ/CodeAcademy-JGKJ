@@ -7,9 +7,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseProgram20 {
+<<<<<<< Updated upstream
 private String url = "jdbc:sqlserver://192.168.178.109:1433;Database=CodeAcademyDatabase;encrypt=false;";
 private String user = "admin";
 private String password = "admin";
+=======
+private String url = "jdbc:sqlserver:/aei-sql2.avans.nl:1443;Database=CodeAcademyJGKJ;encrypt=false;";
+private String user = "jgkj";
+private String password = "jgkj2023";
+>>>>>>> Stashed changes
 
     public static void main(String[] args) {
         DatabaseProgram20 pro = new DatabaseProgram20();
