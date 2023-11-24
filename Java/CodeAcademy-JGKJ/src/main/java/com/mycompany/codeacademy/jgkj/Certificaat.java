@@ -1,5 +1,3 @@
-
-
 public class Certificaat {
     private int certificaatId;
     private byte beoordeling;
