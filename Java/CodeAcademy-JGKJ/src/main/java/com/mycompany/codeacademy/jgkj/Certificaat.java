@@ -1,11 +1,11 @@
-import java.util.ArrayList;
+
 
 public class Certificaat {
     private int certificaatId;
     private byte beoordeling;
     private String medeWerkerNaam;
 
-    ArrayList<String> medewerkers = new ArrayList<String>();
+
 
     public Certificaat(int certificaatId, byte beoordeling, String medeWerkerNaam) {
         this.certificaatId = certificaatId;
@@ -14,12 +14,9 @@ public class Certificaat {
     }
 
     public boolean medeWerkerControle(String medeWerkerNaam) {
-        for (int i = 0; i < medewerkers.size(); i++) {
-            if (medeWerkerNaam.equals(medewerkers.get(i))) {
-                return true;
-            }
-        }
         return false;
+    // Hier comt een controle die checkt of een naam die opgegeven wordt 
+    // ook daadwerkelijk in het systeem bekend is
     }
 
     public void setCertificaatId(int certificaatId) {
@@ -34,10 +31,6 @@ public class Certificaat {
         this.medeWerkerNaam = medeWerkerNaam;
     }
 
-    public void setMedewerkers(ArrayList<String> medewerkers) {
-        this.medewerkers = medewerkers;
-    }
-
     public int getCertificaatId() {
         return certificaatId;
     }
@@ -48,10 +41,6 @@ public class Certificaat {
 
     public String getMedeWerkerNaam() {
         return medeWerkerNaam;
-    }
-
-    public ArrayList<String> getMedewerkers() {
-        return medewerkers;
     }
 
     @Override
