@@ -7,27 +7,27 @@ import java.sql.ResultSet;
 class mainClass {
 
     public static void main(String args[]) throws SQLException {
-//        DataBaseSQL db = new DataBaseSQL();
-//        PreparedStatement p = null;
-//        ResultSet rs = null;
-//
-//        p = db.createConnection().prepareStatement("SELECT * FROM Cursus");
-//        rs = p.executeQuery();
-//
-//        while (rs.next()) {
-//
-//            String naamCursus = rs.getString("naamCursus");
-//            int aantalContentItems = rs.getInt("aantalContentItems");
-//            String onderwerp = rs.getString("onderwerp");
-//            String introductieTekst = rs.getString("introductieTekst");
-//            String niveau = rs.getString("niveau");
-//            System.out.println(naamCursus + "\t\t" + aantalContentItems
-//                    + "\t\t" + onderwerp + "\t\t" + introductieTekst + "\t\t" + niveau);
-//        }
+        DataBaseSQL db = new DataBaseSQL();
+        PreparedStatement p = null;
+        ResultSet rs = null;
+
+        p = db.createConnection().prepareStatement("SELECT * FROM Cursus");
+        rs = p.executeQuery();
+
+        while (rs.next()) {
+
+            String naamCursus = rs.getString("naamCursus");
+            int aantalContentItems = rs.getInt("aantalContentItems");
+            String onderwerp = rs.getString("onderwerp");
+            String introductieTekst = rs.getString("introductieTekst");
+            String niveau = rs.getString("niveau");
+            System.out.println(naamCursus + "\t\t" + aantalContentItems
+                    + "\t\t" + onderwerp + "\t\t" + introductieTekst + "\t\t" + niveau);
+        }
 
 //        db.sendCommand(db.createConnection(), "SELECT * FROM Cursus");
 //        db.sendCommand(db.createConnection(), genInsert("Cursus", "test", "2", "test", "test", "testtest"));
-            System.out.println(genInsert("Cursus", "test", "2", "test", "test", "testtest"));
+//            System.out.println(genInsert("Cursus", "test", "2", "test", "test", "testtest"));
     }
 
     // Genereer makkelijk, de INSERT INTO statement voor 3 t/m 8 values)

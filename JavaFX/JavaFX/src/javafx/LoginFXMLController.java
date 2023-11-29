@@ -36,6 +36,9 @@ public class LoginFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+    
+    
+    
 
     @FXML
     void LoginButtonClicked(ActionEvent event) throws MalformedURLException, IOException {
@@ -46,8 +49,8 @@ public class LoginFXMLController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
             root = loader.load();
 
-            HomeScreenFXMLController homeScreenController = loader.getController();
-            homeScreenController.displayUserName(username);
+//            HomeScreenFXMLController homeScreenController = loader.getController();
+//            homeScreenController.displayUserName(username);
 
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
