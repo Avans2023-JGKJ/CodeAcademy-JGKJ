@@ -16,9 +16,9 @@ public class HomeScreenFXMLController implements Initializable {
         // TODO
     }
     
-    public void displayUserName(String username) {
-        displayUserNameLabel.setText("Hallo: " + username);
-    }
+//    public void displayUserName(String username) {
+//        displayUserNameLabel.setText("Hallo: " + username);
+//    }
     
     @FXML
     void CertificatenButtonClicked(ActionEvent event) {
