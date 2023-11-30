@@ -37,11 +37,6 @@ public class CertificaatFXMLController implements Initializable {
     }
 
     @FXML
-    void CertificaatAanpassenClicked(ActionEvent event) {
-
-    }
-
-    @FXML
     void CertificaatVerwijderenClicked(ActionEvent event) {
 
     }
