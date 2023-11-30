@@ -30,17 +30,12 @@
                   <Font name="Constantia Bold" size="42.0" />
                </font>
             </Text>
-            <Button layoutX="437.0" layoutY="191.0" mnemonicParsing="false" onAction="#CertificaatAanpassenClicked" prefHeight="58.0" prefWidth="102.0" text="Aanpassen" textAlignment="CENTER" underline="true">
+            <Button layoutX="437.0" layoutY="230.0" mnemonicParsing="false" onAction="#CertificaatVerwijderenClicked" prefHeight="58.0" prefWidth="102.0" text="Verwijderen" textAlignment="CENTER" underline="true">
                <font>
                   <Font name="Georgia Bold" size="11.0" />
                </font>
             </Button>
-            <Button layoutX="437.0" layoutY="259.0" mnemonicParsing="false" onAction="#CertificaatVerwijderenClicked" prefHeight="58.0" prefWidth="102.0" text="Verwijderen" textAlignment="CENTER" underline="true">
-               <font>
-                  <Font name="Georgia Bold" size="11.0" />
-               </font>
-            </Button>
-            <Button layoutX="437.0" layoutY="120.0" mnemonicParsing="false" onAction="#CertificaatAanmakenClicked" prefHeight="58.0" prefWidth="102.0" text="Aanmaken" textAlignment="CENTER" underline="true">
+            <Button layoutX="437.0" layoutY="162.0" mnemonicParsing="false" onAction="#CertificaatAanmakenClicked" prefHeight="58.0" prefWidth="102.0" text="Aanmaken" textAlignment="CENTER" underline="true">
                <font>
                   <Font name="Georgia Bold" size="11.0" />
                </font>

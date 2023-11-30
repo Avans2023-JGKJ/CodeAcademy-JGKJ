@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 class mainClass {
 
     public static void main(String args[]) throws SQLException {
-//        DataBaseSQL db = new DataBaseSQL();
-//        PreparedStatement p = null;
-//        ResultSet rs = null;
+        DataBaseSQL db = new DataBaseSQL();
+        PreparedStatement p = null;
+        ResultSet rs = null;
 //
 //        p = db.createConnection().prepareStatement("SELECT * FROM Cursus");
 //        rs = p.executeQuery();
@@ -26,8 +26,10 @@ class mainClass {
 //        }
 
 //        db.sendCommand(db.createConnection(), "SELECT * FROM Cursus");
-//        db.sendCommand(db.createConnection(), genInsert("Cursus", "test", "2", "test", "test", "testtest"));
-            System.out.println(genInsert("Cursus", "test", "2", "test", "test", "testtest"));
+//            db.sendCommand(db.createConnection(), genInsert("Cursist", "test@test.com", "test", "2018-05-28", "m", "abcd12", "999ab", "Verweg", "DE"));
+        
+
+//            System.out.println(genInsert("Cursus", "test", "2", "test", "test", "testtest"));
     }
 
     // Genereer makkelijk, de INSERT INTO statement voor 3 t/m 8 values)

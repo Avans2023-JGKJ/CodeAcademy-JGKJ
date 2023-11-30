@@ -40,8 +40,8 @@ public class LoginFXMLController implements Initializable {
     @FXML
     void LoginButtonClicked(ActionEvent event) throws MalformedURLException, IOException {
         System.out.println("Login Button Clicked");
-        if (checkUserPassCombination(UserNameField.getText(), PassWordField.getText())) {
-            String username = UserNameField.getText();
+//        if (checkUserPassCombination(UserNameField.getText(), PassWordField.getText())) {
+//            String username = UserNameField.getText();
 
 
 //            HomeScreenFXMLController homeScreenController = loader.getController();
@@ -53,9 +53,9 @@ public class LoginFXMLController implements Initializable {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } else {
-            showAlert();
-        }
+//        } else {
+//            showAlert();
+//        }
     }
 
     boolean checkUserPassCombination(String InputUsername, String InputPassword) {
