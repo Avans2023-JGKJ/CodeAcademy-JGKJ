@@ -43,12 +43,12 @@ public class LoginFXMLController implements Initializable {
         if (checkUserPassCombination(UserNameField.getText(), PassWordField.getText())) {
             String username = UserNameField.getText();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
-            root = loader.load();
 
 //            HomeScreenFXMLController homeScreenController = loader.getController();
 //            homeScreenController.displayUserName(username);
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
+            root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
