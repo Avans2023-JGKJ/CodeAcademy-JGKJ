@@ -1,6 +1,7 @@
 package javafx;
 
 import Objects.Inschrijven;
+
 import Java2Database.DataBaseSQL;
 import java.io.IOException;
 import java.net.URL;
@@ -50,6 +51,7 @@ public class InschrijvenFXMLController implements Initializable {
     @FXML
     void InschrijvenVerwijderenClicked(ActionEvent event) {
         loadTableInschrijven();
+        System.out.println("test");
     }
 
     @FXML
@@ -64,9 +66,9 @@ public class InschrijvenFXMLController implements Initializable {
     @FXML
     TableColumn<Inschrijven, String> emailInschrijvenColumn;
     @FXML
-//    TableColumn<Inschrijven, String> cursusInschrijvenColumn;
-//    @FXML
-//    TableColumn<Inschrijven, String> inschrijfIdInschrijvenColumn;
+    TableColumn<Inschrijven, String> naamCursusInschrijvenColumn;
+    @FXML
+    TableColumn<Inschrijven, Integer> inschrijfIdInschrijvenColumn;
 //    @FXML
 //    TableColumn<Inschrijven, String> totaalVoortgangInschrijvenColumn;
 
@@ -75,29 +77,32 @@ public class InschrijvenFXMLController implements Initializable {
     private void initTable() {
         observableInschrijven = FXCollections.observableArrayList();
         emailInschrijvenColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-//        cursusInschrijvenColumn.setCellValueFactory(new PropertyValueFactory<>("cursus"));
-//        inschrijfIdInschrijvenColumn
+        naamCursusInschrijvenColumn.setCellValueFactory(new PropertyValueFactory<>("naamCursus"));
+        inschrijfIdInschrijvenColumn.setCellValueFactory(new PropertyValueFactory<>("inschrijfId"));
 //        totaalVoortgangInschrijvenColumn
     }
 
     public void loadTableInschrijven() {
         try {
-//            , cursus, inschrijfId, totaalVoortgang
+//            , totaalVoortgang
+            System.out.println("test");
             initTable();
-            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT email FROM Inschrijven").executeQuery()) {
+            System.out.println("test");
+            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT email, naamCursus, inschrijfId FROM Inschrijven").executeQuery()) {
                 while (rs.next()) {
                     Inschrijven Inschrijven = new Inschrijven();
                     Inschrijven.setEmail(rs.getString("email"));
-//                    Inschrijven.setNaamCursus(rs.getString("cursus"));
-//                    Inschrijven.setInschrijfId(rs.getInt("inschrijfId"));
+                    Inschrijven.setNaamCursus(rs.getString("naamCursus"));
+                    Inschrijven.setInschrijfId(rs.getInt("inschrijfId"));
 //                    Inschrijven.setEmail//totaalVoortgang maar deze is nog niet af
         //(rs.getString("email"));
-
+        observableInschrijven.add(Inschrijven); 
                 }
             }
             System.out.println("PUNT 4");
             InschrijvenTableView.setItems(observableInschrijven);
             InschrijvenTableView.refresh();
+            System.out.println("PUNT 5");
 
         } catch (SQLException ex) {
             Logger.getLogger(InschrijvenFXMLController.class.getName()).log(Level.SEVERE, null, ex);

@@ -47,9 +47,9 @@
             </Button>
             <TableView fx:id="InschrijvenTableView" layoutX="88.0" layoutY="120.0" prefHeight="200.0" prefWidth="341.0">
               <columns>
-                  <TableColumn prefWidth="123.0" text="Email" />
-                <TableColumn prefWidth="103.0" text="Cursus" />
-                <TableColumn prefWidth="63.0" text="InschrijfID" />
+                  <TableColumn id="emailInschrijvenColumn" fx:id="emailInschrijvenColumn" prefWidth="123.0" text="Email" />
+                <TableColumn id="naamCursusInschrijvenColumn" fx:id="naamCursusInschrijvenColumn" prefWidth="103.0" text="Cursus" />
+                <TableColumn id="inschrijfIdInschrijvenColumn" fx:id="inschrijfIdInschrijvenColumn" prefWidth="63.0" text="InschrijfID" />
                   <TableColumn prefWidth="51.0" text="TotaalVoortgang" />
               </columns>
             </TableView>

@@ -48,7 +48,7 @@ public class CursistFXMLController implements Initializable {
 
     @FXML
     void CursistAanpassenClicked(ActionEvent event) {
-loadTableCursist();
+        loadTableCursist();
     }
 
     @FXML
