@@ -30,13 +30,13 @@
             <Label prefHeight="17.0" prefWidth="41.0" text="Naam" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label prefHeight="17.0" prefWidth="41.0" text="Email" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="88.0" text="Geboortedatum" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <TextField fx:id="cursistNaamColumninput" GridPane.columnIndex="1" />
-            <TextField fx:id="cursistEmailInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="cursistGeboortedatumInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="cursistPostcodeInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="cursistHuisnummerInput" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="cursistWoonplaatsInput" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="cursistLandCode" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField GridPane.columnIndex="1" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Label text="Geslacht" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label text="Postcode" GridPane.rowIndex="4" />
             <Label text="Huisnummer" GridPane.rowIndex="5" />

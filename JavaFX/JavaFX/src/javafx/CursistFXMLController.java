@@ -24,6 +24,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -43,12 +46,28 @@ public class CursistFXMLController implements Initializable {
 
     @FXML
     void CursistAanmakenClicked(ActionEvent event) {
-
+        System.out.println("test1");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursistDialog.fxml"));
+            DialogPane pane = loader.load();
+            System.out.println("test2");
+            
+            CursistFXMLController CursistController = loader.getController();
+//            CursistController.setCursist(cursist);
+            System.out.println("test3");
+            Dialog<ButtonType> Dialog = new Dialog<ButtonType>();
+            System.out.println("test4");
+            Dialog.setDialogPane(pane);
+            Dialog.showAndWait();
+            Dialog.setTitle("Nieuwe Cursist aanmaken"); 
+        } catch (IOException ex) {
+            Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     void CursistAanpassenClicked(ActionEvent event) {
-        loadTableCursist();
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
     }
 
     @FXML
@@ -110,5 +129,22 @@ public class CursistFXMLController implements Initializable {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+        @FXML
+    void CloseButtonUpdateCursistClicked(ActionEvent event) {
+        loadTableCursist();
+    }
+        @FXML
+    void ApplyButtonUpdateCursistClicked(ActionEvent event) {
+        loadTableCursist();
+    }
+        @FXML
+    void FinishButtonCreateCursistClicked(ActionEvent event) {
+        loadTableCursist();
+    }
+        @FXML
+    void CloseButtonCreateCursistClicked(ActionEvent event) {
+        loadTableCursist();
+    }
+    
 
 }
