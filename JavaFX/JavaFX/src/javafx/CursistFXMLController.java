@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
@@ -67,7 +68,23 @@ public class CursistFXMLController implements Initializable {
 
     @FXML
     void CursistAanpassenClicked(ActionEvent event) {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
+                 System.out.println("test1");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("updateCursistDialog.fxml"));
+            DialogPane pane = loader.load();
+            System.out.println("test2");
+            
+            CursistFXMLController CursistController = loader.getController();
+//            CursistController.setCursist(cursist);
+            System.out.println("test3");
+            Dialog<ButtonType> Dialog = new Dialog<ButtonType>();
+            System.out.println("test4");
+            Dialog.setDialogPane(pane);
+            Dialog.showAndWait();
+            Dialog.setTitle("Cursist aanpassen"); 
+        } catch (IOException ex) {
+            Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -131,19 +148,21 @@ public class CursistFXMLController implements Initializable {
     }
         @FXML
     void CloseButtonUpdateCursistClicked(ActionEvent event) {
-        loadTableCursist();
+        Dialog<ButtonType> Dialog = new Dialog<ButtonType>();
+        Dialog.hide();
     }
         @FXML
     void ApplyButtonUpdateCursistClicked(ActionEvent event) {
-        loadTableCursist();
+        
     }
         @FXML
     void FinishButtonCreateCursistClicked(ActionEvent event) {
-        loadTableCursist();
+        
     }
         @FXML
     void CloseButtonCreateCursistClicked(ActionEvent event) {
-        loadTableCursist();
+        Dialog<ButtonType> Dialog = new Dialog<ButtonType>();
+        Dialog.hide();
     }
     
 
