@@ -10,6 +10,8 @@ class mainClass {
         DataBaseSQL db = new DataBaseSQL();
         PreparedStatement p = null;
         ResultSet rs = null;
+        
+        
 //
 //        p = db.createConnection().prepareStatement("SELECT * FROM Cursus");
 //        rs = p.executeQuery();
@@ -25,7 +27,8 @@ class mainClass {
 //                    + "\t\t" + onderwerp + "\t\t" + introductieTekst + "\t\t" + niveau);
 //        }
 
-//        db.sendCommand(db.createConnection(), "SELECT * FROM Cursus");
+            
+        db.sendCommand(db.createConnection(), "");
 //            db.sendCommand(db.createConnection(), genInsert("Cursist", "test@test.com", "test", "2018-05-28", "m", "abcd12", "999ab", "Verweg", "DE"));
         
 

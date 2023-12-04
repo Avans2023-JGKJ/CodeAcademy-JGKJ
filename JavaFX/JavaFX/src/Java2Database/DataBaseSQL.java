@@ -4,6 +4,7 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 
 public class DataBaseSQL {
 
@@ -35,5 +36,13 @@ public class DataBaseSQL {
         }
     }
     
+     public static ResultSet sendCommandReturn(Connection connection, String command) throws SQLException {
+//        try (Statement statement = connection.createStatement()) {
+//            statement.executeQuery(command);
+            System.out.println("Command has been executed.");
+            return connection.createStatement().executeQuery(command);
+        }
+    }
+    
   
-}
+

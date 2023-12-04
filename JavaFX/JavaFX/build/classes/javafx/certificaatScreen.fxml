@@ -42,10 +42,10 @@
             </Button>
             <TableView fx:id="CertificaatTableView" layoutX="88.0" layoutY="120.0" prefHeight="200.0" prefWidth="341.0">
               <columns>
-                  <TableColumn prefWidth="124.0" text="NaamCursist" />
-                <TableColumn prefWidth="66.0" text="Beoordeling" />
-                <TableColumn prefWidth="97.0" text="MedewerkerNaam" />
-                  <TableColumn prefWidth="53.0" text="CertificaatID" />
+                  <TableColumn fx:id="NaamCursistCertificaatColumn" prefWidth="124.0" text="NaamCursist" />
+                <TableColumn fx:id="BeoordelingCertificaatColumn" prefWidth="66.0" text="Beoordeling" />
+                <TableColumn fx:id="MedewerkerNummerCertificaatColumn" prefWidth="97.0" text="MedewerkerNaam" />
+                  <TableColumn fx:id="CertificaatIdCertificaatColumn" prefWidth="53.0" text="CertificaatID" />
               </columns>
             </TableView>
             <Button layoutX="87.0" layoutY="74.0" mnemonicParsing="false" onAction="#CertificaatBackClicked" text="BACK" />
