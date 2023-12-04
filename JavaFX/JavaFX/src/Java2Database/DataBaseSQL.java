@@ -22,7 +22,7 @@ public class DataBaseSQL {
             System.out.println("Connection made successfully!");
             return connection;
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("An ERROR has occured, trying to connect to the database:");
+            System.out.println("An ERROR has occured, tyring to connect to the database:");
             e.printStackTrace(); // Als er een exeptie optreed, mooi afhandelen.
             return null;
         }
