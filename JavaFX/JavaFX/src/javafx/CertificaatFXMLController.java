@@ -70,7 +70,7 @@ public class CertificaatFXMLController implements Initializable {
     @FXML
     TableColumn<Certificaat, String> MedewerkerNummerCertificaatColumn;
     @FXML
-    TableColumn<Certificaat, Integer> CertificaatIdCertificaatColumn;
+    TableColumn<Certificaat, Integer> InschrijfIdCertificaatColumn;
 
     ObservableList<Certificaat> observableCertificaat;
 
@@ -79,7 +79,7 @@ public class CertificaatFXMLController implements Initializable {
         NaamCursistCertificaatColumn.setCellValueFactory(new PropertyValueFactory<>("naamCursist"));
         BeoordelingCertificaatColumn.setCellValueFactory(new PropertyValueFactory<>("beoordeling"));
         MedewerkerNummerCertificaatColumn.setCellValueFactory(new PropertyValueFactory<>("medeWerkerNaam"));
-        CertificaatIdCertificaatColumn.setCellValueFactory(new PropertyValueFactory<>("certificaatId"));
+        InschrijfIdCertificaatColumn.setCellValueFactory(new PropertyValueFactory<>("inschrijfId"));
 
     }
 
@@ -89,10 +89,10 @@ public class CertificaatFXMLController implements Initializable {
             System.out.println("test");
             initTable();
             System.out.println("test");
-            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT beoordeling, medewerkerNaam, CertificaatId FROM Certificaat").executeQuery()) {
+            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT beoordeling, medewerkerNaam, inschrijfId FROM Certificaat").executeQuery()) {
                 while (rs.next()) {
                     Certificaat Certificaat = new Certificaat();
-                    Certificaat.setCertificaatId(rs.getInt("certificaatId"));
+                    Certificaat.setInschrijfId(rs.getInt("inschrijfId"));
                     Certificaat.setNaamCursist(Certificaat.getNaamCursist());
                     Certificaat.setBeoordeling(rs.getByte("beoordeling"));
                     Certificaat.setMedeWerkerNaam(rs.getString("medewerkerNaam"));

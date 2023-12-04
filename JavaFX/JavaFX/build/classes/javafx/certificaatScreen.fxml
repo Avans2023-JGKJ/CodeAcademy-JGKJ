@@ -45,7 +45,7 @@
                   <TableColumn fx:id="NaamCursistCertificaatColumn" prefWidth="124.0" text="NaamCursist" />
                 <TableColumn fx:id="BeoordelingCertificaatColumn" prefWidth="66.0" text="Beoordeling" />
                 <TableColumn fx:id="MedewerkerNummerCertificaatColumn" prefWidth="97.0" text="MedewerkerNaam" />
-                  <TableColumn fx:id="CertificaatIdCertificaatColumn" prefWidth="53.0" text="CertificaatID" />
+                  <TableColumn fx:id="InschrijfIdCertificaatColumn" prefWidth="53.0" text="CertificaatID" />
               </columns>
             </TableView>
             <Button layoutX="87.0" layoutY="74.0" mnemonicParsing="false" onAction="#CertificaatBackClicked" text="BACK" />

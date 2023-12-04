@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class Certificaat {
     
+    private Integer inschrijfId;
     private String naamCursist;
     private Integer certificaatId;
     private byte beoordeling;
@@ -13,11 +14,12 @@ public class Certificaat {
 
 
 
-    public Certificaat(int certificaatId, byte beoordeling, String medeWerkerNaam) throws SQLException {
+    public Certificaat(int inschrijfId, int certificaatId, byte beoordeling, String medeWerkerNaam) throws SQLException {
+        this.inschrijfId = inschrijfId;
         this.certificaatId = certificaatId;
         this.beoordeling = beoordeling;
         this.medeWerkerNaam = medeWerkerNaam;
-        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = (SELECT email FROM Inschrijven WHERE certificaatId = "+certificaatId+")");;
+        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = (SELECT email FROM Inschrijven WHERE inschrijfId = "+inschrijfId+")");
         rs.next();
         this.naamCursist = rs.getString("Naam");
                 
@@ -33,11 +35,11 @@ public class Certificaat {
     // ook daadwerkelijk in het systeem bekend is
     }
 
-    public void setCertificaatId(int certificaatId) throws SQLException {
-        this.certificaatId = certificaatId;
-        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = (SELECT email FROM Inschrijven WHERE certificaatId = "+certificaatId+")");;
+    public void setInschrijfId(int inschrijfId) throws SQLException {
+        this.inschrijfId = inschrijfId;
+        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naam FROM Cursist WHERE email = (SELECT email FROM Inschrijven WHERE inschrijfId = "+inschrijfId+")");
         rs.next();
-        this.naamCursist = rs.getString("Naam");
+        this.naamCursist = rs.getString("naam");
     }
 
     public void setBeoordeling(byte beoordeling) {
@@ -50,6 +52,10 @@ public class Certificaat {
 
     public void setNaamCursist(String NaamCursist) {
         this.naamCursist = NaamCursist;
+    }
+
+    public void setCertificaatId(Integer certificaatId) {
+        this.certificaatId = certificaatId;
     }
     
     public int getCertificaatId() {
@@ -67,6 +73,11 @@ public class Certificaat {
     public String getNaamCursist() {
         return naamCursist;
     }
+
+    public Integer getInschrijfId() {
+        return inschrijfId;
+    }
+    
     
     
 
