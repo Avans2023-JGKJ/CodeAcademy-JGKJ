@@ -36,6 +36,8 @@ public class CursistFXMLController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    
+    Dialog<ButtonType> Dialog;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,7 +79,7 @@ public class CursistFXMLController implements Initializable {
             CursistFXMLController CursistController = loader.getController();
 //            CursistController.setCursist(cursist);
             System.out.println("test3");
-            Dialog<ButtonType> Dialog = new Dialog<ButtonType>();
+            Dialog = new Dialog<ButtonType>();
             System.out.println("test4");
             Dialog.setDialogPane(pane);
             Dialog.showAndWait();
@@ -148,9 +150,9 @@ public class CursistFXMLController implements Initializable {
     }
         @FXML
     void CloseButtonUpdateCursistClicked(ActionEvent event) {
-        Dialog<ButtonType> Dialog = new Dialog<ButtonType>();
-        Dialog.hide();
-    }
+
+        }
+    
         @FXML
     void ApplyButtonUpdateCursistClicked(ActionEvent event) {
         

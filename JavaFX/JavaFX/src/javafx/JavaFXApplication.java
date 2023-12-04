@@ -20,7 +20,11 @@ public class JavaFXApplication extends Application {
         
         FXMLLoader loader = new FXMLLoader();
 //        loader.setLocation(new URL("file:///C:\\Users\\Jochem\\Documents\\GitHub\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
-        loader.setLocation(new URL("file:///C:\\Users\\gijsv\\Documents\\GitHub\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
+//        loader.setLocation(new URL("file:///C:\\Users\\gijsv\\Documents\\GitHub\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
+//Gijs Pc
+        loader.setLocation(new URL("file:///C:\\School\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
+//Gijs laptop
+        
         VBox vbox = loader.<VBox>load();
 
         Scene scene = new Scene(vbox);
