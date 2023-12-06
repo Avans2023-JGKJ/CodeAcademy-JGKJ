@@ -45,7 +45,7 @@
                         <Font name="Georgia Bold" size="11.0" />
                     </font>
                 </Button>
-                <TableView fx:id="CursistTableView" layoutX="88.0" layoutY="120.0" prefHeight="200.0" prefWidth="341.0">
+                <TableView fx:id="CursistTableView" layoutX="88.0" layoutY="120.0" onMouseClicked="#rowClicked" prefHeight="200.0" prefWidth="341.0">
                     <columns>
                         <TableColumn id="naamCursistColumn" fx:id="naamCursistColumn" prefWidth="125.0" text="Naam" />
                         <TableColumn id="geboorteDatumCursistColumn" fx:id="geboorteDatumCursistColumn" prefWidth="96.0" text="GeboorteDatum" />

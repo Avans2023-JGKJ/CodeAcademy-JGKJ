@@ -1,12 +1,7 @@
 package javafx;
 
-import Objects.Cursist;
-
 import Java2Database.DataBaseSQL;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.sql.ResultSetMetaData;
+import Objects.Cursist;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,80 +9,134 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 public class CursistFXMLController implements Initializable {
-
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    
-    Dialog<ButtonType> Dialog;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
 
     @FXML
     private TableView<Cursist> CursistTableView;
 
     @FXML
-    void CursistAanmakenClicked(ActionEvent event) {
-        System.out.println("test1");
+    private TableColumn<Cursist, String> naamCursistColumn;
+
+    @FXML
+    private TableColumn<Cursist, LocalDate> geboorteDatumCursistColumn;
+
+    @FXML
+    private TableColumn<Cursist, String> geslachtCursistColumn;
+
+    @FXML
+    private TableColumn<Cursist, String> postCodeCursistColumn;
+
+    private ObservableList<Cursist> observableCursist;
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        initTable();
+        loadTableCursist();
+    }
+
+    private void initTable() {
+        observableCursist = FXCollections.observableArrayList();
+        naamCursistColumn.setCellValueFactory(new PropertyValueFactory<>("naam"));
+        geboorteDatumCursistColumn.setCellValueFactory(new PropertyValueFactory<>("geboorteDatum"));
+        geslachtCursistColumn.setCellValueFactory(new PropertyValueFactory<>("geslacht"));
+        postCodeCursistColumn.setCellValueFactory(new PropertyValueFactory<>("postCode"));
+    }
+
+    public void loadTableCursist() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursistDialog.fxml"));
-            DialogPane pane = loader.load();
-            System.out.println("test2");
-            
-            CursistFXMLController CursistController = loader.getController();
-//            CursistController.setCursist(cursist);
-            System.out.println("test3");
-            Dialog<ButtonType> Dialog = new Dialog<ButtonType>();
-            System.out.println("test4");
-            Dialog.setDialogPane(pane);
-            Dialog.showAndWait();
-            Dialog.setTitle("Nieuwe Cursist aanmaken"); 
-        } catch (IOException ex) {
+            initTable();
+            try (ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT naam, geboorteDatum, geslacht, postCode, email FROM Cursist").executeQuery()) {
+                while (rs.next()) {
+                    Cursist cursist = new Cursist();
+                    cursist.setNaam(rs.getString("naam"));
+                    cursist.setGeboorteDatum(LocalDate.parse(rs.getString("geboorteDatum")));
+                    char[] c = rs.getString("geslacht").toCharArray();
+                    cursist.setGeslacht(c[0]);
+                    cursist.setPostCode(rs.getString("postCode"));
+                    cursist.setEmail(rs.getString("email"));
+
+                    observableCursist.add(cursist);
+                }
+            }
+
+            CursistTableView.setItems(observableCursist);
+            CursistTableView.refresh();
+
+        } catch (SQLException ex) {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
     void CursistAanpassenClicked(ActionEvent event) {
-                 System.out.println("test1");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("updateCursistDialog.fxml"));
             DialogPane pane = loader.load();
-            System.out.println("test2");
-            
-            CursistFXMLController CursistController = loader.getController();
-//            CursistController.setCursist(cursist);
-            System.out.println("test3");
-            Dialog = new Dialog<ButtonType>();
-            System.out.println("test4");
-            Dialog.setDialogPane(pane);
-            Dialog.showAndWait();
-            Dialog.setTitle("Cursist aanpassen"); 
+
+            DialogCursistFXMLController updateCursistController = loader.getController();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            Optional<ButtonType> clickedApply = dialog.showAndWait();
+
+            if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
+                updateCursistController.ApplyButtonUpdateCursistClicked();
+                loadTableCursist(); // Reload the table after update
+            }
+
+            dialog.setTitle("Cursist aanpassen");
+
         } catch (IOException ex) {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @FXML
+    void CursistAanmakenClicked(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursistDialog.fxml"));
+            DialogPane pane = loader.load();
+
+            DialogCursistFXMLController createCursistController = loader.getController();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            Optional<ButtonType> clickedFinish = dialog.showAndWait();
+
+            if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
+                createCursistController.FinishButtonCreateCursistClicked();
+                loadTableCursist(); // Reload the table after update
+            }
+
+            dialog.setTitle("Cursist toevoegen");
+
+        } catch (IOException ex) {
+            Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 
     @FXML
     void CursistVerwijderenClicked(ActionEvent event) {
@@ -105,67 +154,28 @@ public class CursistFXMLController implements Initializable {
     }
 
     @FXML
-    TableColumn<Cursist, String> naamCursistColumn;
-    @FXML
-    TableColumn<Cursist, LocalDate> geboorteDatumCursistColumn;
-    @FXML
-    TableColumn<Cursist, String> geslachtCursistColumn;
-    @FXML
-    TableColumn<Cursist, String> postCodeCursistColumn;
-
-    ObservableList<Cursist> observableCursist;
-
-    private void initTable() {
-
-        observableCursist = FXCollections.observableArrayList();
-        naamCursistColumn.setCellValueFactory(new PropertyValueFactory<>("naam"));
-        geboorteDatumCursistColumn.setCellValueFactory(new PropertyValueFactory<>("geboorteDatum"));
-        geslachtCursistColumn.setCellValueFactory(new PropertyValueFactory<>("geslacht"));
-        postCodeCursistColumn.setCellValueFactory(new PropertyValueFactory<>("postCode"));
-
-    }
-
-    public void loadTableCursist() {
-        try {
-            initTable();
-            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT naam, geboorteDatum, geslacht, postCode FROM Cursist").executeQuery()) {
-                while (rs.next()) {
-                    Cursist Cursist = new Cursist();
-                    Cursist.setNaam(rs.getString("naam"));
-                    Cursist.setGeboorteDatum(LocalDate.parse(rs.getString("geboorteDatum")));
-                    char[] c = rs.getString("geslacht").toCharArray();
-                    Cursist.setGeslacht(c[0]);
-                    Cursist.setPostCode(rs.getString("postCode"));
-
-                    observableCursist.add(Cursist);
-                }
-            }
-            System.out.println("PUNT 4");
-            CursistTableView.setItems(observableCursist);
-            CursistTableView.refresh();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-        @FXML
-    void CloseButtonUpdateCursistClicked(ActionEvent event) {
-
-        }
-    
-        @FXML
-    void ApplyButtonUpdateCursistClicked(ActionEvent event) {
-        
-    }
-        @FXML
     void FinishButtonCreateCursistClicked(ActionEvent event) {
-        
+        // Handle finish button click
     }
-        @FXML
-    void CloseButtonCreateCursistClicked(ActionEvent event) {
-        Dialog<ButtonType> Dialog = new Dialog<ButtonType>();
-        Dialog.hide();
-    }
-    
 
+    @FXML
+    void CloseButtonCreateCursistClicked(ActionEvent event) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.hide();
+    }
+
+    @FXML
+    void rowClicked(MouseEvent event) throws IOException, SQLException {
+        Cursist clickedCursist = CursistTableView.getSelectionModel().getSelectedItem();
+        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
+        rs.next();
+        DataShare.getInstance().setCursistEmail(rs.getString("email"));
+        DataShare.getInstance().setCursistNaam(rs.getString("naam"));
+        DataShare.getInstance().setCursistGeboorteDatum(LocalDate.parse(rs.getString("geboorteDatum")));
+        DataShare.getInstance().setCursistGeslacht(rs.getString("geslacht").charAt(0));
+        DataShare.getInstance().setCursistPostCode(rs.getString("postCode"));
+        DataShare.getInstance().setCursistHuisnummer(rs.getString("huisNummer"));
+        DataShare.getInstance().setCursistWoonPlaats(rs.getString("woonPlaats"));
+        DataShare.getInstance().setCursistLandCode(rs.getString("landCode"));
+    }
 }
