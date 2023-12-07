@@ -37,7 +37,7 @@
             <TextField fx:id="cursistPostcodeInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="cursistHuisnummerInput" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="cursistWoonplaatsInput" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="cursistLandCode" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="cursistLandCodeInput" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Label text="Geslacht" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label text="Postcode" GridPane.rowIndex="4" />
             <Label text="Huisnummer" GridPane.rowIndex="5" />
