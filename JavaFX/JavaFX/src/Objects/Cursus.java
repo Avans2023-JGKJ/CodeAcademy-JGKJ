@@ -4,13 +4,17 @@ public class Cursus {
     private short aantalContentItems;
     private String onderwerp;
     private String introductieTekst;
-    private Niveau niveau;
-    public Cursus(String naamCursus, short aantalContentItems, String onderwerp, String introductieTekst, Niveau niveau) {
+    private String niveau;
+    public Cursus(String naamCursus, short aantalContentItems, String onderwerp, String introductieTekst, String niveau) {
         this.naamCursus = naamCursus;
         this.aantalContentItems = aantalContentItems;
         this.onderwerp = onderwerp;
         this.introductieTekst = introductieTekst;
         this.niveau = niveau;
+    }
+
+    public Cursus() {
+        
     }
 
     public String getNaamCursus() {
@@ -29,7 +33,7 @@ public class Cursus {
         return introductieTekst;
     }
 
-    public Niveau getNiveau() {
+    public String getNiveau() {
         return niveau;
     }
 
@@ -49,7 +53,7 @@ public class Cursus {
         this.introductieTekst = introductieTekst;
     }
 
-    public void setNiveau(Niveau niveau) {
+    public void setNiveau(String niveau) {
         this.niveau = niveau;
     }
 
