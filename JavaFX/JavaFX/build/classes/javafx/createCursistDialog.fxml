@@ -43,8 +43,8 @@
             <Label text="Huisnummer" GridPane.rowIndex="5" />
             <Label text="Woonplaats" GridPane.rowIndex="6" />
             <Label text="Landcode" GridPane.rowIndex="7" />
-            <RadioButton mnemonicParsing="false" text="Man" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <RadioButton mnemonicParsing="false" text="Vrouw" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <RadioButton fx:id="radioButtonCursistMan" mnemonicParsing="true" text="Man" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <RadioButton fx:id="radioButtonCursistVrouw" mnemonicParsing="false" text="Vrouw" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </graphic>
