@@ -6,6 +6,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import static javafx.application.Application.launch;
 import javafx.application.Application;
@@ -24,10 +26,18 @@ public class JavaFXApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         FXMLLoader loader = new FXMLLoader();
+        // Pad relatief aan de project directory
+        Path path = Paths.get("src/javafx/login.fxml");
+        URL url = path.toUri().toURL();
+
+
+        loader.setLocation(url);
+        
+        
 //        loader.setLocation(new URL("file:///C:\\Users\\Jochem\\Documents\\GitHub\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
 //        loader.setLocation(new URL("file:///C:\\Users\\gijsv\\Documents\\GitHub\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
 //        loader.setLocation(new URL("file:///C:\\Users\\joche\\Documents\\GitHub\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
-        loader.setLocation(new URL("file:///C:\\School\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
+//        loader.setLocation(new URL("file:///C:\\School\\CodeAcademy-JGKJ\\JavaFX\\JavaFX\\src\\javafx\\login.fxml"));
         VBox vbox = loader.<VBox>load();
 
         Scene scene = new Scene(vbox);

@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -140,8 +141,19 @@ public class CursistFXMLController implements Initializable {
 
     @FXML
     void CursistVerwijderenClicked(ActionEvent event) {
+        if (removeAlert()){
+            try {
+               
+                String delete = "DELETE FROM Cursist WHERE email = '" + DataShare.getInstance().getCursistEmail() + "'";
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), delete);
+            } catch (SQLException ex) {
+                //Alert NIET GEVONDEN OF NIET VOLTOOID
+                Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        }
         loadTableCursist();
     }
+    
 
     @FXML
     void CursistBackClicked(ActionEvent event) throws IOException {
@@ -167,6 +179,7 @@ public class CursistFXMLController implements Initializable {
     @FXML
     void rowClicked(MouseEvent event) throws IOException, SQLException {
         Cursist clickedCursist = CursistTableView.getSelectionModel().getSelectedItem();
+        
         ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
         rs.next();
         DataShare.getInstance().setCursistEmail(rs.getString("email"));
@@ -177,5 +190,23 @@ public class CursistFXMLController implements Initializable {
         DataShare.getInstance().setCursistHuisnummer(rs.getString("huisNummer"));
         DataShare.getInstance().setCursistWoonPlaats(rs.getString("woonPlaats"));
         DataShare.getInstance().setCursistLandCode(rs.getString("landCode"));
+    }
+    
+     boolean removeAlert() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+        alert.setTitle("Cursist Verwijderen!");
+        alert.setHeaderText("Weet je zeker dat je Cursist met email: " + DataShare.getInstance().getCursistEmail() + "?");
+
+        // Add a "No" button
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeNo = new ButtonType("No");
+
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // Check the result
+        return result.isPresent() && result.get() == buttonTypeYes;
     }
 }
