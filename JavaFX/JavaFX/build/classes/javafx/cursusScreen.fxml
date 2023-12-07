@@ -47,10 +47,10 @@
             </Button>
             <TableView fx:id="CursusTableView" layoutX="88.0" layoutY="120.0" prefHeight="200.0" prefWidth="341.0">
               <columns>
-                <TableColumn prefWidth="113.0" text="Naam" />
-                <TableColumn prefWidth="62.0" text="#Items" />
-                  <TableColumn prefWidth="99.0" text="Onderwerp" />
-                  <TableColumn prefWidth="65.0" text="Niveau" />
+                <TableColumn fx:id="naamCursusCursusColumn" prefWidth="113.0" text="Naam" />
+                <TableColumn fx:id="aantalContentItemsCursusColumn" prefWidth="62.0" text="#Items" />
+                  <TableColumn fx:id="onderwerpCursusColumn" prefWidth="99.0" text="Onderwerp" />
+                  <TableColumn fx:id="niveauCursusColumn" prefWidth="65.0" text="Niveau" />
               </columns>
             </TableView>
             <Button layoutX="87.0" layoutY="74.0" mnemonicParsing="false" onAction="#CursusBackClicked" text="BACK" />

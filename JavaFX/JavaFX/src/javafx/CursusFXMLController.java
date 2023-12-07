@@ -1,8 +1,20 @@
 package javafx;
 
+import Java2Database.DataBaseSQL;
+import Objects.Cursist;
+import Objects.Cursus;
+import Objects.Niveau;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,22 +25,103 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class CursusFXMLController implements Initializable {
+    
+        @FXML
+    private TableView<Cursus> CursusTableView;
+
+    @FXML
+    private TableColumn<Cursus, String> naamCursusCursusColumn;
+
+    @FXML
+    private TableColumn<Cursus, Short> aantalContentItemsCursusColumn;
+
+    @FXML
+    private TableColumn<Cursus, String> onderwerpCursusColumn;
+
+    @FXML
+    private TableColumn<Cursus, String> introductieTekstCursusColumn;
+
+    @FXML
+    private TableColumn<Cursus, String> niveauCursusColumn;
+
+    private ObservableList<Cursus> observableCursus;
+
+    private void initTable() {
+        observableCursus = FXCollections.observableArrayList();
+        naamCursusCursusColumn.setCellValueFactory(new PropertyValueFactory<>("naamCursus"));
+        aantalContentItemsCursusColumn.setCellValueFactory(new PropertyValueFactory<>("aantalContentItems"));
+        onderwerpCursusColumn.setCellValueFactory(new PropertyValueFactory<>("onderwerp"));
+        niveauCursusColumn.setCellValueFactory(new PropertyValueFactory<>("niveau"));
+    }
 
     private Stage stage;
     private Scene scene;
     private Parent root;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        initTable();
+        loadTableCursus();
+    }   
+
+
+
+    public void loadTableCursus() {
+        try {
+            initTable();
+            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM Cursus").executeQuery()) {
+                while (rs.next()) {
+                    Cursus cursus = new Cursus();
+                    cursus.setNaamCursus(rs.getString("naamCursus"));
+                    cursus.setAantalContentItems(((short)rs.getInt("aantalContentItems")));
+                    cursus.setOnderwerp((rs.getString("onderwerp")));
+                    cursus.setIntroductieTekst(rs.getString("introductieTekst"));
+                    cursus.setNiveau(rs.getString("niveau"));
+
+                    observableCursus.add(cursus);
+                }
+            }
+
+            CursusTableView.setItems(observableCursus);
+            CursusTableView.refresh();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
-    private TableView<?> CursusTableView;
+    void CursistAanpassenClicked(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("updateCursistDialog.fxml"));
+            DialogPane pane = loader.load();
+
+            DialogCursistFXMLController updateCursistController = loader.getController();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            Optional<ButtonType> clickedApply = dialog.showAndWait();
+
+            if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
+                updateCursistController.ApplyButtonUpdateCursistClicked();
+                loadTableCursus(); // Reload the table after update
+            }
+
+            dialog.setTitle("Cursist aanpassen");
+
+        } catch (IOException ex) {
+            Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @FXML
     void CursusAanmakenClicked(ActionEvent event) {
@@ -38,6 +131,26 @@ public class CursusFXMLController implements Initializable {
     @FXML
     void CursusAanpassenClicked(ActionEvent event) {
         System.out.println("CursusAanpassenClicked");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursusDialog.fxml"));
+            DialogPane pane = loader.load();
+
+            DialogCursusFXMLController createCursusController = loader.getController();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            Optional<ButtonType> clickedFinish = dialog.showAndWait();
+
+            if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
+                createCursusController.FinishButtonCreateCursusClicked();
+                loadTableCursus(); // Reload the table after update
+            }
+
+            dialog.setTitle("Cursus aanmaken");
+
+        } catch (IOException ex) {
+            Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
