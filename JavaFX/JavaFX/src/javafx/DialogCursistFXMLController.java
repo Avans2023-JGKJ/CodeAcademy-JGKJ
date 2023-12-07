@@ -37,7 +37,7 @@ public class DialogCursistFXMLController implements Initializable {
     void FinishButtonCreateCursistClicked() {
         try {
             DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
-                    "INSERT INTO Cursist (naam,postCode,email,huisNummer,woonPlaats,landCode) VALUES"
+                    "INSERT INTO Cursist(naam,postCode,email,huisNummer,woonPlaats,landCode) VALUES"
                     + "  '" + cursistNaamColumninput.getText()
                     + "',  '" + cursistPostcodeInput.getText()
                     + "',  '" + cursistEmailInput.getText()

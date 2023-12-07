@@ -99,38 +99,9 @@ public class CursusFXMLController implements Initializable {
         }
     }
 
-    @FXML
-    void CursistAanpassenClicked(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("updateCursistDialog.fxml"));
-            DialogPane pane = loader.load();
-
-            DialogCursistFXMLController updateCursistController = loader.getController();
-
-            Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.setDialogPane(pane);
-            Optional<ButtonType> clickedApply = dialog.showAndWait();
-
-            if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
-                updateCursistController.ApplyButtonUpdateCursistClicked();
-                loadTableCursus(); // Reload the table after update
-            }
-
-            dialog.setTitle("Cursist aanpassen");
-
-        } catch (IOException ex) {
-            Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     @FXML
     void CursusAanmakenClicked(ActionEvent event) {
-        System.out.println("CursusAanmakenClicked");
-    }
-
-    @FXML
-    void CursusAanpassenClicked(ActionEvent event) {
-        System.out.println("CursusAanpassenClicked");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursusDialog.fxml"));
             DialogPane pane = loader.load();
@@ -147,6 +118,31 @@ public class CursusFXMLController implements Initializable {
             }
 
             dialog.setTitle("Cursus aanmaken");
+
+        } catch (IOException ex) {
+            Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void CursusAanpassenClicked(ActionEvent event) {
+        System.out.println("CursusAanpassenClicked");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("updateCursusDialog.fxml"));
+            DialogPane pane = loader.load();
+
+            DialogCursusFXMLController updateCursusController = loader.getController();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            Optional<ButtonType> clickedFinish = dialog.showAndWait();
+
+            if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
+                updateCursusController.FinishButtonUpdateCursusClicked();
+                loadTableCursus(); // Reload the table after update
+            }
+
+            dialog.setTitle("Cursus aanpassen");
 
         } catch (IOException ex) {
             Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);

@@ -26,12 +26,12 @@
          <children>
             <Label text="Naam Cursus" />
             <Label text="# Content Items" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="naamCursusCursusColumnInput" GridPane.columnIndex="1" />
+            <TextField fx:id="aantalContentItemsCursusColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="introductieTekstCursusColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Introductie Tekst" GridPane.rowIndex="2" />
             <Label text="Niveau" GridPane.rowIndex="3" />
-            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="niveauCursusColumnInput" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </graphic>

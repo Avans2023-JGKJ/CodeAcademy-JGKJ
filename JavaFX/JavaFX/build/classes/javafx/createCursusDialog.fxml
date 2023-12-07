@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<DialogPane prefHeight="221.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane prefHeight="221.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
    <graphic>
       <GridPane prefHeight="178.0" prefWidth="357.0">
         <columnConstraints>
@@ -26,14 +26,14 @@
          <children>
             <Label text="Naam Cursus" />
             <Label text="# Content Items" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="naamCursusCursusColumnInput" GridPane.columnIndex="1" />
+            <TextField  fx:id="aantalContentItemsCursusColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="onderwerpCursusColumnInput" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="introductieTekstCursusColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Onderwerp" GridPane.rowIndex="2" />
             <Label text="Introductie Tekst" GridPane.rowIndex="3" />
             <Label text="Niveau" GridPane.rowIndex="4" />
-            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ChoiceBox fx:id="niveauCursusColumnInput" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </graphic>
