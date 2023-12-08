@@ -53,6 +53,9 @@ public class DialogCursistFXMLController implements Initializable {
     void FinishButtonCreateCursistClicked() {
     try {
         LocalDate parsedDate = parseDate(cursistGeboortedatumInput.getText());
+        if (parsedDate == null) {
+            return;
+        }
         String formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
                 "INSERT INTO Cursist (naam, postCode, email, geboorteDatum, geslacht, huisNummer, woonPlaats, landCode) VALUES("

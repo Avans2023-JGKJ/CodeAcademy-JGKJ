@@ -179,20 +179,33 @@ public class CursistFXMLController implements Initializable {
     }
 
     @FXML
-    void rowClicked(MouseEvent event) throws IOException, SQLException {
+    void rowClicked(MouseEvent event) {
+      try {
         Cursist clickedCursist = CursistTableView.getSelectionModel().getSelectedItem();
-        
-        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
-        rs.next();
-        DataShare.getInstance().setCursistEmail(rs.getString("email"));
-        DataShare.getInstance().setCursistNaam(rs.getString("naam"));
-        DataShare.getInstance().setCursistGeboorteDatum(LocalDate.parse(rs.getString("geboorteDatum")));
-        DataShare.getInstance().setCursistGeslacht(rs.getString("geslacht").charAt(0));
-        DataShare.getInstance().setCursistPostCode(rs.getString("postCode"));
-        DataShare.getInstance().setCursistHuisnummer(rs.getString("huisNummer"));
-        DataShare.getInstance().setCursistWoonPlaats(rs.getString("woonPlaats"));
-        DataShare.getInstance().setCursistLandCode(rs.getString("landCode"));
+
+        if (clickedCursist != null) {
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
+            
+            if (rs.next()) {
+                DataShare.getInstance().setCursistEmail(rs.getString("email"));
+                DataShare.getInstance().setCursistNaam(rs.getString("naam"));
+                DataShare.getInstance().setCursistGeboorteDatum(LocalDate.parse(rs.getString("geboorteDatum")));
+                DataShare.getInstance().setCursistGeslacht(rs.getString("geslacht").charAt(0));
+                DataShare.getInstance().setCursistPostCode(rs.getString("postCode"));
+                DataShare.getInstance().setCursistHuisnummer(rs.getString("huisNummer"));
+                DataShare.getInstance().setCursistWoonPlaats(rs.getString("woonPlaats"));
+                DataShare.getInstance().setCursistLandCode(rs.getString("landCode"));
+            } else {
+                ErrorAlert("Deze cursist bestaat niet meer!", "Onbekende cursist");
+            }
+        }
+    } catch (SQLException | DateTimeParseException e) {
+        e.printStackTrace();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+
     
      boolean removeAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -213,28 +226,24 @@ public class CursistFXMLController implements Initializable {
     }
      
      public static LocalDate parseDate(String dateString) {
-        // De mogelijke data
+       
         String[] formats = {"yyyy-MM-dd", "yyyy-dd-MM", "dd-MM-yyyy", "MM-dd-yyyy"};
-
-        // Split the input to check each part separately
-        String[] dateParts = dateString.split("[^\\d]+");
-
-        // Check each format with adjusted logic
+        String[] dateParts = dateString.split("[^\\d]+");       
+        if (dateParts.length < 3) {
+            ErrorAlert("Er mist een Jaar, Maand of Dag!", "E-mail incorrect!");
+            return null;
+        }
+      
         for (String format : formats) {
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
                 LocalDate date;
-
-                // If the first part is greater than 12, assume it's the year
                 if (Integer.parseInt(dateParts[0]) > 12) {
                     date = LocalDate.parse(dateString, formatter);
                 } else {
-                    // Adjust the month and day positions based on the format
                     int year = Integer.parseInt(dateParts[2]);
                     int month;
                     int day;
-
-                    // Check if the second part is greater than 12
                     if (Integer.parseInt(dateParts[1]) > 12) {
                         month = Integer.parseInt(dateParts[0]);
                         day = Integer.parseInt(dateParts[1]);
@@ -242,19 +251,24 @@ public class CursistFXMLController implements Initializable {
                         month = Integer.parseInt(dateParts[1]);
                         day = Integer.parseInt(dateParts[0]);
                     }
-
-                    // Format the date with correct positions
                     String formattedDate = String.format("%04d-%02d-%02d", year, month, day);
                     date = LocalDate.parse(formattedDate, formatter);
                 }
-
                 return date;
             } catch (DateTimeParseException e) {
-                // Do nothing, move on to the next format
+               // niks doen. dit hoort niet eens te gebeuren.
             }
         }
-
-        // Throw an exception if none of the formats match
-        throw new IllegalArgumentException("Invalid date format: " + dateString);
+        
+        ErrorAlert("Je geboortedatum klopt niet helemaal!", "Email incorrect!");
+        return null;
+    }
+     
+     private static void ErrorAlert(String message, String header) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
