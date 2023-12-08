@@ -216,19 +216,45 @@ public class CursistFXMLController implements Initializable {
         // De mogelijke data
         String[] formats = {"yyyy-MM-dd", "yyyy-dd-MM", "dd-MM-yyyy", "MM-dd-yyyy"};
 
-        // format met elke format
+        // Split the input to check each part separately
+        String[] dateParts = dateString.split("[^\\d]+");
+
+        // Check each format with adjusted logic
         for (String format : formats) {
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-                LocalDate date = LocalDate.parse(dateString, formatter);
+                LocalDate date;
+
+                // If the first part is greater than 12, assume it's the year
+                if (Integer.parseInt(dateParts[0]) > 12) {
+                    date = LocalDate.parse(dateString, formatter);
+                } else {
+                    // Adjust the month and day positions based on the format
+                    int year = Integer.parseInt(dateParts[2]);
+                    int month;
+                    int day;
+
+                    // Check if the second part is greater than 12
+                    if (Integer.parseInt(dateParts[1]) > 12) {
+                        month = Integer.parseInt(dateParts[0]);
+                        day = Integer.parseInt(dateParts[1]);
+                    } else {
+                        month = Integer.parseInt(dateParts[1]);
+                        day = Integer.parseInt(dateParts[0]);
+                    }
+
+                    // Format the date with correct positions
+                    String formattedDate = String.format("%04d-%02d-%02d", year, month, day);
+                    date = LocalDate.parse(formattedDate, formatter);
+                }
+
                 return date;
             } catch (DateTimeParseException e) {
-               // niks doen, hij gaat verder met de volgende format
+                // Do nothing, move on to the next format
             }
         }
 
-        // null error, maar is beter om een bericht te laten zien.
+        // Throw an exception if none of the formats match
         throw new IllegalArgumentException("Invalid date format: " + dateString);
-        
     }
 }
