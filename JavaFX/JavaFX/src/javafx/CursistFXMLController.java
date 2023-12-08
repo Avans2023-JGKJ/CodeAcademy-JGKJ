@@ -20,6 +20,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -103,7 +105,7 @@ public class CursistFXMLController implements Initializable {
 
             if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
                 updateCursistController.ApplyButtonUpdateCursistClicked();
-                loadTableCursist(); // Reload the table after update
+                loadTableCursist(); // Herlaad table
             }
 
             dialog.setTitle("Cursist aanpassen");
@@ -198,7 +200,7 @@ public class CursistFXMLController implements Initializable {
         alert.setTitle("Cursist Verwijderen!");
         alert.setHeaderText("Weet je zeker dat je Cursist met email: " + DataShare.getInstance().getCursistEmail() + "?");
 
-        // Add a "No" button
+        // Yes, No knoppen
         ButtonType buttonTypeYes = new ButtonType("Yes");
         ButtonType buttonTypeNo = new ButtonType("No");
 
@@ -208,5 +210,25 @@ public class CursistFXMLController implements Initializable {
 
         // Check the result
         return result.isPresent() && result.get() == buttonTypeYes;
+    }
+     
+     public static LocalDate parseDate(String dateString) {
+        // De mogelijke data
+        String[] formats = {"yyyy-MM-dd", "yyyy-dd-MM", "dd-MM-yyyy", "MM-dd-yyyy"};
+
+        // format met elke format
+        for (String format : formats) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+                LocalDate date = LocalDate.parse(dateString, formatter);
+                return date;
+            } catch (DateTimeParseException e) {
+               // niks doen, hij gaat verder met de volgende format
+            }
+        }
+
+        // null error, maar is beter om een bericht te laten zien.
+        throw new IllegalArgumentException("Invalid date format: " + dateString);
+        
     }
 }
