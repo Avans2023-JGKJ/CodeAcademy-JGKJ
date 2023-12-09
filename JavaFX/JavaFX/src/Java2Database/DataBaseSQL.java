@@ -27,6 +27,21 @@ public class DataBaseSQL {
             e.printStackTrace(); // Als er een exeptie optreed, mooi afhandelen.
             return null;
         }
+    } public static Connection createConnection(Connection dbConnection) {
+        if (dbConnection == null) {
+            try {
+                // Load the JDBC driver
+                Class.forName(JDBC_DRIVER);
+
+                // Create database connection
+                dbConnection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+                System.out.println("Connection made successfully!");
+            } catch (ClassNotFoundException | SQLException e) {
+                System.out.println("An ERROR has occurred while trying to connect to the database:");
+                e.printStackTrace(); // Handle the exception appropriately
+            }
+        }
+        return dbConnection;
     }
 
     public static void sendCommand(Connection connection, String command) throws SQLException {

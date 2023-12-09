@@ -26,6 +26,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.DialogCursistFXMLController.cursistDbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -56,6 +57,7 @@ public class CursistFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableCursist();
+        cursistDbConnection = DataBaseSQL.createConnection(cursistDbConnection);
     }
 
     private void initTable() {
@@ -69,7 +71,7 @@ public class CursistFXMLController implements Initializable {
     public void loadTableCursist() {
         try {
             initTable();
-            try (ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT naam, geboorteDatum, geslacht, postCode, email FROM Cursist").executeQuery()) {
+            try (ResultSet rs = DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection).prepareStatement("SELECT naam, geboorteDatum, geslacht, postCode, email FROM Cursist").executeQuery()) {
                 while (rs.next()) {
                     Cursist cursist = new Cursist();
                     cursist.setNaam(rs.getString("naam"));
@@ -147,7 +149,7 @@ public class CursistFXMLController implements Initializable {
             try {
                
                 String delete = "DELETE FROM Cursist WHERE email = '" + DataShare.getInstance().getCursistEmail() + "'";
-                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), delete);
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), delete);
             } catch (SQLException ex) {
                 //Alert NIET GEVONDEN OF NIET VOLTOOID
                 Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,7 +186,7 @@ public class CursistFXMLController implements Initializable {
         Cursist clickedCursist = CursistTableView.getSelectionModel().getSelectedItem();
 
         if (clickedCursist != null) {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
             
             if (rs.next()) {
                 DataShare.getInstance().setCursistEmail(rs.getString("email"));
