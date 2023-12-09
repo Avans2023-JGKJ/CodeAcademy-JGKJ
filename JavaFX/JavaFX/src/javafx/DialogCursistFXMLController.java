@@ -69,13 +69,18 @@ public class DialogCursistFXMLController implements Initializable {
                         + "',  '" + cursistLandCodeInput.getText() + "')");
 
     } catch (SQLException ex) {
-        Logger.getLogger(DialogCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        if (ex.getSQLState().equals("23000")) {
+            CursistFXMLController.ErrorAlert("De ingevoerde email is incorrect!", "Email Incorrect");
+            return;
+        }
+        CursistFXMLController.ErrorAlert("Er is iets fout gegaan!", "SQL Fout!");
     } catch (DateTimeParseException ex) {
-      
         System.err.println("Invalid date input: " + cursistGeboortedatumInput.getText());
-        
+        CursistFXMLController.ErrorAlert("De ingevoerde geboortedatum is niet correct!", "Geboortedatum Incorrect!");
     }
 }
+    
+
 
     
     public char RadioButtonGeslachtCheck() {

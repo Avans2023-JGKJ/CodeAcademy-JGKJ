@@ -33,7 +33,7 @@
             <Label prefHeight="17.0" prefWidth="88.0" text="Geboortedatum" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <TextField fx:id="cursistNaamColumninput" GridPane.columnIndex="1" GridPane.rowIndex="0" />
             <TextField fx:id="cursistEmailInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="cursistGeboortedatumInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="cursistGeboortedatumInput" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="dd-MM-yyyy" minWidth="150" />
             <TextField fx:id="cursistPostcodeInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="cursistHuisnummerInput" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="cursistWoonplaatsInput" GridPane.columnIndex="1" GridPane.rowIndex="6" />

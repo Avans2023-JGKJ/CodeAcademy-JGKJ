@@ -136,7 +136,7 @@ public class CursistFXMLController implements Initializable {
 
         } catch (IOException ex) {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
     
     
@@ -230,7 +230,7 @@ public class CursistFXMLController implements Initializable {
         String[] formats = {"yyyy-MM-dd", "yyyy-dd-MM", "dd-MM-yyyy", "MM-dd-yyyy"};
         String[] dateParts = dateString.split("[^\\d]+");       
         if (dateParts.length < 3) {
-            ErrorAlert("Er mist een Jaar, Maand of Dag!", "E-mail incorrect!");
+            ErrorAlert("Er mist een Jaar, Maand of Dag!", "Geboortedatum incorrect!");
             return null;
         }
       
@@ -260,11 +260,11 @@ public class CursistFXMLController implements Initializable {
             }
         }
         
-        ErrorAlert("Je geboortedatum klopt niet helemaal!", "Email incorrect!");
+        ErrorAlert("Je geboortedatum klopt niet helemaal!", "Geboortedatum incorrect!");
         return null;
     }
      
-     private static void ErrorAlert(String message, String header) {
+     public static void ErrorAlert(String message, String header) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(header);
