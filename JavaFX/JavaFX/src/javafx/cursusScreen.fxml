@@ -51,6 +51,7 @@
                 <TableColumn fx:id="aantalContentItemsCursusColumn" prefWidth="62.0" text="#Items" />
                   <TableColumn fx:id="onderwerpCursusColumn" prefWidth="99.0" text="Onderwerp" />
                   <TableColumn fx:id="niveauCursusColumn" prefWidth="65.0" text="Niveau" />
+                  <TableColumn fx:id="introductieTekstCursusColumn" prefWidth="150.0" text="Introductie" />
               </columns>
             </TableView>
             <Button layoutX="87.0" layoutY="74.0" mnemonicParsing="false" onAction="#CursusBackClicked" text="BACK" />
