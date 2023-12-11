@@ -82,30 +82,38 @@ public class CursusFXMLController implements Initializable {
 
 
     public void loadTableCursus() {
-    try {
-        initTable();
-        try (ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM Cursus").executeQuery()) {
-            while (rs.next()) {
-                Cursus cursus = new Cursus();
-                cursus.setNaamCursus(rs.getString("naamCursus"));
-                cursus.setAantalContentItems((short) rs.getInt("aantalContentItems"));
-                cursus.setOnderwerp(rs.getString("onderwerp"));
-                cursus.setIntroductieTekst(rs.getString("introductieTekst"));
-                String niveauString = rs.getString("niveau");
-                Niveau niveau = Niveau.valueOf(niveauString);
-                cursus.setNiveau(niveau);
+        try {
+            initTable();
+            try (ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM Cursus").executeQuery()) {
+                while (rs.next()) {
+                    Cursus cursus = new Cursus();
+                    cursus.setNaamCursus(rs.getString("naamCursus"));
+                    cursus.setAantalContentItems((short) rs.getInt("aantalContentItems"));
+                    cursus.setOnderwerp(rs.getString("onderwerp"));
+                    cursus.setIntroductieTekst(rs.getString("introductieTekst"));
 
-                observableCursus.add(cursus);
+                    // zorgt ervoor dat de string uit de database overeenkomt met de enum-constanten
+                    String niveauString = rs.getString("niveau");
+                    try {
+                        Niveau niveau = Niveau.valueOf(niveauString.toUpperCase());
+                        cursus.setNiveau(niveau);
+                    } catch (IllegalArgumentException e) {
+                        Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE,
+                             "Niveuwaarde uit de database komt niet overeen met enige enum-constanten " + niveauString, e);
+                        continue; // toevoegen van deze cursus (aan de lijst) overslaan
+                    }
+
+                    observableCursus.add(cursus);
+                }
             }
+
+            CursusTableView.setItems(observableCursus);
+            CursusTableView.refresh();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        CursusTableView.setItems(observableCursus);
-        CursusTableView.refresh();
-
-    } catch (SQLException ex) {
-        Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
     }
-}
 
 
 
@@ -123,7 +131,7 @@ public class CursusFXMLController implements Initializable {
 
             if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
                 createCursusController.FinishButtonCreateCursusClicked();
-                loadTableCursus(); // Reload the table after update
+                loadTableCursus();
             }
 
             dialog.setTitle("Cursus aanmaken");
@@ -148,7 +156,7 @@ public class CursusFXMLController implements Initializable {
 
             if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
                 updateCursusController.FinishButtonUpdateCursusClicked();
-                loadTableCursus(); // Reload the table after update
+                loadTableCursus();
             }
 
             dialog.setTitle("Cursus aanpassen");

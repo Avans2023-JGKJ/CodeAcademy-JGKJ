@@ -1,10 +1,13 @@
 package javafx;
 
 import Java2Database.DataBaseSQL;
+import Objects.Niveau;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class DialogCursusFXMLController {
@@ -22,17 +25,24 @@ public class DialogCursusFXMLController {
     private TextField introductieTekstCursusColumnInput;
 
     @FXML
-    private TextField niveauCursusColumnInput;
+    private ComboBox<Niveau> niveauComboBox;
+
+    public void initialize() {
+        niveauComboBox.setItems(FXCollections.observableArrayList(Niveau.values()));
+    }
 
     @FXML
     void FinishButtonCreateCursusClicked() {
         try {
+            Niveau selectedNiveau = niveauComboBox.getValue();
+
             DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
-                    "INSERT INTO Cursus (naamCursus, aantalContentItems, onderwerp, introductieTekst) VALUES"
-                            + "  '" + naamCursusCursusColumnInput.getText()
-                            + "',  '" + aantalContentItemsCursusColumnInput.getText()
-                            + "',  '" + onderwerpCursusColumnInput.getText()
-                            + "',  '" + introductieTekstCursusColumnInput.getText() + "'");
+                    "INSERT INTO Cursus (naamCursus, aantalContentItems, onderwerp, introductieTekst, niveau) VALUES"
+                    + "('" + naamCursusCursusColumnInput.getText()
+                    + "', '" + aantalContentItemsCursusColumnInput.getText()
+                    + "', '" + onderwerpCursusColumnInput.getText()
+                    + "', '" + introductieTekstCursusColumnInput.getText()
+                    + "', '" + selectedNiveau.name() + "')");
             System.out.println("SUCCESVOL GEDAAN");
         } catch (SQLException ex) {
             Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -41,16 +51,6 @@ public class DialogCursusFXMLController {
 
     @FXML
     void FinishButtonUpdateCursusClicked() {
-        try {
-            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
-                    "INSERT INTO Cursus (naamCursus, aantalContentItems, introductieTekst, niveau) VALUES"
-                            + "  '" + naamCursusCursusColumnInput.getText()
-                            + "',  '" + aantalContentItemsCursusColumnInput.getText()
-                            + "',  '" + introductieTekstCursusColumnInput.getText()
-                            + "',  '" + niveauCursusColumnInput.getText() + "'");
-            System.out.println("SUCCESVOL GEDAAN");
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // Implementation for updating a course should go here
     }
 }
