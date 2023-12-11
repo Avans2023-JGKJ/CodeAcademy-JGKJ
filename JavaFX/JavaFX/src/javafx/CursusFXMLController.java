@@ -25,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -32,10 +33,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import java.sql.Connection;
 
 public class CursusFXMLController implements Initializable {
     
-        @FXML
+    @FXML
     private TableView<Cursus> CursusTableView;
 
     @FXML
@@ -58,6 +60,9 @@ public class CursusFXMLController implements Initializable {
     
     @FXML
     private ObservableList<Niveau> observableNiveau;
+    
+    @FXML
+    private static Connection cursusDbConnection;
 
 
     private void initTable() {
@@ -77,6 +82,7 @@ public class CursusFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableCursus();
+        cursusDbConnection = DataBaseSQL.createConnection();
     }   
 
 
@@ -127,10 +133,20 @@ public class CursusFXMLController implements Initializable {
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
-            Optional<ButtonType> clickedFinish = dialog.showAndWait();
 
-            if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
-                createCursusController.FinishButtonCreateCursusClicked();
+            dialog.getDialogPane().getButtonTypes().clear();
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.APPLY);
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!createCursusController.validateAndCreateCursus()) {
+                    ae.consume();
+                }
+            });
+
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
+
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.APPLY) {
                 loadTableCursus();
             }
 
@@ -140,6 +156,7 @@ public class CursusFXMLController implements Initializable {
             Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 
     @FXML
     void CursusAanpassenClicked(ActionEvent event) {
