@@ -34,6 +34,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.sql.Connection;
+import javafx.scene.control.Alert;
+
 
 public class CursusFXMLController implements Initializable {
     
@@ -185,8 +187,37 @@ public class CursusFXMLController implements Initializable {
 
     @FXML
     void CursusVerwijderenClicked(ActionEvent event) {
-        System.out.println("CursusVerwijderenClicked");
+        Cursus selectedCursus = CursusTableView.getSelectionModel().getSelectedItem();
+        if (selectedCursus != null && removeCursusAlert(selectedCursus.getNaamCursus())) {
+            try {
+                String delete = "DELETE FROM Cursus WHERE naamCursus = '" + selectedCursus.getNaamCursus() + "'";
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(cursusDbConnection), delete);
+            } catch (SQLException ex) {
+                // Behandel fouten hier
+                Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            loadTableCursus();
+        }
     }
+
+
+    private boolean removeCursusAlert(String cursusNaam) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cursus Verwijderen!");
+        alert.setHeaderText("Weet je zeker dat je de cursus met naam: " + cursusNaam + " wilt verwijderen?");
+
+        // Ja, Nee knoppen
+        ButtonType buttonTypeYes = new ButtonType("Ja");
+        ButtonType buttonTypeNo = new ButtonType("Nee");
+
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // Controleer het resultaat
+        return result.isPresent() && result.get() == buttonTypeYes;
+    }
+
 
     @FXML
     void CursusBackClicked(ActionEvent event) throws IOException {

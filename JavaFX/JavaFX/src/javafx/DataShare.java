@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javafx;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author Jochem
- */
 public class DataShare {
 
     private static final DataShare instance = new DataShare();
 
+    // Cursist-gerelateerde velden
     private String cursistEmail;
     private String cursistNaam;
     private LocalDate cursistGeboorteDatum;
@@ -24,13 +16,17 @@ public class DataShare {
     private String cursistWoonPlaats;
     private String cursistLandCode;
 
+    // Cursus-gerelateerde velden
+    private String cursusNaam;
+
     private DataShare() {
     }
 
-    public static DataShare getInstance(){
+    public static DataShare getInstance() {
         return instance;
     }
 
+    // Cursist-gerelateerde getters en setters
     public String getCursistEmail() {
         return cursistEmail;
     }
@@ -94,6 +90,14 @@ public class DataShare {
     public void setCursistLandCode(String cursistLandCode) {
         this.cursistLandCode = cursistLandCode;
     }
-    
-    
+
+    // Cursus-gerelateerde getters en setters
+    public String getCursusNaam() {
+        return cursusNaam;
+    }
+
+    public void setCursusNaam(String cursusNaam) {
+        this.cursusNaam = cursusNaam;
+    }
+
 }
