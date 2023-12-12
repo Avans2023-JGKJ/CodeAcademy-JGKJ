@@ -63,7 +63,7 @@
                   <Font name="System Bold" size="38.0" />
                </font>
             </Text>
-            <Button layoutX="31.0" layoutY="747.0" mnemonicParsing="false" onAction="#AfsluitenButtonClicked" prefHeight="27.0" prefWidth="73.0" text="Afsluiten" />
+            <Button layoutX="31.0" layoutY="747.0" mnemonicParsing="false" onAction="#BackButtonClicked" prefHeight="27.0" prefWidth="73.0" text="Back" />
             <ImageView fitHeight="283.0" fitWidth="331.0" layoutX="14.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Logo.png" />

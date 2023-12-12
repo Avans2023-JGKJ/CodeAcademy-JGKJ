@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import static javafx.CursistFXMLController.parseDate;
 import static javafx.DialogCursistFXMLController.cursistDbConnection;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -90,7 +91,8 @@ public class LoginFXMLController implements Initializable {
 
 //            HomeScreenFXMLController homeScreenController = loader.getController();
 //            homeScreenController.displayUserName(username);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
+        DataShare.getInstance().setUsername(UserNameField.getText());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenCursist.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -141,6 +143,7 @@ public class LoginFXMLController implements Initializable {
                             + UserNameFieldRegistreren.getText()
                             + "',  '" + PassWordFieldRegistreren.getText()
                             + "',  '" + cursistEmailInput.getText() + "')");
+
                     showPopup("Succesvol Cursist Aangemaakt Je kunt nu inloggen!");
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
                     root = loader.load();
@@ -178,7 +181,17 @@ public class LoginFXMLController implements Initializable {
 
     @FXML
     void AfsluitenButtonClicked(ActionEvent event) {
-
+        Platform.exit();
+    }
+    
+    @FXML
+    void BackButtonClicked(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            root = loader.load();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
     }
 
     boolean checkRegistreerFields() {
@@ -221,7 +234,7 @@ public class LoginFXMLController implements Initializable {
         alert.setHeaderText("Combination is not correct");
         alert.showAndWait();
     }
-    
+
     void showPopup(String Message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Something interesting happened!");
