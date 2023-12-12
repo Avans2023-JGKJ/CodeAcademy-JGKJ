@@ -1,7 +1,13 @@
 package javafx;
 
+import Java2Database.DataBaseSQL;
+import Objects.Cursist;
 import Objects.Niveau;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import static javafx.CursistFXMLController.ErrorAlert;
 
 public class DataShare {
 
@@ -9,10 +15,9 @@ public class DataShare {
 
     //Cursist DONE
     // Certificaat 
-    
     // Username Inlog
     private String username;
-    
+
     // Cursist-gerelateerde velden
     private String cursistEmail;
     private String cursistNaam;
@@ -22,14 +27,14 @@ public class DataShare {
     private String cursistHuisnummer;
     private String cursistWoonPlaats;
     private String cursistLandCode;
-    
+
     // Certificaat-gerelateerde velden
     private Integer CertificaatInschrijfId;
     private String naamCursist;
     private Integer certificaatId;
     private byte beoordeling;
     private String medeWerkerNaam;
-    
+
     // ContentItem-gerelateerde velden
     private Integer contentItemId;
     private String titel;
@@ -42,23 +47,23 @@ public class DataShare {
     private String onderwerp;
     private String introductieTekst;
     private Niveau niveau;
-    
+
     //Inschrijven-gerelateerde velden
     private String inschrijvenEmail;
     private String inschrijvenNaamCursus;
     private LocalDate inschrijvenDatum;
     private int inschrijfId;
     private float totaalVoortgang;
-    
+
     //Module-gerelateerde velden
     private String versie;
     private String ModuleBeschrijving;
     private String naamContactPersoon;
     private String emailContactPersoon;
     private byte volgordeNr;
-    
+
     //Webcast-gerelateerde velden
-     private short Tijdsduur;
+    private short Tijdsduur;
     private LocalDate DatumPublicatie;
     private String URL;
     private String WebcastBeschrijving;
@@ -66,6 +71,65 @@ public class DataShare {
     private String OrganisatieSpreker;
 
     private DataShare() {
+    }
+
+    public void resetCursist() {
+        this.cursistEmail = "";
+        this.cursistNaam = ("");
+        this.cursistGeboorteDatum = null;
+        this.cursistGeslacht = '0';
+        this.cursistPostCode = "";
+        this.cursistHuisnummer = "";
+        this.cursistWoonPlaats = "";
+        this.cursistLandCode = "";
+    }
+
+    public void resetCertificaat() {
+        this.CertificaatInschrijfId = null;
+        this.naamCursist = "";
+        this.certificaatId = null;
+        this.beoordeling = Byte.valueOf(null);
+        this.medeWerkerNaam = "";
+    }
+
+    public void resetContentItem() {
+        this.contentItemId = null;
+        this.titel = "";
+        this.datum = null;
+        this.status = "";
+    }
+
+    public void ResetCursus() {
+        this.naamCursus = "";
+        this.aantalContentItems = Short.valueOf(null);
+        this.onderwerp = "";
+        this.introductieTekst = "";
+        this.niveau = null;
+    }
+
+    public void resetInschrijvingen() {
+        this.inschrijvenEmail = "";
+        this.inschrijvenNaamCursus = "";
+        this.inschrijvenDatum = null;
+        this.inschrijfId = Integer.valueOf(null);
+        this.totaalVoortgang = Float.valueOf(null);
+    }
+
+    public void resetModule() {
+        this.versie = "";
+        this.ModuleBeschrijving = "";
+        this.naamContactPersoon = "";
+        this.emailContactPersoon = "";
+        this.volgordeNr = Byte.valueOf(null);
+    }
+
+    public void resetWebcast() {
+        this.Tijdsduur = Short.valueOf(null);
+        this.DatumPublicatie = null;
+        this.URL = "";
+        this.WebcastBeschrijving = "";
+        this.NaamSpreker = "";
+        this.OrganisatieSpreker = "";
     }
 
     public static DataShare getInstance() {
@@ -383,8 +447,5 @@ public class DataShare {
     public void setOrganisatieSpreker(String OrganisatieSpreker) {
         this.OrganisatieSpreker = OrganisatieSpreker;
     }
-
-    
-
 
 }

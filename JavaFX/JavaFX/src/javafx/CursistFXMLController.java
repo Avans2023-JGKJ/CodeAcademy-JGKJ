@@ -119,7 +119,7 @@ public class CursistFXMLController implements Initializable {
 
     @FXML
     void CursistAanmakenClicked(ActionEvent event) {
-        resetData();
+        DataShare.getInstance().resetCursist();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursistDialog.fxml"));
             DialogPane pane = loader.load();
@@ -210,32 +210,7 @@ public class CursistFXMLController implements Initializable {
     }
 }
     
-    void resetData() {
-      try {
-        Cursist clickedCursist = CursistTableView.getSelectionModel().getSelectedItem();
-
-        if (clickedCursist != null) {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
-            
-            if (rs.next()) {
-                DataShare.getInstance().setCursistEmail("");
-                DataShare.getInstance().setCursistNaam("");
-                DataShare.getInstance().setCursistGeboorteDatum(null);
-                DataShare.getInstance().setCursistGeslacht('0');
-                DataShare.getInstance().setCursistPostCode(null);
-                DataShare.getInstance().setCursistHuisnummer(null);
-                DataShare.getInstance().setCursistWoonPlaats(null);
-                DataShare.getInstance().setCursistLandCode(null);
-            } else {
-                ErrorAlert("Deze cursist bestaat niet meer!", "Onbekende cursist");
-            }
-        }
-    } catch (SQLException | DateTimeParseException e) {
-        e.printStackTrace();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
+   
 
     
      boolean removeAlert() {
