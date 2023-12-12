@@ -43,7 +43,7 @@ public class DataShare {
 
     // Cursus-gerelateerde velden
     private String naamCursus;
-    private short aantalContentItems;
+    private Short aantalContentItems;
     private String onderwerp;
     private String introductieTekst;
     private Niveau niveau;
@@ -101,7 +101,9 @@ public class DataShare {
 
     public void ResetCursus() {
         this.naamCursus = "";
-        this.aantalContentItems = Short.valueOf(null);
+        this.aantalContentItems = -1;
+        
+        
         this.onderwerp = "";
         this.introductieTekst = "";
         this.niveau = null;

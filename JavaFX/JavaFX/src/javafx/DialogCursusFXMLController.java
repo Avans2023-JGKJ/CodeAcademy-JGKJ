@@ -32,7 +32,29 @@ public class DialogCursusFXMLController {
     private static Connection cursusDbConnection;
 
     public void initialize() {
+        loadData();
         niveauComboBox.setItems(FXCollections.observableArrayList(Niveau.values()));
+    }
+    
+    private void loadData() {
+        naamCursusCursusColumnInput.setText(String.valueOf(DataShare.getInstance().getNaamCursus()));
+        if((DataShare.getInstance().getAantalContentItems()) != -1){
+        aantalContentItemsCursusColumnInput.setText(String.valueOf(DataShare.getInstance().getAantalContentItems()));
+        }
+        onderwerpCursusColumnInput.setText(String.valueOf(DataShare.getInstance().getOnderwerp()));
+        introductieTekstCursusColumnInput.setText(String.valueOf(DataShare.getInstance().getIntroductieTekst()));
+//        niveauComboBox(Niveau.valueOf(DataShare.getInstance().getNiveau()));
+       
+        if (DataShare.getInstance().getNiveau() == Niveau.valueOf("GEVORDERD")) {
+            niveauComboBox.setValue(Niveau.GEVORDERD);
+        } 
+        else if (DataShare.getInstance().getNiveau() == Niveau.valueOf("BEGINNER")) {
+            niveauComboBox.setValue(Niveau.BEGINNER);
+        } 
+        else if (DataShare.getInstance().getNiveau() == Niveau.valueOf("EXPERT")) {
+            niveauComboBox.setValue(Niveau.EXPERT);
+        } 
+
     }
 
     @FXML

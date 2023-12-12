@@ -34,7 +34,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.sql.Connection;
+import java.time.format.DateTimeParseException;
+import static javafx.CursistFXMLController.ErrorAlert;
 import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
 
 
 public class CursusFXMLController implements Initializable {
@@ -84,7 +87,7 @@ public class CursusFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableCursus();
-        cursusDbConnection = DataBaseSQL.createConnection();
+        cursusDbConnection = DataBaseSQL.createConnection(cursusDbConnection);
     }   
 
 
@@ -127,14 +130,19 @@ public class CursusFXMLController implements Initializable {
 
     @FXML
     void CursusAanmakenClicked(ActionEvent event) {
+        DataShare.getInstance().ResetCursus();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursusDialog.fxml"));
             DialogPane pane = loader.load();
 
             DialogCursusFXMLController createCursusController = loader.getController();
 
+          
+            
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
+            
+            
 
             dialog.getDialogPane().getButtonTypes().clear();
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
@@ -216,6 +224,31 @@ public class CursusFXMLController implements Initializable {
 
         // Controleer het resultaat
         return result.isPresent() && result.get() == buttonTypeYes;
+    }
+    
+    @FXML
+    void rowClicked(MouseEvent event) {
+      try {
+        Cursus clickedCursus = CursusTableView.getSelectionModel().getSelectedItem();
+
+        if (clickedCursus != null) {
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), "SELECT * FROM Cursus WHERE naamCursus = '" + clickedCursus.getNaamCursus()+ "'");
+            
+            if (rs.next()) {
+                DataShare.getInstance().setNaamCursus(rs.getString("naamCursus"));
+                DataShare.getInstance().setAantalContentItems(rs.getShort("aantalContentItems"));
+                DataShare.getInstance().setOnderwerp(rs.getString("onderwerp"));
+                DataShare.getInstance().setIntroductieTekst(rs.getString("introductieTekst"));
+                DataShare.getInstance().setNiveau(Niveau.valueOf(rs.getString("niveau").toUpperCase()));
+            } else {
+                ErrorAlert("Deze cursus bestaat niet meer!", "Onbekende cursist");
+            }
+        }
+    } catch (SQLException | DateTimeParseException e) {
+        e.printStackTrace();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
 
