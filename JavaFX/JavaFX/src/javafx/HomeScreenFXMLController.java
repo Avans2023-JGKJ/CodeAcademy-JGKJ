@@ -70,7 +70,7 @@ public class HomeScreenFXMLController implements Initializable {
     @FXML
     void CursusButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Cursus");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("cursusScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("cursusScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
