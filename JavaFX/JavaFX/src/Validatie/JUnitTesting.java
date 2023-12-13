@@ -5,10 +5,14 @@
  */
 package Validatie;
 
-/**
- *
- * @author joche
- */
 public class JUnitTesting {
+    
+    /*
+    *subcontract inadequate{
+    * @requires 1 <= grade < 5,5;
+    * @ensures \result = "onvoldoende"; } */
+    public static String getWordRating(float grade){
+      return null;
+    }
     
 }
