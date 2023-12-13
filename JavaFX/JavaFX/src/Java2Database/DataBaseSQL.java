@@ -27,7 +27,9 @@ public class DataBaseSQL {
             e.printStackTrace(); // Als er een exeptie optreed, mooi afhandelen.
             return null;
         }
-    } public static Connection createConnection(Connection dbConnection) {
+    }
+
+    public static Connection createConnection(Connection dbConnection) {
         if (dbConnection == null) {
             try {
                 // Load the JDBC driver
@@ -45,20 +47,18 @@ public class DataBaseSQL {
     }
 
     public static void sendCommand(Connection connection, String command) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
+        try ( Statement statement = connection.createStatement()) {
             statement.executeUpdate(command);
             System.out.println("Command has been executed.");
         }
     }
-    
-     public static ResultSet sendCommandReturn(Connection connection, String command) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            statement.executeQuery(command);
+
+    public static ResultSet sendCommandReturn(Connection connection, String command) throws SQLException {
+        try ( Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(command);
             System.out.println("Command has been executed.");
-            return connection.createStatement().executeQuery(command);
+            return resultSet;
         }
     }
-}
-    
-  
 
+}
