@@ -16,6 +16,10 @@ public class Inschrijven {
         this.inschrijfId = inschrijfId;
         this.totaalVoortgang = totaalVoortgang;
     }
+    
+    public void setTotaalVoortgang(float totaalVoortgang) {
+        this.totaalVoortgang = totaalVoortgang;
+    }   
 
     public Inschrijven() {
     }

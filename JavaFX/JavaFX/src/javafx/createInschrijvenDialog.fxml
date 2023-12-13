@@ -3,6 +3,7 @@
 <?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,20 +12,17 @@
 <DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
       <GridPane prefHeight="112.0" prefWidth="319.0">
-        <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="144.79998779296875" minWidth="10.0" prefWidth="97.59998779296876" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.80001220703124" minWidth="10.0" prefWidth="152.80001220703124" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="121.59998168945313" minHeight="10.0" prefHeight="43.99997749328613" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="188.8000244140625" minHeight="10.0" prefHeight="68.00002250671386" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="E-mail" />
-            <Label text="Naam Cursus" GridPane.rowIndex="1" />
-            <TextField prefHeight="26.0" prefWidth="98.0" GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-         </children>
+            <Label text="E-mail" GridPane.columnIndex="0"/>
+            <Label text="Naam Cursus" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label text="Datum" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label text="Inschrijf ID" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <!-- <Label text="Voortgang" GridPane.columnIndex="0" GridPane.rowIndex="4"/> -->
+
+            <TextField fx:id="emailTextField" GridPane.columnIndex="1"/>
+            <TextField fx:id="naamCursusTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <DatePicker fx:id="datumPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <TextField fx:id="inschrijfIdTextField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <!-- <TextField fx:id="voortgangTextField" GridPane.columnIndex="1" GridPane.rowIndex="4"/> -->
       </GridPane>
    </graphic>
    <buttonTypes>
