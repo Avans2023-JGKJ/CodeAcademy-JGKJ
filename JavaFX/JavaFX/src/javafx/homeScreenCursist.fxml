@@ -32,14 +32,19 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.homeScreenCursistFXMLController">
+<VBox prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Validatie.HomeScreenCursistFXMLController">
   <children>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" VBox.vgrow="ALWAYS">
       <children>
@@ -58,6 +63,79 @@
                   <Font name="Calibri Bold Italic" size="45.0" />
                </font>
             </Label>
+            <Rectangle fx:id="CursusEenRechthoek" arcHeight="5.0" arcWidth="5.0" height="106.0" layoutX="42.0" layoutY="354.0" onMouseClicked="#CursusEenClicked" stroke="#00000094" strokeType="INSIDE" width="409.0">
+               <fill>
+                  <RadialGradient centerY="0.4848484920732903" cycleMethod="REPEAT" focusDistance="-1.0" radius="0.4908256530761719">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4243200123310089" green="0.1656000018119812" blue="0.7200000286102295" opacity="0.17468087375164032" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.14152047038078308" green="0.035087719559669495" blue="0.2631579041481018" opacity="0.28999999165534973" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </fill>
+            </Rectangle>
+            <Label fx:id="CursusEenTitel" layoutX="50.0" layoutY="373.0" onMouseClicked="#CursusEenClicked" prefHeight="67.0" prefWidth="170.0" text="TITELCURSUSEEN" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="CursusEenLabel" layoutX="260.0" layoutY="364.0" onMouseClicked="#CursusEenClicked" prefHeight="86.0" prefWidth="178.0" text="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST " textFill="WHITE" wrapText="true" />
+            <Rectangle fx:id="CursusTweeRechthoek" arcHeight="5.0" arcWidth="5.0" height="106.0" layoutX="42.0" layoutY="476.0" onMouseClicked="#CursusTweeClicked" stroke="#00000094" strokeType="INSIDE" width="409.0">
+               <fill>
+                  <RadialGradient centerY="0.4848484920732903" cycleMethod="REPEAT" focusDistance="-1.0" radius="0.4908256530761719">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.4243200123310089" green="0.1656000018119812" blue="0.7200000286102295" opacity="0.17468087375164032" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.14152047038078308" green="0.035087719559669495" blue="0.2631579041481018" opacity="0.28999999165534973" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </fill>
+            </Rectangle>
+            <Label fx:id="CursusTweeTitel" layoutX="50.0" layoutY="495.0" onMouseClicked="#CursusTweeClicked" prefHeight="67.0" prefWidth="170.0" text="TITELCURSUSTWEE" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="CursusTweeLabel" layoutX="260.0" layoutY="486.0" onMouseClicked="#CursusTweeClicked" prefHeight="86.0" prefWidth="178.0" text="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST " textFill="WHITE" wrapText="true" />
+            <Rectangle fx:id="CursusDrieRechthoek" arcHeight="5.0" arcWidth="5.0" height="106.0" layoutX="42.0" layoutY="598.0" onMouseClicked="#CursusDrieClicked" stroke="#00000094" strokeType="INSIDE" width="409.0">
+               <fill>
+                  <RadialGradient centerY="0.4848484920732903" cycleMethod="REPEAT" focusDistance="-1.0" radius="0.4908256530761719">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.42352941632270813" green="0.16470588743686676" blue="0.7215686440467834" opacity="0.17000000178813934" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.14152047038078308" green="0.035087719559669495" blue="0.2631579041481018" opacity="0.28999999165534973" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </fill>
+            </Rectangle>
+            <Label fx:id="CursusDrieTitel" layoutX="50.0" layoutY="617.0" onMouseClicked="#CursusDrieClicked" prefHeight="67.0" prefWidth="170.0" text="TITELCURSUSDRIE" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="CursusDrieLabel" layoutX="260.0" layoutY="608.0" onMouseClicked="#CursusDrieClicked" prefHeight="86.0" prefWidth="178.0" text="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST " textFill="WHITE" wrapText="true" />
+            <Button layoutX="43.0" layoutY="741.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#BekijkAlleCursussenCursistClicked" prefHeight="26.0" prefWidth="410.0" text="Bekijk alle Cursussen" underline="true" />
       </children>
     </AnchorPane>
   </children>

@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class HomeScreenFXMLController implements Initializable {
@@ -21,9 +22,12 @@ public class HomeScreenFXMLController implements Initializable {
     
     Label displayUserNameLabel;
     
+    @FXML
+    private Label WelcomeLabelHomeScreen;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        WelcomeLabelHomeScreen.setText("Hallo, "+DataShare.getInstance().getUsername());
     }
     
 //    public void displayUserName(String username) {
@@ -31,7 +35,7 @@ public class HomeScreenFXMLController implements Initializable {
 //    }
     
     @FXML
-    void CertificatenButtonClicked(ActionEvent event) throws IOException {
+    void CertificatenButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Certificaat");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("certificaatScreen.fxml"));
             root = loader.load();
@@ -42,7 +46,7 @@ public class HomeScreenFXMLController implements Initializable {
     }
     
     @FXML
-    void ContentItemButtonClicked(ActionEvent event) throws IOException {
+    void ContentItemButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Content-Item");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("contentItemsScreen.fxml"));
             root = loader.load();
@@ -53,7 +57,7 @@ public class HomeScreenFXMLController implements Initializable {
     }
     
     @FXML
-    void CursistenButtonClicked(ActionEvent event) throws IOException {
+    void CursistenButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Cursist");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("cursistScreen.fxml"));
             root = loader.load();
@@ -64,7 +68,7 @@ public class HomeScreenFXMLController implements Initializable {
     }
     
     @FXML
-    void CursusButtonClicked(ActionEvent event) throws IOException {
+    void CursusButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Cursus");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("cursusScreen.fxml"));
             root = loader.load();
@@ -75,7 +79,7 @@ public class HomeScreenFXMLController implements Initializable {
     }
     
     @FXML
-    void InschrijvenButtonClicked(ActionEvent event) throws IOException {
+    void InschrijvenButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Inschrijven");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("inschrijvenScreen.fxml"));
             root = loader.load();
@@ -86,7 +90,7 @@ public class HomeScreenFXMLController implements Initializable {
     }
     
     @FXML
-    void OverigButtonClicked(ActionEvent event) throws IOException {
+    void OverigButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Overig");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
             root = loader.load();

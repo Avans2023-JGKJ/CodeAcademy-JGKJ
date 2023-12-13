@@ -90,14 +90,20 @@ public class LoginFXMLController implements Initializable {
 //            String username = UserNameField.getText();
 
 //            HomeScreenFXMLController homeScreenController = loader.getController();
-//            homeScreenController.displayUserName(username);
         DataShare.getInstance().setUsername(UserNameField.getText());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenCursist.fxml"));
-        root = loader.load();
+
+        if (checkRole(UserNameField.getText(), PassWordField.getText())) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenAdmin.fxml"));
+            root = loader.load();
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenCursist.fxml"));
+            root = loader.load();
+        }
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
 //        } else {
 //            showAlert();
 //        }
@@ -183,15 +189,15 @@ public class LoginFXMLController implements Initializable {
     void AfsluitenButtonClicked(ActionEvent event) {
         Platform.exit();
     }
-    
+
     @FXML
     void BackButtonClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-            root = loader.load();
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+        root = loader.load();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     boolean checkRegistreerFields() {
@@ -216,6 +222,21 @@ public class LoginFXMLController implements Initializable {
     boolean checkUserPassCombination(String InputUsername, String InputPassword) {
         try {
             ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM Persoon WHERE UserName='" + InputUsername + "' AND PassWord='" + InputPassword + "'").executeQuery();
+
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    boolean checkRole(String InputUsername, String InputPassword) {
+        try {
+            ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM Persoon WHERE UserName='" + InputUsername + "' AND PassWord='" + InputPassword + "' AND Rol = 'Admin'").executeQuery();
 
             if (rs.next()) {
                 return true;
