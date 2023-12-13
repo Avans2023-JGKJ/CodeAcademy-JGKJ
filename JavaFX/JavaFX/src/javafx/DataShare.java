@@ -88,7 +88,7 @@ public class DataShare {
         this.CertificaatInschrijfId = null;
         this.naamCursist = "";
         this.certificaatId = null;
-        this.beoordeling = Byte.valueOf(null);
+        this.beoordeling = -1;
         this.medeWerkerNaam = "";
     }
 

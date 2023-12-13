@@ -40,12 +40,12 @@
                   <Font name="Georgia Bold" size="11.0" />
                </font>
             </Button>
-            <TableView fx:id="CertificaatTableView" layoutX="88.0" layoutY="120.0" prefHeight="200.0" prefWidth="341.0">
+            <TableView fx:id="CertificaatTableView" layoutX="88.0" layoutY="120.0" onMouseClicked="#rowClicked" prefHeight="200.0" prefWidth="341.0">
               <columns>
-                  <TableColumn fx:id="NaamCursistCertificaatColumn" prefWidth="124.0" text="NaamCursist" />
+                  <TableColumn fx:id="InschrijfIdCertificaatColumn" prefWidth="124.0" text="Inschrijf ID" />
                 <TableColumn fx:id="BeoordelingCertificaatColumn" prefWidth="66.0" text="Beoordeling" />
                 <TableColumn fx:id="MedewerkerNummerCertificaatColumn" prefWidth="97.0" text="MedewerkerNaam" />
-                  <TableColumn fx:id="InschrijfIdCertificaatColumn" prefWidth="53.0" text="CertificaatID" />
+                  <TableColumn fx:id="IdCertificaatColumn" prefWidth="53.0" text="CertificaatID" />
               </columns>
             </TableView>
             <Button layoutX="87.0" layoutY="74.0" mnemonicParsing="false" onAction="#CertificaatBackClicked" text="BACK" />

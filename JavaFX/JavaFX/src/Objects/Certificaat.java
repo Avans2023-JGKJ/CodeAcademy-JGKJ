@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class Certificaat {
     
-    private Integer inschrijfId;
+    private int inschrijfId;
     private String naamCursist;
-    private Integer certificaatId;
+    private int certificaatId;
     private byte beoordeling;
     private String medeWerkerNaam;
 
@@ -37,9 +37,9 @@ public class Certificaat {
 
     public void setInschrijfId(int inschrijfId) throws SQLException {
         this.inschrijfId = inschrijfId;
-        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naam FROM Cursist WHERE email = (SELECT email FROM Inschrijven WHERE inschrijfId = "+inschrijfId+")");
+        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naam FROM Cursist WHERE email = (SELECT email FROM Inschrijven WHERE inschrijfId = '"+inschrijfId+"')");
         rs.next();
-        this.naamCursist = rs.getString("naam");
+        // this.naamCursist = rs.getString("naam");
     }
 
     public void setBeoordeling(byte beoordeling) {
