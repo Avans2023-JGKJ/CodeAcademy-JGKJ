@@ -12,6 +12,12 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class HomeScreenCursistFXMLController implements Initializable {
 
     @FXML
@@ -47,6 +53,17 @@ public class HomeScreenCursistFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         WelcomeLabelHomeScreen.setText("Hallo, " + DataShare.getInstance().getUsername());
+        loadRecentCursussen();
+    }
+    
+    private void loadRecentCursussen(){
+//        try {
+//            String command = "";
+//            ResultSet rs = DataBaseSQL.sendCommandReturn(cursistDbConnection, command);
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(HomeScreenCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     @FXML
