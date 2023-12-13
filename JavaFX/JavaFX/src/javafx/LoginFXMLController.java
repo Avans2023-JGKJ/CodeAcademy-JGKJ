@@ -93,7 +93,7 @@ public class LoginFXMLController implements Initializable {
         DataShare.getInstance().setUsername(UserNameField.getText());
 
         if (checkRole(UserNameField.getText(), PassWordField.getText())) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenAdmin.fxml"));
             root = loader.load();
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenCursist.fxml"));
