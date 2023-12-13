@@ -1,6 +1,7 @@
 package Validatie;
 
 import Java2Database.DataBaseSQL;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.DataShare;
@@ -17,6 +18,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class HomeScreenCursistFXMLController implements Initializable {
 
@@ -49,6 +55,10 @@ public class HomeScreenCursistFXMLController implements Initializable {
 
     @FXML
     private Label WelcomeLabelHomeScreen;
+    
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -126,18 +136,44 @@ private void loadRecentCursussen() {
 
     @FXML
     void CursusDrieClicked(MouseEvent event) {
-        System.out.println("CURSUS 3");
-        CursusTweeRechthoek.setVisible(false);
+        try {
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("loginRegistreren.fxml"));
+            root = loader.load();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+                    } catch (IOException ex) {
+            Logger.getLogger(HomeScreenCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     void CursusEenClicked(MouseEvent event) {
-        System.out.println("CURSUS 1");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CursusInformatie.fxml"));
+            root = loader.load();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+                    } catch (IOException ex) {
+            Logger.getLogger(HomeScreenCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     void CursusTweeClicked(MouseEvent event) {
-        System.out.println("CURSUS 2");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cursusInformatie.fxml"));
+            root = loader.load();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+                    } catch (IOException ex) {
+            Logger.getLogger(HomeScreenCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
