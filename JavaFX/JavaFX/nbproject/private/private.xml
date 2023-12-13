@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/JavaFXApplication.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/ContentItemsFXMLController.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/CursistFXMLController.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/DialogCursistFXMLController.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/createCursistDialog.fxml</file>
+            <file>file:/C:/Users/joche/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/CursistFXMLController.java</file>
+            <file>file:/C:/Users/joche/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Java2Database/DataBaseSQL.java</file>
+            <file>file:/C:/Users/joche/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/JavaFXApplication.java</file>
+            <file>file:/C:/Users/joche/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/homeScreenCursist.fxml</file>
+            <file>file:/C:/Users/joche/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/javafx/LoginFXMLController.java</file>
+            <file>file:/C:/Users/joche/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Validatie/HomeScreenCursistFXMLController.java</file>
         </group>
     </open-files>
 </project-private>
