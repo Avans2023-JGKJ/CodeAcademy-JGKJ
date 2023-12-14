@@ -1,5 +1,3 @@
-
-import Objects.Certificaat;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -14,10 +12,6 @@ import javafx.application.Application;
 public class JavaFXApplication extends Application {
 
     public static void main(String[] args) throws SQLException {
-        
-//        Certificaat c = new Certificaat(0, Byte.valueOf("5"), "Karel");
-//        System.out.println(c.getNaamCursist());
-
         launch(args);
     }
 
@@ -28,8 +22,7 @@ public class JavaFXApplication extends Application {
         // Pad relatief aan de project directory
         Path path = Paths.get("src/javafx/login.fxml");
         URL url = path.toUri().toURL();
-
-
+        
         loader.setLocation(url);
         
         VBox vbox = loader.<VBox>load();

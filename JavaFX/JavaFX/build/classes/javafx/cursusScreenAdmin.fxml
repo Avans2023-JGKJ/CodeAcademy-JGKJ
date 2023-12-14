@@ -34,7 +34,7 @@
                     </columns>
                 </TableView>
             <Button layoutX="65.0" layoutY="31.0" mnemonicParsing="false" onAction="#CursusBackClicked" text="Back" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="65.0" layoutY="275.0" stroke="BLACK" strokeType="INSIDE" width="950.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="64.0" layoutY="275.0" stroke="BLACK" strokeType="INSIDE" width="952.0" />
             <Label layoutX="97.0" layoutY="279.0" onMouseClicked="#CursusAanmakenClicked" text="Cursus toevoegen" />
             <Label layoutX="231.0" layoutY="279.0" onMouseClicked="#CursusAanpassenClicked" text="Cursus aanpassen" />
             <Label layoutX="365.0" layoutY="279.0" onMouseClicked="#CursusVerwijderenClicked" text="Cursus verwijderen" />

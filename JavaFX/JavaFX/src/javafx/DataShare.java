@@ -3,6 +3,7 @@ package javafx;
 import Java2Database.DataBaseSQL;
 import Objects.Cursist;
 import Objects.Niveau;
+import Objects.Status;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -39,7 +40,7 @@ public class DataShare {
     private Integer contentItemId;
     private String titel;
     private LocalDate datum;
-    private String status;
+    private Status status;
 
     // Cursus-gerelateerde velden
     private String naamCursus;
@@ -96,7 +97,7 @@ public class DataShare {
         this.contentItemId = null;
         this.titel = "";
         this.datum = null;
-        this.status = "";
+        this.status = null;
     }
 
     public void resetCursus() {
@@ -206,7 +207,7 @@ public class DataShare {
         return datum;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -362,7 +363,7 @@ public class DataShare {
         this.datum = datum;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

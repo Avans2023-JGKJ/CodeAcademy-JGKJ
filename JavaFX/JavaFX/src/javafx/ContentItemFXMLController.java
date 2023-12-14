@@ -36,6 +36,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class ContentItemFXMLController implements Initializable {
@@ -54,7 +55,7 @@ public class ContentItemFXMLController implements Initializable {
     private TableView<ContentItem> ContentItemTableView;
 
     @FXML
-    void ContentItemsAanmakenClicked(ActionEvent event) {
+    void ContentItemsAanmakenClicked(MouseEvent event) {
         DataShare.getInstance().resetContentItem();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("createContentItemDialog.fxml"));
@@ -89,12 +90,32 @@ public class ContentItemFXMLController implements Initializable {
     }
 
     @FXML
-    void ContentItemsAanpassenClicked(ActionEvent event) {
-        loadTableContentItem();
+    void ContentItemsAanpassenClicked(MouseEvent event) {
+        System.out.println("ContentItemAanpassenClicked");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("updateContentItemDialog.fxml"));
+            DialogPane pane = loader.load();
+
+            DialogContentItemFXMLController updateContentItemController = loader.getController();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            Optional<ButtonType> clickedFinish = dialog.showAndWait();
+
+            if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
+                updateContentItemController.FinishButtonUpdateContentItemClicked();
+                loadTableContentItem();
+            }
+
+            dialog.setTitle("Content item aanpassen");
+
+        } catch (IOException ex) {
+            Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
-    void ContentItemsVerwijderenClicked(ActionEvent event) {
+    void ContentItemsVerwijderenClicked(MouseEvent event) {
         loadTableContentItem();
     }
 
