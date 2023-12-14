@@ -131,7 +131,7 @@ public class CursusFXMLController implements Initializable {
 
     @FXML
     void CursusAanmakenClicked(MouseEvent event) {
-        DataShare.getInstance().ResetCursus();
+        DataShare.getInstance().resetCursus();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursusDialog.fxml"));
             DialogPane pane = loader.load();

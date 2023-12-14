@@ -99,7 +99,7 @@ public class DataShare {
         this.status = "";
     }
 
-    public void ResetCursus() {
+    public void resetCursus() {
         this.naamCursus = "";
         this.aantalContentItems = -1;
         

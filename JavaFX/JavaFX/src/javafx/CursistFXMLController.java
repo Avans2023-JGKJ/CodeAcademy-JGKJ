@@ -94,7 +94,7 @@ public class CursistFXMLController implements Initializable {
     }
 
     @FXML
-    void CursistAanpassenClicked(ActionEvent event) {
+    void CursistAanpassenClicked(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("updateCursistDialog.fxml"));
             DialogPane pane = loader.load();
@@ -118,7 +118,7 @@ public class CursistFXMLController implements Initializable {
     }
 
     @FXML
-    void CursistAanmakenClicked(ActionEvent event) {
+    void CursistAanmakenClicked(MouseEvent event) {
         DataShare.getInstance().resetCursist();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("createCursistDialog.fxml"));
@@ -145,7 +145,7 @@ public class CursistFXMLController implements Initializable {
     
 
     @FXML
-    void CursistVerwijderenClicked(ActionEvent event) {
+    void CursistVerwijderenClicked(MouseEvent event) {
         if (removeAlert()){
             try {
                
@@ -162,7 +162,7 @@ public class CursistFXMLController implements Initializable {
 
     @FXML
     void CursistBackClicked(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

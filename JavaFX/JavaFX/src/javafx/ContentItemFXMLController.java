@@ -12,6 +12,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,13 +28,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class ContentItemsFXMLController implements Initializable {
+public class ContentItemFXMLController implements Initializable {
 
     private Stage stage;
     private Scene scene;
@@ -42,7 +47,7 @@ public class ContentItemsFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
-        loadTableContentItems();
+        loadTableContentItem();
     }
 
     @FXML
@@ -50,17 +55,47 @@ public class ContentItemsFXMLController implements Initializable {
 
     @FXML
     void ContentItemsAanmakenClicked(ActionEvent event) {
+        DataShare.getInstance().resetContentItem();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("createContentItemDialog.fxml"));
+            DialogPane pane = loader.load();
 
+            DialogContentItemFXMLController createContentItemController = loader.getController();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+
+            dialog.getDialogPane().getButtonTypes().clear();
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.APPLY);
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!createContentItemController.validateAndCreateContentItem()) {
+                    ae.consume();
+                }
+            });
+
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
+
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.APPLY) {
+                loadTableContentItem();
+            }
+
+            dialog.setTitle("ContentItem aanmaken");
+
+        } catch (IOException ex) {
+            Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     void ContentItemsAanpassenClicked(ActionEvent event) {
-        loadTableContentItems();
+        loadTableContentItem();
     }
 
     @FXML
     void ContentItemsVerwijderenClicked(ActionEvent event) {
-        loadTableContentItems();
+        loadTableContentItem();
     }
 
     @FXML
@@ -82,7 +117,7 @@ public class ContentItemsFXMLController implements Initializable {
         contentItemsStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
-    void loadTableContentItems() {
+    void loadTableContentItem() {
         try {
             System.out.println("test1");
             initTable();
@@ -115,7 +150,7 @@ public class ContentItemsFXMLController implements Initializable {
 
     @FXML
     void ContentItemsBackClicked(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

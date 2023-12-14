@@ -48,7 +48,7 @@ public class HomeScreenFXMLController implements Initializable {
     @FXML
     void ContentItemButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Content-Item");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("contentItemsScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("contentItemsScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -59,7 +59,7 @@ public class HomeScreenFXMLController implements Initializable {
     @FXML
     void CursistenButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Cursist");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("cursistScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("cursistScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.CursusFXMLController">
+<VBox prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.ContentItemsFXMLController">
     <children>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" VBox.vgrow="ALWAYS">
             <children>
@@ -24,20 +24,19 @@
                         <Image url="@Logo.png" />
                     </image>
                 </ImageView>
-                <TableView fx:id="CursusTableView" layoutX="65.0" layoutY="300.0" prefHeight="453.0" prefWidth="950.0">
+                <TableView fx:id="ContentItemTableView" layoutX="65.0" layoutY="300.0" prefHeight="453.0" prefWidth="950.0">
                     <columns>
-                        <TableColumn fx:id="naamCursusCursusColumn" prefWidth="188.0" text="Naam" />
-                        <TableColumn fx:id="aantalContentItemsCursusColumn" prefWidth="43.0" text="#Items" />
-                        <TableColumn fx:id="onderwerpCursusColumn" prefWidth="202.0" text="Onderwerp" />
-                        <TableColumn fx:id="niveauCursusColumn" prefWidth="138.0" text="Niveau" />
-                        <TableColumn fx:id="introductieTekstCursusColumn" prefWidth="378.0" text="Introductie" />
+                        <TableColumn fx:id="contentItemsIdColumn" prefWidth="71.0" text="Id" />
+                        <TableColumn fx:id="contentItemsTitelColumn" prefWidth="422.0" text="Titel" />
+                        <TableColumn fx:id="contentItemsDatumColumn" prefWidth="217.0" text="Datum" />
+                        <TableColumn fx:id="contentItemsStatusColumn" prefWidth="239.0" text="Status" />
                     </columns>
                 </TableView>
-            <Button layoutX="65.0" layoutY="31.0" mnemonicParsing="false" onAction="#CursusBackClicked" text="Back" />
+            <Button layoutX="65.0" layoutY="31.0" mnemonicParsing="false" onAction="#ContentItemsBackClicked" text="Back" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="64.0" layoutY="275.0" stroke="BLACK" strokeType="INSIDE" width="952.0" />
-            <Label layoutX="97.0" layoutY="279.0" onMouseClicked="#CursusAanmakenClicked" text="Cursus toevoegen" />
-            <Label layoutX="231.0" layoutY="279.0" onMouseClicked="#CursusAanpassenClicked" text="Cursus aanpassen" />
-            <Label layoutX="365.0" layoutY="279.0" onMouseClicked="#CursusVerwijderenClicked" text="Cursus verwijderen" />
+            <Label layoutX="97.0" layoutY="279.0" onMouseClicked="#ContentItemsAanmakenClicked" text="Content item toevoegen" />
+            <Label layoutX="244.0" layoutY="279.0" onMouseClicked="#ContentItemsAanpassenClicked" text="Content item aanpassen" />
+            <Label layoutX="385.0" layoutY="279.0" onMouseClicked="#ContentItemsVerwijderenClicked" text="Content item verwijderen" />
             </children>
         </AnchorPane>
     </children>
