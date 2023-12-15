@@ -163,9 +163,32 @@ public class InschrijvenFXMLController implements Initializable {
 
     @FXML
     void InschrijvenVerwijderenClicked(ActionEvent event) {
-        loadTableInschrijven();
-        System.out.println("test");
+        Inschrijven selectedInschrijving = InschrijvenTableView.getSelectionModel().getSelectedItem();
+        if (selectedInschrijving == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Selecteer een inschrijving om te verwijderen.");
+            alert.showAndWait();
+            return;
+        }
+
+        try (Connection conn = DataBaseSQL.createConnection();
+             PreparedStatement pstmt = conn.prepareStatement(
+                "DELETE FROM Inschrijven WHERE inschrijfId = ?")) {
+
+            pstmt.setInt(1, selectedInschrijving.getInschrijfId());
+            pstmt.executeUpdate();
+
+            // Refresh de tabelweergave
+            loadTableInschrijven();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Databasefout");
+            errorAlert.setContentText("Er is een fout opgetreden bij het verwijderen.");
+            errorAlert.showAndWait();
+        }
     }
+
 
     @FXML
     void InschrijvenBackClicked(ActionEvent event) throws IOException {
