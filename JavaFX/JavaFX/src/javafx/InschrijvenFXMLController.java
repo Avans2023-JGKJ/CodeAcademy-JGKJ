@@ -1,6 +1,10 @@
 package javafx;
 
 import Java2Database.DataBaseSQL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Date; 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -47,6 +51,7 @@ public class InschrijvenFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        loadTableInschrijven();
     }
 
     @FXML
@@ -86,10 +91,75 @@ public class InschrijvenFXMLController implements Initializable {
     }
 
 
-    @FXML
-    void InschrijvenAanpassenClicked(ActionEvent event) {
+        @FXML
+        void InschrijvenAanpassenClicked(ActionEvent event) {
+            Inschrijven selectedInschrijving = InschrijvenTableView.getSelectionModel().getSelectedItem();
+            if (selectedInschrijving == null) {
+                // Toon een foutmelding als er geen record is geselecteerd
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Selecteer een inschrijving om aan te passen.");
+                alert.showAndWait();
+                return;
+            }
 
-    }
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("updateInschrijvenDialog.fxml"));
+                DialogPane dialogPane = loader.load();
+                Dialog<ButtonType> dialog = new Dialog<>();
+                dialog.setDialogPane(dialogPane);
+                dialog.setTitle("Inschrijving Aanpassen");
+
+                // Vul de dialoogvelden vooraf in met gegevens van selectedInschrijving
+                TextField emailUpdateTextField = (TextField) dialogPane.lookup("#emailUpdateTextField");
+                TextField naamCursusUpdateTextField = (TextField) dialogPane.lookup("#naamCursusUpdateTextField");
+                DatePicker datumUpdatePicker = (DatePicker) dialogPane.lookup("#datumUpdatePicker");
+                TextField inschrijfIdUpdateTextField = (TextField) dialogPane.lookup("#inschrijfIdUpdateTextField");
+
+                emailUpdateTextField.setText(selectedInschrijving.getEmail());
+                naamCursusUpdateTextField.setText(selectedInschrijving.getNaamCursus());
+                datumUpdatePicker.setValue(selectedInschrijving.getDatum());
+                inschrijfIdUpdateTextField.setText(String.valueOf(selectedInschrijving.getInschrijfId()));
+
+                Optional<ButtonType> clickedButton = dialog.showAndWait();
+                if (clickedButton.isPresent() && clickedButton.get() == ButtonType.FINISH) {
+                    // Haal bijgewerkte gegevens op uit de dialoogvelden
+                    String updatedEmail = emailUpdateTextField.getText();
+                    String updatedCursusNaam = naamCursusUpdateTextField.getText();
+                    LocalDate updatedDatum = datumUpdatePicker.getValue();
+                    int updatedInschrijfId = Integer.parseInt(inschrijfIdUpdateTextField.getText());
+
+                    // Voer SQL UPDATE-operatie uit met bijgewerkte gegevens
+                    try (Connection conn = DataBaseSQL.createConnection();
+                         PreparedStatement pstmt = conn.prepareStatement(
+                            "UPDATE Inschrijven SET email = ?, naamCursus = ?, datum = ? WHERE inschrijfId = ?")) {
+
+                        pstmt.setString(1, updatedEmail);
+                        pstmt.setString(2, updatedCursusNaam);
+                        pstmt.setDate(3, java.sql.Date.valueOf(updatedDatum));
+                        pstmt.setInt(4, updatedInschrijfId);
+
+                        pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        // Behandel de SQLException
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setHeaderText("Databasefout");
+                        errorAlert.setContentText("Er is een fout opgetreden bij het bijwerken van de database.");
+                        errorAlert.showAndWait();
+                    }
+
+                    // Refresh de tabelweergave
+                    loadTableInschrijven();
+                }
+            } catch (IOException | NumberFormatException ex) {
+                ex.printStackTrace();
+                // Behandel de uitzonderingen op gepaste wijze
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Fout bij het verwerken");
+                errorAlert.setContentText("Er is een fout opgetreden tijdens het verwerken van de gegevens.");
+                errorAlert.showAndWait();
+            }
+        }
+
 
     @FXML
     void InschrijvenVerwijderenClicked(ActionEvent event) {
