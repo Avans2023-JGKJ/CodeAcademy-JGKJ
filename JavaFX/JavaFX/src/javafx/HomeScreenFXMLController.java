@@ -37,7 +37,7 @@ public class HomeScreenFXMLController implements Initializable {
     @FXML
     void CertificatenButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Certificaat");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("certificaatScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("certificaatScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);

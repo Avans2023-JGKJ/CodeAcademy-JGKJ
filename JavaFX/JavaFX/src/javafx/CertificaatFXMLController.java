@@ -53,7 +53,7 @@ public class CertificaatFXMLController implements Initializable {
    
 
     @FXML
-    void CertificaatAanmakenClicked(ActionEvent event) {
+    void CertificaatAanmakenClicked(MouseEvent event) {
      DataShare.getInstance().resetCertificaat();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("createCertificaatDialog.fxml"));
@@ -78,7 +78,7 @@ public class CertificaatFXMLController implements Initializable {
     }
 
     @FXML
-    void CertificaatVerwijderenClicked(ActionEvent event) {
+    void CertificaatVerwijderenClicked(MouseEvent event) {
         if (removeAlert()){
             try {
                 String delete = "DELETE FROM Certificaat WHERE certificaatId = '" + DataShare.getInstance().getCertificaatId() + "'";
@@ -111,7 +111,7 @@ public class CertificaatFXMLController implements Initializable {
 
     @FXML
     void CertificaatBackClicked(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homeScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

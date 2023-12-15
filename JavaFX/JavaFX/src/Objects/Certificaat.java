@@ -37,8 +37,8 @@ public class Certificaat {
 
     public void setInschrijfId(int inschrijfId) throws SQLException {
         this.inschrijfId = inschrijfId;
-        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naam FROM Cursist WHERE email = (SELECT email FROM Inschrijven WHERE inschrijfId = '"+inschrijfId+"')");
-        rs.next();
+//        ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naam FROM Cursist WHERE email = (SELECT email FROM Inschrijven WHERE inschrijfId = '"+inschrijfId+"')");
+//        rs.next();
         // this.naamCursist = rs.getString("naam");
     }
 
