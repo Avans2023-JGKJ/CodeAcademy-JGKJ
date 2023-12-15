@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -19,8 +18,6 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -28,22 +25,18 @@
         </rowConstraints>
          <children>
             <Label prefHeight="17.0" prefWidth="72.0" text="Naam Cursus" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label prefHeight="17.0" prefWidth="86.0" text="Content Item Id" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label prefHeight="17.0" prefWidth="117.0" text="Datum van publicatie" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <TextField fx:id="contentItemsNaamCursusColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            <TextField fx:id="contentItemsIdColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="contentItemsBeschrijvingColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Titel" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <Label text="Beschrijving" GridPane.rowIndex="4" />
-            <DatePicker fx:id="contentItemsDatumColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="contentItemsTitelColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Status" GridPane.rowIndex="5" />
-            <ComboBox fx:id="statusComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="contentItemsBeschrijvingColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Titel" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label text="Beschrijving" GridPane.rowIndex="2" />
+            <TextField fx:id="contentItemsTitelColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Status" GridPane.rowIndex="3" />
+            <ComboBox fx:id="statusComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </graphic>
    <buttonTypes>
-      <ButtonType fx:constant="FINISH" />
+      <ButtonType fx:constant="APPLY" />
       <ButtonType fx:constant="CLOSE" />
    </buttonTypes>
 </DialogPane>

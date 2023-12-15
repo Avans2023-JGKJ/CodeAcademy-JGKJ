@@ -40,6 +40,7 @@ public class DataShare {
     private Integer contentItemId;
     private String titel;
     private LocalDate datum;
+    private String Beschrijving;
     private Status status;
 
     // Cursus-gerelateerde velden
@@ -103,8 +104,7 @@ public class DataShare {
     public void resetCursus() {
         this.naamCursus = "";
         this.aantalContentItems = -1;
-        
-        
+
         this.onderwerp = "";
         this.introductieTekst = "";
         this.niveau = null;
@@ -205,6 +205,10 @@ public class DataShare {
 
     public LocalDate getDatum() {
         return datum;
+    }
+
+    public String getBeschrijving() {
+        return Beschrijving;
     }
 
     public Status getStatus() {

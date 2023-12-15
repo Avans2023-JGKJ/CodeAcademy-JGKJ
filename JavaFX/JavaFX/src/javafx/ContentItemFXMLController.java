@@ -100,10 +100,10 @@ public class ContentItemFXMLController implements Initializable {
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
-            Optional<ButtonType> clickedFinish = dialog.showAndWait();
+            Optional<ButtonType> clickedApply = dialog.showAndWait();
 
-            if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
-                updateContentItemController.FinishButtonUpdateContentItemClicked();
+            if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
+                updateContentItemController.ApplyButtonUpdateContentItemClicked();
                 loadTableContentItem();
             }
 

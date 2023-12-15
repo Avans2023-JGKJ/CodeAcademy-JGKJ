@@ -94,9 +94,7 @@ public class DialogCursistFXMLController implements Initializable {
     }
 
     @FXML
-    void ApplyButtonUpdateCursistClicked
-
-            () {
+    void ApplyButtonUpdateCursistClicked() {
         try {
             DataBaseSQL.sendCommand(DataBaseSQL.createConnection(cursistDbConnection),
                     "UPDATE Cursist SET"
