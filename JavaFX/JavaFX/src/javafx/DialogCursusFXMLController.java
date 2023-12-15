@@ -43,7 +43,7 @@ public class DialogCursusFXMLController {
         }
         onderwerpCursusColumnInput.setText(String.valueOf(DataShare.getInstance().getOnderwerp()));
         introductieTekstCursusColumnInput.setText(String.valueOf(DataShare.getInstance().getIntroductieTekst()));
-//        niveauComboBox(Niveau.valueOf(DataShare.getInstance().getNiveau()));
+        niveauComboBox.setValue(DataShare.getInstance().getNiveau());
        
         if (DataShare.getInstance().getNiveau() == Niveau.valueOf("GEVORDERD")) {
             niveauComboBox.setValue(Niveau.GEVORDERD);
