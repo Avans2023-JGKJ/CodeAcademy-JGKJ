@@ -35,7 +35,7 @@
             <Button layoutX="65.0" layoutY="31.0" mnemonicParsing="false" onAction="#CertificaatBackClicked" text="Back" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="64.0" layoutY="275.0" stroke="BLACK" strokeType="INSIDE" width="952.0" />
             <Label layoutX="97.0" layoutY="279.0" onMouseClicked="#CertificaatAanmakenClicked" text="Certificaat toevoegen" />
-            <Label layoutX="261.0" layoutY="279.0" onMouseClicked="#CertificaatVerwijderenClicked" text="Content item verwijderen" />
+            <Label layoutX="261.0" layoutY="279.0" onMouseClicked="#CertificaatVerwijderenClicked" text="Certificaat verwijderen" />
             </children>
         </AnchorPane>
     </children>

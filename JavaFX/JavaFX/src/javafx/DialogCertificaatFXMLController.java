@@ -52,10 +52,7 @@ public class DialogCertificaatFXMLController implements Initializable {
 
 
     @Override
-    public void initialize
-            (URL url, ResourceBundle rb
-
-            ) {
+    public void initialize(URL url, ResourceBundle rb) {
         loadData();
         dbConnection = DataBaseSQL.createConnection(dbConnection);
     
@@ -66,9 +63,7 @@ public class DialogCertificaatFXMLController implements Initializable {
         if((DataShare.getInstance().getBeoordeling()) != -1){
         CertificaatBeoordeling.setText(String.valueOf(DataShare.getInstance().getBeoordeling()));
         }
-       
         CertificaatNaamMedewerker.setText(String.valueOf(DataShare.getInstance().getMedeWerkerNaam()));
         CertificaatInschrijfId.setText(String.valueOf(DataShare.getInstance().getInschrijfId()));
-
     }
 }
