@@ -47,18 +47,36 @@ public class DataBaseSQL {
     }
 
     public static void sendCommand(Connection connection, String command) throws SQLException {
-        try ( Statement statement = connection.createStatement()) {
-            statement.executeUpdate(command);
-            System.out.println("Command has been executed.");
+        if (isSafe(command)) {
+            try ( Statement statement = connection.createStatement()) {
+                statement.executeUpdate(command);
+                System.out.println("Command has been executed.");
+            }
+        } else {
+            System.out.println("This Command is not accepted!");
         }
     }
 
     public static ResultSet sendCommandReturn(Connection connection, String command) throws SQLException {
-        try ( Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(command);
-            System.out.println("Command has been executed.");
-            return resultSet;
+        if (isSafe(command)) {
+            try ( Statement statement = connection.createStatement()) {
+                ResultSet resultSet = statement.executeQuery(command);
+                System.out.println("Command has been executed.");
+                return resultSet;
+            }
+        } else {
+            System.out.println("This Command is not accepted!");
         }
+        return null;
+    }
+
+    private static boolean isSafe(String str) {
+        if (str.contains(";") || str.toLowerCase().contains("delete") || str.toLowerCase().contains("alter")) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
 }

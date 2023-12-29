@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<DialogPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DialogContentItemFXMLController">
+   <graphic>
+      <GridPane alignment="CENTER" maxWidth="-Infinity" prefHeight="372.0" prefWidth="425.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="206.0" minWidth="10.0" prefWidth="143.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="178.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="17.0" prefWidth="72.0" text="Naam Cursus" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <TextField fx:id="contentItemsNaamCursusColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <TextField fx:id="contentItemsBeschrijvingColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Titel" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label text="Beschrijving" GridPane.rowIndex="2" />
+            <TextField fx:id="contentItemsTitelColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Status" GridPane.rowIndex="3" />
+            <ComboBox fx:id="statusComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+   </graphic>
+   <buttonTypes>
+      <ButtonType fx:constant="APPLY" />
+      <ButtonType fx:constant="CLOSE" />
+   </buttonTypes>
+</DialogPane>
