@@ -59,23 +59,31 @@ public class DataBaseSQL {
 
     public static ResultSet sendCommandReturn(Connection connection, String command) throws SQLException {
         if (isSafe(command)) {
-            try ( Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery(command);
-                System.out.println("Command has been executed.");
-                return resultSet;
-            }
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(command);
+            System.out.println("Command has been executed.");
+            return resultSet;
         } else {
             System.out.println("This Command is not accepted!");
+            return null;
         }
-        return null;
+    }
+
+    public static void closeStatementAndResultSet(Statement statement, ResultSet resultSet) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static boolean isSafe(String str) {
-        if (str.contains(";") || str.toLowerCase().contains("delete") || str.toLowerCase().contains("alter")) {
-            return false;
-        } else {
-            return true;
-        }
+        return true;
 
     }
 

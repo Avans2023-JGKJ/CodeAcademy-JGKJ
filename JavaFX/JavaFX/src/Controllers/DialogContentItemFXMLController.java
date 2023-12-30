@@ -1,5 +1,6 @@
 // NIET AF MOMENTEEL ALLE DATA IS CURSUS!!!!!
 package Controllers;
+
 import Java2Database.DataShare;
 
 import Java2Database.DataShare;
@@ -8,20 +9,30 @@ import Objects.Status;
 import Objects.Niveau;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static Controllers.DialogCursistFXMLController.cursistDbConnection;
+import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 
 public class DialogContentItemFXMLController implements Initializable {
 
+    //VOOR SPLITSING
     @FXML
     private TextField contentItemsNaamCursusColumnInput;
 
@@ -39,6 +50,83 @@ public class DialogContentItemFXMLController implements Initializable {
 
     @FXML
     private ComboBox<Status> statusComboBox;
+
+    //Module
+    @FXML
+    private TextField ModuleBeschrijvingColumnInput;
+
+    @FXML
+    private TextField ModuleEmailContactColumnInput;
+
+    @FXML
+    private TextField ModuleNaamContactColumnInput;
+
+    @FXML
+    private TextField ModuleTitelColumnInput;
+
+    @FXML
+    private TextField ModuleVersieColumnInput;
+
+    @FXML
+    private ComboBox<String> contentItemsNaamCursusComboBoxInput;
+
+//    @FXML
+//    private ComboBox<Status> statusComboBox;
+    //Webcast
+    @FXML
+    private TextField WebcastBeschrijvingColumnInput;
+
+    @FXML
+    private DatePicker WebcastDatumPublicatieColumnInput;
+
+    @FXML
+    private TextField WebcastNaamSprekerColumnInput;
+
+    @FXML
+    private TextField WebcastTijdsDuurColumnInput;
+
+    @FXML
+    private TextField WebcastTitelColumnInput;
+
+    //Lijst met CursusNamen
+    @FXML
+    private ObservableList<String> naamCursusList = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+            statusComboBox.setItems(FXCollections.observableArrayList(Status.values()));
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus FROM Cursus");
+            while (rs.next()) {
+                naamCursusList.add(rs.getString("naamCursus"));
+            }
+            contentItemsNaamCursusComboBoxInput.setItems(naamCursusList);
+            if (DataShare.getInstance().getNaamCursus() != null) {
+                loadData();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void loadData() {
+
+        contentItemsNaamCursusComboBoxInput.setValue(DataShare.getInstance().getNaamCursus());
+        contentItemsTitelColumnInput.setText(String.valueOf(DataShare.getInstance().getTitel()));
+        if (DataShare.getInstance().getModuleBeschrijving() != null) {
+            contentItemsBeschrijvingColumnInput.setText(String.valueOf(DataShare.getInstance().getModuleBeschrijving()));
+        }
+        System.out.println(String.valueOf(DataShare.getInstance().getModuleBeschrijving()));
+        statusComboBox.setValue(DataShare.getInstance().getStatus());
+        if (DataShare.getInstance().getStatus() == Status.valueOf("CONCEPT")) {
+            statusComboBox.setValue(Status.CONCEPT);
+        } else if (DataShare.getInstance().getStatus() == Status.valueOf("ACTIEF")) {
+            statusComboBox.setValue(Status.ACTIEF);
+        } else if (DataShare.getInstance().getStatus() == Status.valueOf("GEARCHIVEERD")) {
+            statusComboBox.setValue(Status.GEARCHIVEERD);
+        }
+    }
 
     @FXML
     void FinishButtonCreateContentItemClicked() {
@@ -85,7 +173,7 @@ public class DialogContentItemFXMLController implements Initializable {
         try {
             Status selectedStatus = statusComboBox.getValue();
             DataBaseSQL.sendCommand(DataBaseSQL.createConnection(cursistDbConnection),
-                    "UPDATE Cursist SET"
+                    "UPDATE contentItems SET"
                     + " naamCursus = '" + contentItemsNaamCursusColumnInput.getText()
                     + "', titel = '" + contentItemsTitelColumnInput.getText()
                     + "', beschrijving = '" + contentItemsBeschrijvingColumnInput.getText()
@@ -97,23 +185,4 @@ public class DialogContentItemFXMLController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        loadData();
-    }
-
-    private void loadData() {
-        contentItemsNaamCursusColumnInput.setText(String.valueOf(DataShare.getInstance().getNaamCursus()));
-        contentItemsTitelColumnInput.setText(String.valueOf(DataShare.getInstance().getTitel()));
-        contentItemsBeschrijvingColumnInput.setText(String.valueOf(DataShare.getInstance().getBeschrijving())); 
-        statusComboBox.setValue(DataShare.getInstance().getStatus());
-
-        if (DataShare.getInstance().getStatus() == Status.valueOf("CONCEPT")) {
-            statusComboBox.setValue(Status.CONCEPT);
-        } else if (DataShare.getInstance().getStatus() == Status.valueOf("ACTIEF")) {
-            statusComboBox.setValue(Status.GEARCHIVEERD);
-        } else if (DataShare.getInstance().getStatus() == Status.valueOf("GEARCHIVEERD")) {
-            statusComboBox.setValue(Status.GEARCHIVEERD);
-        }
-    }
 }

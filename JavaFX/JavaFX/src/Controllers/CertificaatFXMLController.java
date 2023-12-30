@@ -65,6 +65,7 @@ public class CertificaatFXMLController implements Initializable {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
             Optional<ButtonType> clickedFinish = dialog.showAndWait();
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
 
             if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
                 createCertificaatController.FinishButtonCreateCertificaatClicked();
@@ -102,7 +103,7 @@ public class CertificaatFXMLController implements Initializable {
         ButtonType buttonTypeYes = new ButtonType("Yes");
         ButtonType buttonTypeNo = new ButtonType("No");
 
-        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, ButtonType.CLOSE);
 
         Optional<ButtonType> result = alert.showAndWait();
 

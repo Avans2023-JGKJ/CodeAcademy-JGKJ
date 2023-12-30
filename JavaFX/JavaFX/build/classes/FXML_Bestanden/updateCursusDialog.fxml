@@ -11,7 +11,8 @@
 
 <DialogPane prefHeight="221.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DialogCursusFXMLController">
    <graphic>
-      <GridPane prefHeight="178.0" prefWidth="357.0">
+      <GridPane prefHeight="178.0" prefWidth="357.0"> 
+          
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="144.79998779296875" minWidth="10.0" prefWidth="103.199951171875" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.800048828125" minWidth="10.0" prefWidth="96.800048828125" />

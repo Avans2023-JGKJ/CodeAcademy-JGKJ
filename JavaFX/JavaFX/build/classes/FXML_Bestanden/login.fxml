@@ -64,6 +64,7 @@
                </font>
             </Label>
             <TextField id="UserNameField" fx:id="UserNameField" layoutX="707.0" layoutY="357.0" onAction="#LoginButtonClicked" prefHeight="38.0" prefWidth="213.0" />
+            <PasswordField fx:id="PassWordField" layoutX="707.0" layoutY="409.0" onAction="#LoginButtonClicked" prefHeight="38.0" prefWidth="213.0" />
             <Text fill="WHITE" layoutX="530.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
                <font>
                   <Font name="System Bold" size="31.0" />
@@ -89,7 +90,6 @@
             <Label alignment="CENTER" layoutX="12.0" layoutY="48.0" prefHeight="17.0" prefWidth="132.0" style="&#10;" text="Gijs van Vugt (2216616)" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" />
             <Label alignment="CENTER" layoutX="15.0" layoutY="65.0" prefHeight="17.0" prefWidth="109.0" style="&#10;" text="Karim Aly (2222796)" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" />
             <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="167.0" style="&#10;" text="Jabir hadj Messaoud (2213124)" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" />
-            <PasswordField fx:id="PassWordField" layoutX="707.0" layoutY="409.0" onAction="#LoginButtonClicked" prefHeight="38.0" prefWidth="213.0" />
       </children>
     </AnchorPane>
   </children>

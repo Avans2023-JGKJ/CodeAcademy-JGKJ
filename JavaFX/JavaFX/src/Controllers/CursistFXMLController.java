@@ -225,7 +225,7 @@ public class CursistFXMLController implements Initializable {
         ButtonType buttonTypeYes = new ButtonType("Yes");
         ButtonType buttonTypeNo = new ButtonType("No");
 
-        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, ButtonType.CLOSE);
 
         Optional<ButtonType> result = alert.showAndWait();
 

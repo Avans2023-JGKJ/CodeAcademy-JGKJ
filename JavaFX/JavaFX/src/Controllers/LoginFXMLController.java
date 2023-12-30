@@ -1,4 +1,5 @@
 package Controllers;
+
 import Java2Database.DataShare;
 
 import Java2Database.DataShare;
@@ -100,9 +101,9 @@ public class LoginFXMLController implements Initializable {
         } else {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenCursist.fxml"));
-                ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT email from Cursist WHERE email = (SELECT email FROM Persoon WHERE UserName = '"+UserNameField.getText()+"');").executeQuery();
-                while (rs.next()){
-                  DataShare.getInstance().setCursistEmail(rs.getString("email"));
+                ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT email from Cursist WHERE email = (SELECT email FROM Persoon WHERE UserName = '" + UserNameField.getText() + "');").executeQuery();
+                while (rs.next()) {
+                    DataShare.getInstance().setCursistEmail(rs.getString("email"));
                 }
                 root = loader.load();
             } catch (SQLException ex) {
@@ -144,6 +145,7 @@ public class LoginFXMLController implements Initializable {
 
                 if (checkRegistreerFields()) {
                     String formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    System.out.println("Na CheckRegistreerFields");
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Cursist (naam, postCode, email, geboorteDatum, geslacht, huisNummer, woonPlaats, landCode) VALUES("
                             + "  '" + cursistNaamColumninput.getText()
                             + "',  '" + cursistPostcodeInput.getText()
@@ -153,7 +155,7 @@ public class LoginFXMLController implements Initializable {
                             + "',   '" + cursistHuisnummerInput.getText()
                             + "',  '" + cursistWoonplaatsInput.getText()
                             + "',  '" + cursistLandCodeInput.getText() + "')");
-                    System.out.println("test123");
+
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord, Email) VALUES("
                             + "'Cursist' ,'"
                             + UserNameFieldRegistreren.getText()

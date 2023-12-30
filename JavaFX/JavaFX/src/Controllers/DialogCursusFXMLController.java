@@ -13,7 +13,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import Controllers.CursusFXMLController;
+import Validatie.SQLValid;
 import java.sql.Connection;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
 public class DialogCursusFXMLController {
@@ -32,8 +34,6 @@ public class DialogCursusFXMLController {
 
     @FXML
     private ComboBox<Niveau> niveauComboBox;
-
-    private static Connection cursusDbConnection;
 
     public void initialize() {
         loadData();
@@ -70,6 +70,7 @@ public class DialogCursusFXMLController {
                     onderwerpCursusColumnInput.getText(),
                     introductieTekstCursusColumnInput.getText(),
                     selectedNiveau.name());
+            System.out.println(insertSQL);
             DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQL);
             System.out.println("Cursus successfully created.");
 
@@ -98,7 +99,26 @@ public class DialogCursusFXMLController {
     }
 
     @FXML
-    void FinishButtonUpdateCursusClicked() {
+    boolean FinishButtonUpdateCursusClicked() {
+        if (SQLValid.validatieUpdateCursus(naamCursusCursusColumnInput.getText(), aantalContentItemsCursusColumnInput.getText(), onderwerpCursusColumnInput.getText(),introductieTekstCursusColumnInput.getText(), niveauComboBox.getValue().name())) {
+            String updateSQL = String.format("UPDATE Cursus SET naamCursus = '%s', aantalContentItems = '%s', onderwerp = '%s', introductieTekst = '%s', niveau = '%s' WHERE naamCursus = '"+DataShare.getInstance().getNaamCursus()+"'",
+                    naamCursusCursusColumnInput.getText(),
+                    aantalContentItemsCursusColumnInput.getText(),
+                    onderwerpCursusColumnInput.getText(),
+                    introductieTekstCursusColumnInput.getText(),
+                    niveauComboBox.getValue().name());
+            try {
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), updateSQL);
+            } catch (SQLException ex) {
+                Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Cursus successfully created.");
+            return true;
+            
+        } else {
+            return false;
+        }
+
     }
 
     @FXML
