@@ -1,12 +1,10 @@
 package Controllers;
 
 import static Controllers.CursistFXMLController.ErrorAlert;
-import Java2Database.DataShare;
 
 import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Objects.ContentItem;
-import Objects.Cursist;
 import Objects.Status;
 //import Objects.Module;
 //import Objects.Webcast;
@@ -24,10 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,11 +30,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;

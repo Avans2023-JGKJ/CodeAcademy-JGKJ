@@ -101,9 +101,9 @@ public class DialogContentItemFXMLController implements Initializable {
                 naamCursusList.add(rs.getString("naamCursus"));
             }
             contentItemsNaamCursusComboBoxInput.setItems(naamCursusList);
-            if (DataShare.getInstance().getNaamCursus() != null) {
-                loadData();
-            }
+//            if (DataShare.getInstance().getNaamCursus() != null) {
+//                loadData();
+//            }
         } catch (SQLException ex) {
             Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
