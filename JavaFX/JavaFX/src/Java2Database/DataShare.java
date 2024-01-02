@@ -78,7 +78,7 @@ public class DataShare {
     private String naamCursusTwee;
     private String naamCursusDrie;
 
-    private DataShare() {
+    public DataShare() {
     }
 
     public void resetCursist() {

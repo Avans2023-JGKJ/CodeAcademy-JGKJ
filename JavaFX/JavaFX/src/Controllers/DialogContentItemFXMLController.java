@@ -34,22 +34,6 @@ import javafx.scene.input.KeyEvent;
 
 public class DialogContentItemFXMLController implements Initializable {
 
-    //VOOR SPLITSING
-    @FXML
-    private TextField contentItemsNaamCursusColumnInput;
-
-    @FXML
-    private TextField contentItemscontentItemIdColumnInput;
-
-    @FXML
-    private TextField contentItemsTitelColumnInput;
-
-    @FXML
-    private DatePicker contentItemsDatumColumnInput;
-
-    @FXML
-    private TextField contentItemsBeschrijvingColumnInput;
-
     @FXML
     private ComboBox<Status> statusComboBox;
 
@@ -70,11 +54,11 @@ public class DialogContentItemFXMLController implements Initializable {
     private TextField ModuleVersieColumnInput;
 
     @FXML
+    private TextField ModuleVolgNrColumnInput;
+
+    @FXML
     private ComboBox<String> contentItemsNaamCursusComboBoxInput;
 
-//    @FXML
-//    private ComboBox<Status> statusComboBox;
-    //Webcast
     @FXML
     private TextField WebcastBeschrijvingColumnInput;
 
@@ -109,9 +93,9 @@ public class DialogContentItemFXMLController implements Initializable {
                 naamCursusList.add(rs.getString("naamCursus"));
             }
             contentItemsNaamCursusComboBoxInput.setItems(naamCursusList);
-//            if (DataShare.getInstance().getNaamCursus() != null) {
-//                loadData();
-//            }
+            if (DataShare.getInstance().getNaamCursus() != null) {
+                loadData();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -119,21 +103,36 @@ public class DialogContentItemFXMLController implements Initializable {
     }
 
     private void loadData() {
-        
         contentItemsNaamCursusComboBoxInput.setValue(DataShare.getInstance().getNaamCursus());
-        contentItemsTitelColumnInput.setText(String.valueOf(DataShare.getInstance().getTitel()));
-        if (DataShare.getInstance().getModuleBeschrijving() != null) {
-            contentItemsBeschrijvingColumnInput.setText(String.valueOf(DataShare.getInstance().getModuleBeschrijving()));
-        }
-        System.out.println(String.valueOf(DataShare.getInstance().getModuleBeschrijving()));
         statusComboBox.setValue(DataShare.getInstance().getStatus());
-        if (DataShare.getInstance().getStatus() == Status.valueOf("CONCEPT")) {
-            statusComboBox.setValue(Status.CONCEPT);
-        } else if (DataShare.getInstance().getStatus() == Status.valueOf("ACTIEF")) {
-            statusComboBox.setValue(Status.ACTIEF);
-        } else if (DataShare.getInstance().getStatus() == Status.valueOf("GEARCHIVEERD")) {
-            statusComboBox.setValue(Status.GEARCHIVEERD);
+        if (DataShare.getInstance().getVersie() == null) {
+            //WEBCAST INLADEN
+            DataShare.getInstance().setCreatedItem("webcast");
+            WebcastTitelColumnInput.setText(DataShare.getInstance().getTitel());
+            if (DataShare.getInstance().getModuleBeschrijving() != null) {
+                WebcastBeschrijvingColumnInput.setText(String.valueOf(DataShare.getInstance().getModuleBeschrijving()));
+            }
+            WebcastDatumPublicatieColumnInput.setValue(DataShare.getInstance().getDatumPublicatie());
+//            if(DataShare.getInstance().getURL() != null){
+            WebcastUrlColumnInput.setText(DataShare.getInstance().getURL());
+//            }
+            WebcastTijdsDuurColumnInput.setText(String.valueOf(DataShare.getInstance().getTijdsduur()));
+            WebcastNaamSprekerColumnInput.setText(DataShare.getInstance().getNaamSpreker());
+            WebcastOrganisatieSprekerColumnInput.setText(DataShare.getInstance().getOrganisatieSpreker());
+
+        } else if (DataShare.getInstance().getVersie() != null) {
+//            MODULE INLADEN
+            DataShare.getInstance().setCreatedItem("module");
+            ModuleTitelColumnInput.setText(DataShare.getInstance().getTitel());
+            ModuleVersieColumnInput.setText(DataShare.getInstance().getVersie());
+            if (DataShare.getInstance().getModuleBeschrijving() != null) {
+                ModuleBeschrijvingColumnInput.setText(String.valueOf(DataShare.getInstance().getModuleBeschrijving()));
+            }
+            ModuleNaamContactColumnInput.setText(DataShare.getInstance().getNaamContactPersoon());
+            ModuleEmailContactColumnInput.setText(DataShare.getInstance().getEmailContactPersoon());
+            ModuleVolgNrColumnInput.setText(String.valueOf(DataShare.getInstance().getVolgordeNr()));
         }
+
     }
 
     void CreateModule() {
@@ -215,21 +214,58 @@ public class DialogContentItemFXMLController implements Initializable {
         }
     }
 
-    @FXML
-    void ApplyButtonUpdateContentItemClicked() {
-        try {
-            Status selectedStatus = statusComboBox.getValue();
-            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(cursistDbConnection),
-                    "UPDATE contentItems SET"
-                    + " naamCursus = '" + contentItemsNaamCursusColumnInput.getText()
-                    + "', titel = '" + contentItemsTitelColumnInput.getText()
-                    + "', beschrijving = '" + contentItemsBeschrijvingColumnInput.getText()
-                    + "', status = '" + selectedStatus.name()
-                    + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+    public boolean validateAndUpdateContentItem() {
+        //VALIDATE ALL FIELDS
+        boolean VALID = true;
+        if (VALID) {
+            if (DataShare.getInstance().getCreatedItem().toLowerCase().equals("module")) {
+                try {
+                    DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
+                            "UPDATE contentItems SET"
+                            + " naamCursus = '" + contentItemsNaamCursusComboBoxInput.getValue()
+                            + "', beschrijving = '" + ModuleBeschrijvingColumnInput.getText()
+                            + "', titel = '" + ModuleTitelColumnInput.getText()
+                            + "', status = '" + statusComboBox.getValue()
+                            + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
+                    System.out.println("ContentItem Updated!");
+                    DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "UPDATE Module SET"
+                            + " titel = '" + ModuleTitelColumnInput.getText()
+                            + "', versie = '" + ModuleVersieColumnInput.getText()
+                            + "', naamContactPersoon = '" + ModuleNaamContactColumnInput.getText()
+                            + "', emailContactPersoon = '" + ModuleEmailContactColumnInput.getText()
+                            + "', volgNr = '" + ModuleVolgNrColumnInput.getText()
+                            + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
+                    System.out.println("Module Updated!");
+                    return true;
+                } catch (SQLException ex) {
+                    Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (DataShare.getInstance().getCreatedItem().toLowerCase().equals("webcast")) {
+                try {
+                    DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
+                            "UPDATE contentItems SET"
+                            + " naamCursus = '" + contentItemsNaamCursusComboBoxInput.getValue()
+                            + "', beschrijving = '" + WebcastBeschrijvingColumnInput.getText()
+                            + "', titel = '" + WebcastTitelColumnInput.getText()
+                            + "', status = '" + statusComboBox.getValue()
+                            + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
+                    System.out.println("ContentItem Updated!");
+                    DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "UPDATE Webcast SET"
+                            + " titel = '" + WebcastTitelColumnInput.getText()
+                            + "', tijdsDuur = '" + Integer.valueOf(WebcastTijdsDuurColumnInput.getText())
+                            + "', datumPublicatie = '" + WebcastDatumPublicatieColumnInput.getValue()
+                            + "', url = '" + WebcastUrlColumnInput.getText()
+                            + "', naamSpreker = '" + WebcastNaamSprekerColumnInput.getText()
+                            + "', organisatieSpreker = '" + WebcastOrganisatieSprekerColumnInput.getText()
+                            + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
+                    System.out.println("Webcast Updated!");
+                    return true;
+                } catch (SQLException ex) {
+                    Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
+        return false;
     }
 
 }
