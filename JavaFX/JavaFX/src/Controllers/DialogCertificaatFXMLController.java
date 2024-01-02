@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 
 public class DialogCertificaatFXMLController implements Initializable {
@@ -37,7 +38,7 @@ public class DialogCertificaatFXMLController implements Initializable {
 
     @FXML
     private ComboBox<String> inschrijfIdSelectBox;
-    
+
     @FXML
     private ObservableList<String> inschrijfIdList = FXCollections.observableArrayList();
 
@@ -45,11 +46,16 @@ public class DialogCertificaatFXMLController implements Initializable {
 
     //       @FXML
     void FinishButtonCreateCertificaatClicked() {
-        try {
-            DataBaseSQL.sendCommand(dbConnection, "INSERT INTO Certificaat (beoordeling, medewerkerNaam, inschrijfId) VALUES('"
-                    + CertificaatBeoordeling.getText()
-                    + "',  '" + CertificaatNaamMedewerker.getText()
-                    + "',  '" + inschrijfIdSelectBox.getValue() + "')");
+        try {   
+            if (Integer.valueOf(CertificaatBeoordeling.getText()) >= 0 && Integer.valueOf(CertificaatBeoordeling.getText()) <= 10) {
+                DataBaseSQL.sendCommand(dbConnection, "INSERT INTO Certificaat (beoordeling, medewerkerNaam, inschrijfId) VALUES('"
+                        + CertificaatBeoordeling.getText()
+                        + "',  '" + CertificaatNaamMedewerker.getText()
+                        + "',  '" + inschrijfIdSelectBox.getValue() + "')");
+            } else {
+                showAlert();
+            }
+
         } catch (SQLException ex) {
             CursistFXMLController.ErrorAlert("Er is iets fout gegaan!", "SQL Fout!");
             System.out.println(ex);
@@ -90,5 +96,13 @@ public class DialogCertificaatFXMLController implements Initializable {
         if (DataShare.getInstance().getInschrijfId() != 0) {
             CertificaatInschrijfId.setText(String.valueOf(DataShare.getInstance().getInschrijfId()));
         }
+    }
+
+    void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Number incorrect");
+        alert.setHeaderText("The value entered is not a valid score!");
+        alert.showAndWait();
+
     }
 }
