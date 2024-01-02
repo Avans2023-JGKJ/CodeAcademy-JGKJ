@@ -83,6 +83,7 @@ public class CertificaatFXMLController implements Initializable {
     void CertificaatVerwijderenClicked(MouseEvent event) {
         if (removeAlert()){
             try {
+                System.out.println("TEST DELETE");
                 String delete = "DELETE FROM Certificaat WHERE certificaatId = '" + DataShare.getInstance().getCertificaatId() + "'";
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), delete);
             } catch (SQLException ex) {
@@ -97,7 +98,7 @@ public class CertificaatFXMLController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
         alert.setTitle("Certificaat Verwijderen!");
-        alert.setHeaderText("Weet je zeker dat je de certificaat met ID: " + DataShare.getInstance().getCertificaatId() + "wil verwijderen?");
+        alert.setHeaderText("Weet u zeker dat u het certificaat met ID: " + DataShare.getInstance().getCertificaatId() + " wilt verwijderen?");
 
         // Yes, No knoppen
         ButtonType buttonTypeYes = new ButtonType("Yes");

@@ -24,7 +24,7 @@
                         <Image url="@Logo.png" />
                     </image>
                 </ImageView>
-                <TableView fx:id="CertificaatTableView" layoutX="65.0" layoutY="300.0" prefHeight="453.0" prefWidth="950.0">
+                <TableView fx:id="CertificaatTableView" layoutX="65.0" layoutY="300.0" onMouseClicked="#rowClicked" prefHeight="453.0" prefWidth="950.0">
                     <columns>
                         <TableColumn fx:id="InschrijfIdCertificaatColumn" prefWidth="140.0" text="Inschrijf Id" />
                         <TableColumn fx:id="BeoordelingCertificaatColumn" prefWidth="216.0" text="Beoordeling" />

@@ -29,10 +29,11 @@ public class DialogChooseFXMLController implements Initializable {
     void CreateWebcast(ActionEvent event) {
         DataShare.getInstance().resetContentItem();
         try {
+            DataShare.getInstance().setCreatedItem("webcast");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/createWebcastDialog.fxml"));
             DialogPane pane = loader.load();
 
-            DialogContentItemFXMLController createContentItemController = loader.getController();
+            DialogContentItemFXMLController createWebcastController = loader.getController();
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
@@ -42,8 +43,16 @@ public class DialogChooseFXMLController implements Initializable {
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
 
-            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.APPLY) {
-                ContentItemFXMLController.loadTableContentItem();
+            Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!createWebcastController.validateAndCreateContentItem()) {
+                    ae.consume();
+                }
+            });
+
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.FINISH) {
+                createWebcastController.validateAndCreateContentItem();
+//                ContentItemFXMLController.loadTableContentItem();
             }
 
             dialog.setTitle("Webcast aanmaken");
@@ -57,24 +66,32 @@ public class DialogChooseFXMLController implements Initializable {
     void CreateModule(ActionEvent event) {
         DataShare.getInstance().resetContentItem();
         try {
+            DataShare.getInstance().setCreatedItem("module");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/createModuleDialog.fxml"));
             DialogPane pane = loader.load();
 
-            DialogContentItemFXMLController DialogContentItemController = loader.getController();
+            DialogContentItemFXMLController createModuleController = loader.getController();
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
+            dialog.setTitle("Module aanmaken");
 
             dialog.getDialogPane().getButtonTypes().clear();
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
 
-            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.APPLY) {
-                ContentItemFXMLController.loadTableContentItem();
-            }
+            Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!createModuleController.validateAndCreateContentItem()) {
+                    ae.consume();
+                }
+            });
 
-            dialog.setTitle("Module aanmaken");
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.FINISH) {
+                createModuleController.validateAndCreateContentItem();
+//                ContentItemFXMLController.loadTableContentItem();
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);

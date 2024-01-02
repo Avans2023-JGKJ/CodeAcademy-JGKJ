@@ -37,6 +37,7 @@ public class DataShare {
     private String medeWerkerNaam;
 
     // ContentItem-gerelateerde velden
+    private String createdItem;
     private Integer contentItemId;
     private String titel;
     private LocalDate datum;
@@ -71,7 +72,7 @@ public class DataShare {
     private String WebcastBeschrijving;
     private String NaamSpreker;
     private String OrganisatieSpreker;
-    
+
     //Cursist Homescreen
     private String naamCursusEen;
     private String naamCursusTwee;
@@ -198,6 +199,10 @@ public class DataShare {
 
     public String getMedeWerkerNaam() {
         return medeWerkerNaam;
+    }
+
+    public String getCreatedItem() {
+        return createdItem;
     }
 
     public Integer getContentItemId() {
@@ -372,6 +377,10 @@ public class DataShare {
         this.medeWerkerNaam = medeWerkerNaam;
     }
 
+    public void setCreatedItem(String createdItem) {
+        this.createdItem = createdItem;
+    }
+
     public void setContentItemId(Integer contentItemId) {
         this.contentItemId = contentItemId;
     }
@@ -483,7 +492,5 @@ public class DataShare {
     public void setNaamCursusDrie(String naamCursusDrie) {
         this.naamCursusDrie = naamCursusDrie;
     }
-    
-    
 
 }

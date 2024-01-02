@@ -29,6 +29,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 
 public class DialogContentItemFXMLController implements Initializable {
 
@@ -83,7 +85,13 @@ public class DialogContentItemFXMLController implements Initializable {
     private TextField WebcastNaamSprekerColumnInput;
 
     @FXML
+    private TextField WebcastOrganisatieSprekerColumnInput;
+
+    @FXML
     private TextField WebcastTijdsDuurColumnInput;
+
+    @FXML
+    private TextField WebcastUrlColumnInput;
 
     @FXML
     private TextField WebcastTitelColumnInput;
@@ -111,7 +119,7 @@ public class DialogContentItemFXMLController implements Initializable {
     }
 
     private void loadData() {
-
+        
         contentItemsNaamCursusComboBoxInput.setValue(DataShare.getInstance().getNaamCursus());
         contentItemsTitelColumnInput.setText(String.valueOf(DataShare.getInstance().getTitel()));
         if (DataShare.getInstance().getModuleBeschrijving() != null) {
@@ -128,42 +136,81 @@ public class DialogContentItemFXMLController implements Initializable {
         }
     }
 
-    @FXML
-    void FinishButtonCreateContentItemClicked() {
+    void CreateModule() {
         try {
             Status selectedStatus = statusComboBox.getValue();
-
-            String insertSQL = String.format("INSERT INTO Cursus (naamCursus, contentItemId, titel, datum, beschrijving, status) VALUES ('%s','%s', '%s', '%s', '%s', '%s')",
-                    contentItemsNaamCursusColumnInput.getText(),
-                    contentItemscontentItemIdColumnInput.getText(),
-                    contentItemsTitelColumnInput.getText(),
-                    contentItemsDatumColumnInput.getValue(),
-                    contentItemsBeschrijvingColumnInput.getText(),
+            System.out.println("MODULE");
+            String insertSQLContentitem = String.format("INSERT INTO contentItems (naamCursus, beschrijving, titel, datum, status) VALUES ('%s','%s', '%s', '%s', '%s')",
+                    contentItemsNaamCursusComboBoxInput.getValue(),
+                    ModuleBeschrijvingColumnInput.getText(),
+                    ModuleTitelColumnInput.getText(),
+                    LocalDate.now().toString(),
                     selectedStatus.name());
-            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQL);
+            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQLContentitem);
             System.out.println("ContentItem successfully created.");
 
+            String selectSQLId = "SELECT contentItemId FROM contentItems ORDER BY contentItemId desc";
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), selectSQLId);
+            rs.next();
+            DataShare.getInstance().setContentItemId(Integer.valueOf(rs.getString("contentItemId")));
+
+            String insertSQLModule = String.format("INSERT INTO Module (contentitemId , titel, versie, naamContactPersoon, emailContactPersoon) VALUES ('%s','%s', '%s', '%s', '%s')",
+                    DataShare.getInstance().getContentItemId(),
+                    ModuleTitelColumnInput.getText(),
+                    ModuleVersieColumnInput.getText(),
+                    ModuleNaamContactColumnInput.getText(),
+                    ModuleEmailContactColumnInput.getText());
+
+            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQLModule);
+            System.out.println("Module successfully created.");
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void CreateWebcast() {
+        try {
+            Status selectedStatus = statusComboBox.getValue();
+            System.out.println("WEBCAST");
+            String insertSQLContentitem = String.format("INSERT INTO contentItems (naamCursus, beschrijving, titel, datum, status) VALUES ('%s','%s', '%s', '%s', '%s')",
+                    contentItemsNaamCursusComboBoxInput.getValue(),
+                    WebcastBeschrijvingColumnInput.getText(),
+                    WebcastTitelColumnInput.getText(),
+                    LocalDate.now().toString(),
+                    selectedStatus.name());
+            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQLContentitem);
+            System.out.println("ContentItem successfully created.");
+
+            String selectSQLId = "SELECT contentItemId FROM contentItems ORDER BY contentItemId desc";
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), selectSQLId);
+            rs.next();
+            DataShare.getInstance().setContentItemId(Integer.valueOf(rs.getString("contentItemId")));
+
+            String insertSQLModule = String.format("INSERT INTO Webcast (contentitemId , titel, tijdsDuur, datumPublicatie, url, naamSpreker, organisatieSpreker) VALUES ('%s','%s', '%s', '%s', '%s', '%s', '%s')",
+                    DataShare.getInstance().getContentItemId(),
+                    WebcastTitelColumnInput.getText(),
+                    Integer.valueOf(WebcastTijdsDuurColumnInput.getText()),
+                    WebcastDatumPublicatieColumnInput.getValue().toString(),
+                    WebcastUrlColumnInput.getText(),
+                    WebcastNaamSprekerColumnInput.getText(),
+                    WebcastOrganisatieSprekerColumnInput.getText()
+            );
+
+            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQLModule);
+            System.out.println("Webcast successfully created.");
         } catch (SQLException ex) {
             Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public boolean validateAndCreateContentItem() {
-        try {
-
-            Status selectedStatus = statusComboBox.getValue();
-            String insertSQL = String.format("INSERT INTO Cursus (naamCursus, contentItemId, titel, datum, beschrijving, status) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
-                    contentItemsNaamCursusColumnInput.getText(),
-                    contentItemscontentItemIdColumnInput.getText(),
-                    contentItemsTitelColumnInput.getText(),
-                    contentItemsDatumColumnInput.getValue(),
-                    contentItemsBeschrijvingColumnInput.getText(),
-                    selectedStatus.name());
-            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQL);
-            System.out.println("ContentItem successfully created.");
+        if (DataShare.getInstance().getCreatedItem().toLowerCase().equals("module")) {
+            CreateModule();
             return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } else if (DataShare.getInstance().getCreatedItem().toLowerCase().equals("webcast")) {
+            CreateWebcast();
+            return true;
+        } else {
             return false;
         }
     }
