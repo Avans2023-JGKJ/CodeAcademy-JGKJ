@@ -24,6 +24,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label prefHeight="17.0" prefWidth="72.0" text="Naam Cursus" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -40,6 +41,8 @@
             <ComboBox fx:id="statusComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="ModuleNaamContactColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="ModuleEmailContactColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="ModuleVolgNrColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="VolgNr" GridPane.rowIndex="7" />
          </children>
       </GridPane>
    </graphic>
