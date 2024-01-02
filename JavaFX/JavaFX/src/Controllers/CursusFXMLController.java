@@ -147,11 +147,11 @@ public class CursusFXMLController implements Initializable {
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
             Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.APPLY);
-            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
-                if (!createCursusController.validateAndCreateCursus()) {
-                    ae.consume();
-                }
-            });
+//            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+//                if (!createCursusController.validateAndCreateCursus()) {
+//                    ae.consume();
+//                }
+//            });
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
 

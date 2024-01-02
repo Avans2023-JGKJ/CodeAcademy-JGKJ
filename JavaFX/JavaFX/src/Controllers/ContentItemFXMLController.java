@@ -35,93 +35,92 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class ContentItemFXMLController implements Initializable {
-
+    
     private Stage stage;
     private Scene scene;
     private Parent root;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableContentItem();
     }
-
+    
     @FXML
     private TableView<ContentItem> ContentItemTableView;
-
+    
     @FXML
     void ContentItemsAanmakenClicked(MouseEvent event) {
-        DataShare.getInstance().resetContentItem();
-
+        
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/chooseContentItemDialog.fxml"));
             DialogPane pane = loader.load();
-
+            
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
             dialog.setTitle("Kies een soort ContentItem");
-            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
             dialog.showAndWait();
-
+            
         } catch (IOException ex) {
             Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @FXML
     void ContentItemsAanpassenClicked(MouseEvent event) {
         if (DataShare.getInstance().getVersie() == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/updateWebcastDialog.fxml"));
                 DialogPane pane = loader.load();
-
+                
                 DialogContentItemFXMLController updateContentItemController = loader.getController();
-
+                
                 Dialog<ButtonType> dialog = new Dialog<>();
                 dialog.setDialogPane(pane);
                 Optional<ButtonType> clickedApply = dialog.showAndWait();
-
+                
                 if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
                     updateContentItemController.ApplyButtonUpdateContentItemClicked();
                     loadTableContentItem();
                 }
-
+                
                 dialog.setTitle("Webcast aanpassen");
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else{
-             try {
+        } else {
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/updateModuleDialog.fxml"));
                 DialogPane pane = loader.load();
-
+                
                 DialogContentItemFXMLController updateContentItemController = loader.getController();
-
+                
                 Dialog<ButtonType> dialog = new Dialog<>();
                 dialog.setDialogPane(pane);
                 Optional<ButtonType> clickedApply = dialog.showAndWait();
-
+                
                 if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
                     updateContentItemController.ApplyButtonUpdateContentItemClicked();
                     loadTableContentItem();
                 }
-
+                
                 dialog.setTitle("Module aanpassen");
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
     }
-
+    
     @FXML
     void ContentItemsVerwijderenClicked(MouseEvent event) {
         ContentItem selectedContentItem = ContentItemTableView.getSelectionModel().getSelectedItem();
@@ -136,7 +135,7 @@ public class ContentItemFXMLController implements Initializable {
             loadTableContentItem();
         }
     }
-
+    
     private boolean removeContentItemAlert(int ContentItemId, String ContentItemTitel) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("ContentItem Verwijderen!");
@@ -145,15 +144,16 @@ public class ContentItemFXMLController implements Initializable {
         // Ja, Nee knoppen
         ButtonType buttonTypeYes = new ButtonType("Ja");
         ButtonType buttonTypeNo = new ButtonType("Nee");
-
+        
         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-
+        alert.getButtonTypes().add(ButtonType.CLOSE);
+        
         Optional<ButtonType> result = alert.showAndWait();
 
         // Controleer het resultaat
         return result.isPresent() && result.get() == buttonTypeYes;
     }
-
+    
     @FXML
     TableColumn<ContentItem, Integer> contentItemsIdColumn;
     @FXML
@@ -162,17 +162,17 @@ public class ContentItemFXMLController implements Initializable {
     TableColumn<ContentItem, LocalDate> contentItemsDatumColumn;
     @FXML
     TableColumn<ContentItem, String> contentItemsStatusColumn;
-
+    
     ObservableList<ContentItem> observableContentItem;
-
+    
     @FXML
     void rowClicked(MouseEvent event) {
         try {
             ContentItem clickedContentItem = ContentItemTableView.getSelectionModel().getSelectedItem();
-
+            
             if (clickedContentItem != null) {
-                ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.naamCursus,c.contentItemId,c.beschrijving,c.titel,c.datum,c.status FROM contentItems c LEFT JOIN Module m ON m.contentItemId = c.contentItemId LEFT JOIN Webcast w ON w.contentItemId = c.contentItemId WHERE c.contentItemId = '" + clickedContentItem.getContentItemId() + "'");
-
+                ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.naamCursus,c.contentItemId,c.beschrijving,c.titel,c.datum,c.status, m.versie FROM contentItems c LEFT JOIN Module m ON m.contentItemId = c.contentItemId LEFT JOIN Webcast w ON w.contentItemId = c.contentItemId WHERE c.contentItemId = '" + clickedContentItem.getContentItemId() + "'");
+                
                 if (rs.next()) {
                     DataShare.getInstance().setNaamCursus(rs.getString("naamCursus"));
                     DataShare.getInstance().setContentItemId(rs.getInt("contentItemId"));
@@ -180,6 +180,7 @@ public class ContentItemFXMLController implements Initializable {
                     DataShare.getInstance().setTitel(rs.getString("titel"));
                     DataShare.getInstance().setDatum(LocalDate.parse(rs.getString("datum")));
                     DataShare.getInstance().setStatus(Status.valueOf(rs.getString("status").toUpperCase().strip()));
+                    DataShare.getInstance().setVersie(rs.getString("versie"));
                     System.out.println(DataShare.getInstance().getStatus());
                 } else {
                     ErrorAlert("Dit ContentItem bestaat niet meer!", "Onbekend ContentItem");
@@ -191,7 +192,7 @@ public class ContentItemFXMLController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    
     private void initTable() {
         observableContentItem = FXCollections.observableArrayList(); // Initialize the list
         contentItemsIdColumn.setCellValueFactory(new PropertyValueFactory<>("contentItemId"));
@@ -199,7 +200,7 @@ public class ContentItemFXMLController implements Initializable {
         contentItemsDatumColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));
         contentItemsStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
-
+    
     void loadTableContentItem() {
         try {
             System.out.println("test1");
@@ -213,10 +214,10 @@ public class ContentItemFXMLController implements Initializable {
                     ContentItem.setTitel(rs.getString("titel"));
                     ContentItem.setDatum(LocalDate.parse(rs.getString("datum")));
                     ContentItem.setStatus(rs.getString("status"));
-
+                    
                     System.out.println("Printline");
                     observableContentItem.add(ContentItem);
-
+                    
                 }
             }
             System.out.println("PUNT 4");
@@ -224,13 +225,13 @@ public class ContentItemFXMLController implements Initializable {
             System.out.println("PUNT 5");
             ContentItemTableView.refresh();
             System.out.println("PUNT 6");
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(InschrijvenFXMLController.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @FXML
     void ContentItemsBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
@@ -240,5 +241,5 @@ public class ContentItemFXMLController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    
 }

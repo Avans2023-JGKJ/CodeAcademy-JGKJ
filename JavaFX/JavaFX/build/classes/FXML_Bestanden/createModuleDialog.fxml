@@ -44,7 +44,7 @@
       </GridPane>
    </graphic>
    <buttonTypes>
-      <ButtonType fx:constant="FINISH" />
+      <ButtonType text="FINISH" />
       <ButtonType fx:constant="CLOSE" />
    </buttonTypes>
 </DialogPane>

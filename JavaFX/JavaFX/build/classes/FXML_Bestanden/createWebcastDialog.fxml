@@ -26,24 +26,27 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label prefHeight="17.0" prefWidth="72.0" text="Naam Cursus" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label text="Titel" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label text="Beschrijving" GridPane.rowIndex="2" />
             <Label text="Status" GridPane.rowIndex="3" />
-            <Label text="Naam Spreker" GridPane.rowIndex="6" />
-            <Label text="Organisatie Spreker" GridPane.rowIndex="7" />
+            <Label text="Naam Spreker" GridPane.rowIndex="7" />
+            <Label text="Organisatie Spreker" GridPane.rowIndex="8" />
             <ComboBox fx:id="contentItemsNaamCursusComboBoxInput" prefHeight="31.0" prefWidth="205.0" GridPane.columnIndex="1" />
             <TextField fx:id="WebcastTitelColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="WebcastBeschrijvingColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="176.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="WebcastNaamSprekerColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="WebcastNaamSprekerColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="WebcastOrganisatieSprekerColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <DatePicker fx:id="WebcastDatumPublicatieColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="WebcastTijdsDuurColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="WebcastTijdsDuurColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Publicatie Datum" GridPane.rowIndex="4" />
-            <Label text="Tijdsduur in minuten" GridPane.rowIndex="5" />
+            <Label text="Tijdsduur in minuten" GridPane.rowIndex="6" />
+            <Label text="URL van Webcast" GridPane.rowIndex="5" />
+            <TextField fx:id="WebcastUrlColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </graphic>
