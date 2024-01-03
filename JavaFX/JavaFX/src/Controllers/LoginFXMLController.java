@@ -1,8 +1,6 @@
 package Controllers;
 
 import Java2Database.DataShare;
-
-import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Validatie.Error;
 import java.io.IOException;
@@ -15,15 +13,10 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import static Controllers.CursistFXMLController.parseDate;
-import static Controllers.DialogCursistFXMLController.cursistDbConnection;
 import Validatie.DataValidatie;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
