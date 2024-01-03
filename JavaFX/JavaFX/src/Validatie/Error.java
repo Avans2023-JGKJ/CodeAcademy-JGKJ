@@ -1,7 +1,10 @@
 package Validatie;
 
+import Java2Database.DataShare;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -16,9 +19,36 @@ public class Error {
     private ButtonType buttonTypeYes = new ButtonType("Ja");
     private ButtonType buttonTypeNo = new ButtonType("Nee");
     private ButtonType buttonTypeOk = new ButtonType("Oke");
+   
 
     public boolean removeCursusAlert(String str) {
-        if (ConfirmationAlert("Cursus Verwijderen!", "Weet je zeker dat je de cursus met naam: " + str + " wilt verwijderen?", "")) {
+        if (ConfirmationAlert("Cursus Verwijderen!", "Weet je zeker dat je de Cursus met naam: " + str + " wilt verwijderen?", ""
+                + "Cursus naam = '"+str+"'\nAantalContentItems = '"+DataShare.getInstance().getAantalContentItems()+"'\nOnderwerp = '"+DataShare.getInstance().getOnderwerp()+"'\n"
+                        + "Niveau = '"+DataShare.getInstance().getNiveau().name()+"'")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean removeCertificaatAlert(Integer certificaatId) {
+        if (ConfirmationAlert("Certificaat Verwijderen!", "Weet je zeker dat je de Certificaat met certificaatId: " + certificaatId + " wilt verwijderen?", ""
+                + "CertificaatId = '"+certificaatId+"'\nBeoordeling = '"+DataShare.getInstance().getBeoordeling()+"'\nMedewerker Naam = '"+DataShare.getInstance().getMedeWerkerNaam()+"'\nInschrijfId = '"+DataShare.getInstance().getCertificaatInschrijfId()+"'")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean removeCursistAlert(String str) {
+        if (ConfirmationAlert("Cursist Verwijderen!", "Weet je zeker dat je de Cursist met naam: " + str + " wilt verwijderen?", ""
+                + "GeboorteDatum = '"+DataShare.getInstance().getCursistGeboorteDatum()+"'\nGeslacht = '"+DataShare.getInstance().getCursistGeslacht()+"'\n"
+                        + "PostCode = '"+DataShare.getInstance().getCursistPostCode()+"'")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean removeContentItemsAlert(String str) {
+        if (ConfirmationAlert("ContentItem Verwijderen!", "Weet je zeker dat je het ContentItem met naam: " + str + " wilt verwijderen?", "")) {
             return true;
         }
         return false;
@@ -53,6 +83,8 @@ public class Error {
         if (!contentText.isEmpty()) {
             ConfirmationAlert.setContentText(contentText);
         }
+        
+        
         ConfirmationAlert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, ButtonType.CANCEL);
         Optional<ButtonType> result = ConfirmationAlert.showAndWait();
         return result.isPresent() && result.get() == buttonTypeYes;
@@ -71,7 +103,7 @@ public class Error {
         if (!contentText.isEmpty()) {
             ErrorAlert.setContentText(contentText);
         }
-        ErrorAlert.getButtonTypes().setAll(buttonTypeOk, buttonTypeNo, ButtonType.CANCEL);
+        ErrorAlert.getButtonTypes().setAll(ButtonType.CANCEL);
         Optional<ButtonType> result = ErrorAlert.showAndWait();
         return result.isPresent() && result.get() == buttonTypeOk;
     }
@@ -89,7 +121,7 @@ public class Error {
         if (!contentText.isEmpty()) {
             InformationAlert.setContentText(contentText);
         }
-        InformationAlert.getButtonTypes().setAll(buttonTypeOk, buttonTypeNo, ButtonType.CANCEL);
+        InformationAlert.getButtonTypes().setAll(buttonTypeOk, ButtonType.CANCEL);
         Optional<ButtonType> result = InformationAlert.showAndWait();
         return result.isPresent() && result.get() == buttonTypeOk;
     }
@@ -152,6 +184,14 @@ public class Error {
 
     public void ErrorSucces() {
         InformationAlert("Succesvol","Succesvol Cursist Aangemaakt Je kunt nu inloggen!", null);
+    }
+
+    void ErrorPKViolation(String input, String ondrwrp, String var) {
+        ErrorAlert(ondrwrp+" is al in gebruik!", "Er bestaat al een "+var+" met "+ondrwrp+": '"+input,"");
+    }
+
+    void ErrorFKViolation(String var, String ondrwrp, String type) {
+        ErrorAlert(ondrwrp+" niet gevonden!", "Er bestaat geen "+ondrwrp+" met "+type+": '"+var+"'.", "");
     }
 
 }

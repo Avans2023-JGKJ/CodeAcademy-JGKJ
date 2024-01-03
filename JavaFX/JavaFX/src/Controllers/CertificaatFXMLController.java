@@ -1,14 +1,14 @@
 package Controllers;
+
 import Java2Database.DataShare;
 
 import Objects.Certificaat;
+import Validatie.Error;
 import Java2Database.DataBaseSQL;
-import Objects.Cursist;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -33,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import static Controllers.DialogCursistFXMLController.cursistDbConnection;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
 public class CertificaatFXMLController implements Initializable {
@@ -40,22 +41,22 @@ public class CertificaatFXMLController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    
+
+    private Error Error = new Error();
+
     @FXML
     private TableView<Certificaat> CertificaatTableView;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableCertificaat();
         cursistDbConnection = DataBaseSQL.createConnection(cursistDbConnection);
     }
-   
 
     @FXML
     void CertificaatAanmakenClicked(MouseEvent event) {
-     DataShare.getInstance().resetCertificaat();
+        DataShare.getInstance().resetCertificaat();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/createCertificaatDialog.fxml"));
             DialogPane pane = loader.load();
@@ -64,36 +65,43 @@ public class CertificaatFXMLController implements Initializable {
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
+            dialog.setTitle("Certificaat toevoegen");
+           
+
+            dialog.getDialogPane().getButtonTypes().clear();
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
+
+            Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!createCertificaatController.ValidateAndCreateCertificaat()) {
+                    ae.consume();
+                }
+            });
             Optional<ButtonType> clickedFinish = dialog.showAndWait();
-            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
 
             if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
-                createCertificaatController.FinishButtonCreateCertificaatClicked();
                 loadTableCertificaat(); // Reload the table after update
             }
 
-            dialog.setTitle("Certificaat toevoegen");
-
         } catch (IOException ex) {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     @FXML
     void CertificaatVerwijderenClicked(MouseEvent event) {
-        if (removeAlert()){
+        if (Error.removeCertificaatAlert(DataShare.getInstance().getCertificaatId())) {
             try {
-                System.out.println("TEST DELETE");
                 String delete = "DELETE FROM Certificaat WHERE certificaatId = '" + DataShare.getInstance().getCertificaatId() + "'";
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), delete);
             } catch (SQLException ex) {
                 //Alert NIET GEVONDEN OF NIET VOLTOOID
                 Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }   
+            }
         }
         loadTableCertificaat();
     }
-    
+
     boolean removeAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
@@ -121,7 +129,7 @@ public class CertificaatFXMLController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     @FXML
     TableColumn<Certificaat, String> IdCertificaatColumn;
     @FXML
@@ -154,10 +162,10 @@ public class CertificaatFXMLController implements Initializable {
                     Certificaat.setBeoordeling(rs.getByte("beoordeling"));
                     Certificaat.setMedeWerkerNaam(rs.getString("medewerkerNaam"));
                     Certificaat.setInschrijfId(rs.getInt("inschrijfId"));
-                    
+
                     System.out.println(Certificaat.getNaamCursist());
-                    
-        observableCertificaat.add(Certificaat); 
+
+                    observableCertificaat.add(Certificaat);
                 }
             }
             System.out.println("PUNT 4");
@@ -169,29 +177,29 @@ public class CertificaatFXMLController implements Initializable {
             Logger.getLogger(CertificaatFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     void rowClicked(MouseEvent event) {
-      try {
-        Certificaat clickedCertificaat = CertificaatTableView.getSelectionModel().getSelectedItem();
+        try {
+            Certificaat clickedCertificaat = CertificaatTableView.getSelectionModel().getSelectedItem();
 
-        if (clickedCertificaat != null) {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Certificaat WHERE certificaatId = '" + clickedCertificaat.getCertificaatId() + "'");
-            
-            if (rs.next()) {
-                DataShare.getInstance().setCertificaatId(rs.getInt("certificaatId"));
-                DataShare.getInstance().setCertificaatInschrijfId(rs.getInt("inschrijfId"));
-                DataShare.getInstance().setBeoordeling(rs.getByte("beoordeling"));
-                DataShare.getInstance().setMedeWerkerNaam(rs.getString("medewerkerNaam"));
-            } else {
-                ErrorAlert("Deze cursist bestaat niet meer!", "Onbekende cursist");
+            if (clickedCertificaat != null) {
+                ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Certificaat WHERE certificaatId = '" + clickedCertificaat.getCertificaatId() + "'");
+
+                if (rs.next()) {
+                    DataShare.getInstance().setCertificaatId(rs.getInt("certificaatId"));
+                    DataShare.getInstance().setCertificaatInschrijfId(rs.getInt("inschrijfId"));
+                    DataShare.getInstance().setBeoordeling(rs.getByte("beoordeling"));
+                    DataShare.getInstance().setMedeWerkerNaam(rs.getString("medewerkerNaam"));
+                } else {
+                    ErrorAlert("Deze cursist bestaat niet meer!", "Onbekende cursist");
+                }
             }
+        } catch (SQLException | DateTimeParseException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (SQLException | DateTimeParseException e) {
-        e.printStackTrace();
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 
 }
