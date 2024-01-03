@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -33,7 +34,6 @@
             <Label prefHeight="17.0" prefWidth="88.0" text="Geboortedatum" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <TextField fx:id="cursistNaamColumninput" GridPane.columnIndex="1" GridPane.rowIndex="0" />
             <TextField fx:id="cursistEmailInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="cursistGeboortedatumInput" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="dd-MM-yyyy" minWidth="150" />
             <TextField fx:id="cursistPostcodeInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="cursistHuisnummerInput" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="cursistWoonplaatsInput" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -45,6 +45,7 @@
             <Label text="Landcode" GridPane.rowIndex="7" />
             <RadioButton fx:id="radioButtonCursistMan" mnemonicParsing="true" text="Man" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <RadioButton fx:id="radioButtonCursistVrouw" mnemonicParsing="false" text="Vrouw" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <DatePicker fx:id="cursistGeboortedatumInput" prefHeight="25.0" prefWidth="179.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </graphic>

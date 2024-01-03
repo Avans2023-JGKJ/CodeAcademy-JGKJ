@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import Controllers.CursusFXMLController;
+import Validatie.DataValidatie;
 import Validatie.SQLValid;
 import java.sql.Connection;
 import javafx.event.ActionEvent;
@@ -59,49 +60,39 @@ public class DialogCursusFXMLController {
 
     }
 
-    @FXML
-    void FinishButtonCreateCursusClicked() {
-        try {
-            Niveau selectedNiveau = niveauComboBox.getValue();
-
-            String insertSQL = String.format("INSERT INTO Cursus (naamCursus, aantalContentItems, onderwerp, introductieTekst, niveau) VALUES ('%s', '%s', '%s', '%s', '%s')",
-                    naamCursusCursusColumnInput.getText(),
-                    aantalContentItemsCursusColumnInput.getText(),
-                    onderwerpCursusColumnInput.getText(),
-                    introductieTekstCursusColumnInput.getText(),
-                    selectedNiveau.name());
-            System.out.println(insertSQL);
-            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQL);
-            System.out.println("Cursus successfully created.");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public boolean validateAndCreateCursus() {
-        try {
-
-            Niveau selectedNiveau = niveauComboBox.getValue();
-            String insertSQL = String.format("INSERT INTO Cursus (naamCursus, aantalContentItems, onderwerp, introductieTekst, niveau) VALUES ('%s', '%s', '%s', '%s', '%s')",
-                    naamCursusCursusColumnInput.getText(),
-                    aantalContentItemsCursusColumnInput.getText(),
-                    onderwerpCursusColumnInput.getText(),
-                    introductieTekstCursusColumnInput.getText(),
-                    selectedNiveau.name());
-            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQL);
-            System.out.println("Cursus successfully created.");
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+        if (DataValidatie.InsertCursusValid(
+                naamCursusCursusColumnInput.getText(),
+                aantalContentItemsCursusColumnInput.getText(),
+                onderwerpCursusColumnInput.getText(),
+                introductieTekstCursusColumnInput.getText(),
+                niveauComboBox.getValue())) {
+            try {
+                String insertSQL = String.format("INSERT INTO Cursus (naamCursus, aantalContentItems, onderwerp, introductieTekst, niveau) VALUES ('%s', '%s', '%s', '%s', '%s')",
+                        naamCursusCursusColumnInput.getText(),
+                        aantalContentItemsCursusColumnInput.getText(),
+                        onderwerpCursusColumnInput.getText(),
+                        introductieTekstCursusColumnInput.getText(),
+                        niveauComboBox.getValue().name());
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQL);
+                System.out.println("Cursus successfully created.");
+                return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
         }
+        return false;
     }
 
     @FXML
-    boolean FinishButtonUpdateCursusClicked() {
-        if (SQLValid.validatieUpdateCursus(naamCursusCursusColumnInput.getText(), aantalContentItemsCursusColumnInput.getText(), onderwerpCursusColumnInput.getText(),introductieTekstCursusColumnInput.getText(), niveauComboBox.getValue().name())) {
-            String updateSQL = String.format("UPDATE Cursus SET naamCursus = '%s', aantalContentItems = '%s', onderwerp = '%s', introductieTekst = '%s', niveau = '%s' WHERE naamCursus = '"+DataShare.getInstance().getNaamCursus()+"'",
+    boolean validateAndUpdateCursus() {
+        if (DataValidatie.UpdateCursusValid(naamCursusCursusColumnInput.getText(),
+                aantalContentItemsCursusColumnInput.getText(),
+                onderwerpCursusColumnInput.getText(),
+                introductieTekstCursusColumnInput.getText(),
+                niveauComboBox.getValue())) {
+            String updateSQL = String.format("UPDATE Cursus SET naamCursus = '%s', aantalContentItems = '%s', onderwerp = '%s', introductieTekst = '%s', niveau = '%s' WHERE naamCursus = '" + DataShare.getInstance().getNaamCursus() + "'",
                     naamCursusCursusColumnInput.getText(),
                     aantalContentItemsCursusColumnInput.getText(),
                     onderwerpCursusColumnInput.getText(),
@@ -112,9 +103,9 @@ public class DialogCursusFXMLController {
             } catch (SQLException ex) {
                 Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("Cursus successfully created.");
+            System.out.println("Cursus successfully updated.");
             return true;
-            
+
         } else {
             return false;
         }
