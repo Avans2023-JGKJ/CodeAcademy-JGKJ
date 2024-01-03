@@ -4,6 +4,7 @@ import Java2Database.DataShare;
 
 import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
+import Validatie.Error;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,11 +24,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import static Controllers.CursistFXMLController.parseDate;
 import static Controllers.DialogCursistFXMLController.cursistDbConnection;
+import Validatie.DataValidatie;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
@@ -56,7 +59,7 @@ public class LoginFXMLController implements Initializable {
     TextField cursistPostcodeInput;
 
     @FXML
-    TextField cursistGeboortedatumInput;
+    DatePicker cursistGeboortedatumInput;
 
     @FXML
     TextField cursistEmailInput;
@@ -80,6 +83,8 @@ public class LoginFXMLController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    private Error Error = new Error();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -138,19 +143,21 @@ public class LoginFXMLController implements Initializable {
     void RegistrerenKlaarButtonClicked(ActionEvent event) {
         try {
             if (PassWordFieldRegistreren.getText().equals(PassWordFieldRegistreren2.getText())) {
-                LocalDate parsedDate = parseDate(cursistGeboortedatumInput.getText());
-                if (parsedDate == null) {
-                    return;
-                }
-
-                if (checkRegistreerFields()) {
-                    String formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                    System.out.println("Na CheckRegistreerFields");
+                if (DataValidatie.InsertCursistValid(
+                        cursistNaamColumninput.getText(),
+                        cursistPostcodeInput.getText(),
+                        cursistEmailInput.getText(),
+                        cursistGeboortedatumInput.getValue(),
+                        RadioButtonCursistMan.isSelected(),
+                        RadioButtonCursistVrouw.isSelected(),
+                        cursistHuisnummerInput.getText(),
+                        cursistWoonplaatsInput.getText(),
+                        cursistLandCodeInput.getText())) {
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Cursist (naam, postCode, email, geboorteDatum, geslacht, huisNummer, woonPlaats, landCode) VALUES("
                             + "  '" + cursistNaamColumninput.getText()
                             + "',  '" + cursistPostcodeInput.getText()
                             + "',  '" + cursistEmailInput.getText()
-                            + "',  '" + formattedDate
+                            + "',  '" + cursistGeboortedatumInput.getValue()
                             + "',  '" + RadioButtonGeslachtCheck()
                             + "',   '" + cursistHuisnummerInput.getText()
                             + "',  '" + cursistWoonplaatsInput.getText()
@@ -162,7 +169,7 @@ public class LoginFXMLController implements Initializable {
                             + "',  '" + PassWordFieldRegistreren.getText()
                             + "',  '" + cursistEmailInput.getText() + "')");
 
-                    showPopup("Succesvol Cursist Aangemaakt Je kunt nu inloggen!");
+                    Error.ErrorSucces();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/login.fxml"));
                     root = loader.load();
                     stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -170,19 +177,14 @@ public class LoginFXMLController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
                 }
-
             } else {
-                showAlert();
+                Error.ErrorPassWord();
             }
         } catch (SQLException ex) {
             if (ex.getSQLState().equals("23000")) {
-                CursistFXMLController.ErrorAlert("De ingevoerde email is al in gebruik!", "Email Incorrect");
-                return;
             }
-            CursistFXMLController.ErrorAlert("Er is iets fout gegaan!", "SQL Fout!");
+            Error.ErrorNull("SQL Fout!");
         } catch (DateTimeParseException ex) {
-            System.err.println("Invalid date input: " + cursistGeboortedatumInput.getText());
-            CursistFXMLController.ErrorAlert("De ingevoerde geboortedatum is niet correct!", "Geboortedatum Incorrect!");
         } catch (IOException ex) {
             Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -210,25 +212,6 @@ public class LoginFXMLController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    boolean checkRegistreerFields() {
-        if (cursistNaamColumninput.getText() != null
-                && cursistPostcodeInput.getText() != null
-                && cursistEmailInput.getText() != null
-                && cursistHuisnummerInput.getText() != null
-                && cursistWoonplaatsInput.getText() != null
-                && cursistLandCodeInput.getText() != null
-                && cursistGeboortedatumInput.getText() != null
-                && (RadioButtonGeslachtCheck() == 'm' || RadioButtonGeslachtCheck() == 'v')
-                && UserNameFieldRegistreren.getText() != null
-                && PassWordFieldRegistreren.getText() != null
-                && PassWordFieldRegistreren2.getText() != null) {
-            return true;
-        } else {
-            return false;
-        }
-
     }
 
     boolean checkUserPassCombination(String InputUsername, String InputPassword) {
@@ -259,19 +242,5 @@ public class LoginFXMLController implements Initializable {
             Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-    }
-
-    void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("An ERROR has occured...");
-        alert.setHeaderText("Combination is not correct");
-        alert.showAndWait();
-    }
-
-    void showPopup(String Message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Something interesting happened!");
-        alert.setHeaderText(Message);
-        alert.showAndWait();
     }
 }

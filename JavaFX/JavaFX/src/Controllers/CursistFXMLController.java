@@ -1,4 +1,5 @@
 package Controllers;
+
 import Java2Database.DataShare;
 
 import Java2Database.DataShare;
@@ -15,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -73,7 +73,7 @@ public class CursistFXMLController implements Initializable {
     public void loadTableCursist() {
         try {
             initTable();
-            try (ResultSet rs = DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection).prepareStatement("SELECT naam, geboorteDatum, geslacht, postCode, email FROM Cursist").executeQuery()) {
+            try ( ResultSet rs = DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection).prepareStatement("SELECT naam, geboorteDatum, geslacht, postCode, email FROM Cursist").executeQuery()) {
                 while (rs.next()) {
                     Cursist cursist = new Cursist();
                     cursist.setNaam(rs.getString("naam"));
@@ -105,14 +105,23 @@ public class CursistFXMLController implements Initializable {
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
+            dialog.setTitle("Cursist aanpassen");
+            
+            dialog.getDialogPane().getButtonTypes().clear();
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.APPLY);
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!updateCursistController.ValidateAndUpdateCursist()) {
+                    ae.consume();
+                }
+            });
+
             Optional<ButtonType> clickedApply = dialog.showAndWait();
 
             if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
-                updateCursistController.ApplyButtonUpdateCursistClicked();
                 loadTableCursist(); // Herlaad table
             }
-
-            dialog.setTitle("Cursist aanpassen");
 
         } catch (IOException ex) {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,37 +139,43 @@ public class CursistFXMLController implements Initializable {
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
+            dialog.setTitle("Cursist toevoegen");
+
+            dialog.getDialogPane().getButtonTypes().clear();
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
+
+            Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!createCursistController.ValidateAndCreateCursist()) {
+                    ae.consume();
+                }
+            });
+
             Optional<ButtonType> clickedFinish = dialog.showAndWait();
 
             if (clickedFinish.isPresent() && clickedFinish.get() == ButtonType.FINISH) {
-                createCursistController.FinishButtonCreateCursistClicked();
                 loadTableCursist(); // Reload the table after update
             }
 
-            dialog.setTitle("Cursist toevoegen");
-
         } catch (IOException ex) {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
-    
-    
 
     @FXML
     void CursistVerwijderenClicked(MouseEvent event) {
-        if (removeAlert()){
+        if (removeAlert()) {
             try {
-               
+
                 String delete = "DELETE FROM Cursist WHERE email = '" + DataShare.getInstance().getCursistEmail() + "'";
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), delete);
             } catch (SQLException ex) {
                 //Alert NIET GEVONDEN OF NIET VOLTOOID
                 Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }   
+            }
         }
         loadTableCursist();
     }
-    
 
     @FXML
     void CursistBackClicked(ActionEvent event) throws IOException {
@@ -175,7 +190,7 @@ public class CursistFXMLController implements Initializable {
     @FXML
     void FinishButtonCreateCursistClicked(ActionEvent event) {
         // Handle finish button click
-        
+
     }
 
     @FXML
@@ -186,36 +201,33 @@ public class CursistFXMLController implements Initializable {
 
     @FXML
     void rowClicked(MouseEvent event) {
-      try {
-        Cursist clickedCursist = CursistTableView.getSelectionModel().getSelectedItem();
+        try {
+            Cursist clickedCursist = CursistTableView.getSelectionModel().getSelectedItem();
 
-        if (clickedCursist != null) {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
-            
-            if (rs.next()) {
-                DataShare.getInstance().setCursistEmail(rs.getString("email"));
-                DataShare.getInstance().setCursistNaam(rs.getString("naam"));
-                DataShare.getInstance().setCursistGeboorteDatum(LocalDate.parse(rs.getString("geboorteDatum")));
-                DataShare.getInstance().setCursistGeslacht(rs.getString("geslacht").charAt(0));
-                DataShare.getInstance().setCursistPostCode(rs.getString("postCode"));
-                DataShare.getInstance().setCursistHuisnummer(rs.getString("huisNummer"));
-                DataShare.getInstance().setCursistWoonPlaats(rs.getString("woonPlaats"));
-                DataShare.getInstance().setCursistLandCode(rs.getString("landCode"));
-            } else {
-                ErrorAlert("Deze cursist bestaat niet meer!", "Onbekende cursist");
+            if (clickedCursist != null) {
+                ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
+
+                if (rs.next()) {
+                    DataShare.getInstance().setCursistEmail(rs.getString("email"));
+                    DataShare.getInstance().setCursistNaam(rs.getString("naam"));
+                    DataShare.getInstance().setCursistGeboorteDatum(LocalDate.parse(rs.getString("geboorteDatum")));
+                    DataShare.getInstance().setCursistGeslacht(rs.getString("geslacht").charAt(0));
+                    DataShare.getInstance().setCursistPostCode(rs.getString("postCode"));
+                    DataShare.getInstance().setCursistHuisnummer(rs.getString("huisNummer"));
+                    DataShare.getInstance().setCursistWoonPlaats(rs.getString("woonPlaats"));
+                    DataShare.getInstance().setCursistLandCode(rs.getString("landCode"));
+                } else {
+                    ErrorAlert("Deze cursist bestaat niet meer!", "Onbekende cursist");
+                }
             }
+        } catch (SQLException | DateTimeParseException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (SQLException | DateTimeParseException e) {
-        e.printStackTrace();
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
-    
-   
 
-    
-     boolean removeAlert() {
+    boolean removeAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
         alert.setTitle("Cursist Verwijderen!");
@@ -232,16 +244,16 @@ public class CursistFXMLController implements Initializable {
         // Check the result
         return result.isPresent() && result.get() == buttonTypeYes;
     }
-     
-     public static LocalDate parseDate(String dateString) {
-       
+
+    public static LocalDate parseDate(String dateString) {
+
         String[] formats = {"yyyy-MM-dd", "yyyy-dd-MM", "dd-MM-yyyy", "MM-dd-yyyy"};
-        String[] dateParts = dateString.split("[^\\d]+");       
+        String[] dateParts = dateString.split("[^\\d]+");
         if (dateParts.length < 3) {
             ErrorAlert("Er mist een Jaar, Maand of Dag!", "Geboortedatum incorrect!");
             return null;
         }
-      
+
         for (String format : formats) {
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
@@ -264,15 +276,15 @@ public class CursistFXMLController implements Initializable {
                 }
                 return date;
             } catch (DateTimeParseException e) {
-               // niks doen. dit hoort niet eens te gebeuren.
+                // niks doen. dit hoort niet eens te gebeuren.
             }
         }
-        
+
         ErrorAlert("Je geboortedatum klopt niet helemaal!", "Geboortedatum incorrect!");
         return null;
     }
-     
-     public static void ErrorAlert(String message, String header) {
+
+    public static void ErrorAlert(String message, String header) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(header);

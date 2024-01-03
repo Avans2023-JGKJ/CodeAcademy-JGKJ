@@ -1,4 +1,5 @@
 package Controllers;
+
 import Java2Database.DataShare;
 
 import Java2Database.DataShare;
@@ -6,6 +7,7 @@ import Java2Database.DataBaseSQL;
 import Objects.Cursist;
 import Objects.Cursus;
 import Objects.Niveau;
+import Validatie.Error;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -142,16 +144,17 @@ public class CursusFXMLController implements Initializable {
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
+            dialog.setTitle("Cursus aanmaken");
 
             dialog.getDialogPane().getButtonTypes().clear();
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
             Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.APPLY);
-//            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
-//                if (!createCursusController.validateAndCreateCursus()) {
-//                    ae.consume();
-//                }
-//            });
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!createCursusController.validateAndCreateCursus()) {
+                    ae.consume();
+                }
+            });
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
 
@@ -159,52 +162,49 @@ public class CursusFXMLController implements Initializable {
                 loadTableCursus();
             }
 
-            dialog.setTitle("Cursus aanmaken");
+        } catch (IOException ex) {
+            Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void CursusAanpassenClicked(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/updateCursusDialog.fxml"));
+            DialogPane pane = loader.load();
+
+            DialogCursusFXMLController updateCursusController = loader.getController();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+            dialog.setTitle("Cursus aanpassen");
+
+            dialog.getDialogPane().getButtonTypes().clear();
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
+
+            Button finishButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+            finishButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!updateCursusController.validateAndUpdateCursus()) {
+                    ae.consume();
+                }
+            });
+
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
+
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.FINISH) {
+                loadTableCursus();
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-@FXML
-void CursusAanpassenClicked(MouseEvent event) {
-    System.out.println("CursusAanpassenClicked");
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/updateCursusDialog.fxml"));
-        DialogPane pane = loader.load();
-
-        DialogCursusFXMLController updateCursusController = loader.getController();
-
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setDialogPane(pane);
-
-        dialog.getDialogPane().getButtonTypes().clear();
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
-
-        Button finishButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
-        finishButton.addEventFilter(ActionEvent.ACTION, ae -> {
-            if (!updateCursusController.FinishButtonUpdateCursusClicked()) {
-                ae.consume();
-            }
-        });
-
-        Optional<ButtonType> clickedButton = dialog.showAndWait();
-
-        if (clickedButton.isPresent() && clickedButton.get() == ButtonType.FINISH) {
-            loadTableCursus();
-        }
-
-        dialog.setTitle("Cursus aanpassen");
-
-    } catch (IOException ex) {
-        Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-    }
-}
-
     @FXML
     void CursusVerwijderenClicked(MouseEvent event) {
+        Error Error = new Error();
         Cursus selectedCursus = CursusTableView.getSelectionModel().getSelectedItem();
-        if (selectedCursus != null && removeCursusAlert(selectedCursus.getNaamCursus())) {
+        if (selectedCursus != null && Error.removeCursusAlert(selectedCursus.getNaamCursus())) {
             try {
                 String delete = "DELETE FROM Cursus WHERE naamCursus = '" + selectedCursus.getNaamCursus() + "'";
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(cursusDbConnection), delete);
@@ -216,21 +216,7 @@ void CursusAanpassenClicked(MouseEvent event) {
         }
     }
 
-    private boolean removeCursusAlert(String cursusNaam) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Cursus Verwijderen!");
-        alert.setHeaderText("Weet je zeker dat je de cursus met naam: " + cursusNaam + " wilt verwijderen?");
-
-        // Ja, Nee knoppen
-        ButtonType buttonTypeYes = new ButtonType("Ja");
-        ButtonType buttonTypeNo = new ButtonType("Nee");
-        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo,ButtonType.CANCEL);
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        // Controleer het resultaat
-        return result.isPresent() && result.get() == buttonTypeYes;
-    }
+    
 
     @FXML
     void rowClicked(MouseEvent event) {
