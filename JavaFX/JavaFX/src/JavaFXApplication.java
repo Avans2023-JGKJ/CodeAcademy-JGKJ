@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import static javafx.application.Application.launch;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 
 public class JavaFXApplication extends Application {
 
@@ -29,6 +30,7 @@ public class JavaFXApplication extends Application {
 
         Scene scene = new Scene(vbox);
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(this.getClass().getResource("/FXML_Bestanden/Logo.png").toString()));
         primaryStage.show();
     }
 }

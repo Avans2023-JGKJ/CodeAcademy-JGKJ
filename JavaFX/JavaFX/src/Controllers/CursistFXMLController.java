@@ -4,6 +4,7 @@ import Java2Database.DataShare;
 
 import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
+import Validatie.Error;
 import Objects.Cursist;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,6 +55,8 @@ public class CursistFXMLController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    
+    private Error Error = new Error();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -164,7 +167,7 @@ public class CursistFXMLController implements Initializable {
 
     @FXML
     void CursistVerwijderenClicked(MouseEvent event) {
-        if (removeAlert()) {
+        if (Error.removeCursistAlert(DataShare.getInstance().getCursistEmail())) {
             try {
 
                 String delete = "DELETE FROM Cursist WHERE email = '" + DataShare.getInstance().getCursistEmail() + "'";
