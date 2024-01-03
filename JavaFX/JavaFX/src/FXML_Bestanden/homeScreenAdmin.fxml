@@ -52,7 +52,7 @@
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="106.0" layoutX="591.0" layoutY="473.0" stroke="#ffdbdb50" strokeType="INSIDE" width="409.0" />
-            <Label layoutX="727.0" layoutY="502.0" text="Persoon" textFill="WHITE">
+            <Label layoutX="727.0" layoutY="502.0" onMouseClicked="#PersoonButtonClicked" text="Persoon" textFill="WHITE">
                <font>
                   <Font name="Calibri Bold" size="40.0" />
                </font>

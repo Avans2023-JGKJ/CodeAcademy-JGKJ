@@ -81,9 +81,9 @@ public class HomeScreenFXMLController implements Initializable {
     }
     
     @FXML
-    void InschrijvenButtonClicked(MouseEvent event) throws IOException {
+    void PersoonButtonClicked(MouseEvent event) throws IOException {
         System.out.println("Inschrijven");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/inschrijvenScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/persoonScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
