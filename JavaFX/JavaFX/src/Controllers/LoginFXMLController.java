@@ -160,7 +160,7 @@ public class LoginFXMLController implements Initializable {
                             + "'Cursist' ,'"
                             + UserNameFieldRegistreren.getText()
                             + "',  '" + PassWordFieldRegistreren.getText()
-                            + "',  '" + cursistEmailInput.getText() + "')");
+                            + "',  '" + cursistEmailInput.getText().toLowerCase() + "')");
 
                     Error.ErrorSucces();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/login.fxml"));

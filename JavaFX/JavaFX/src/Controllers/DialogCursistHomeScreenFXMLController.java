@@ -67,6 +67,7 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
                     ResultSet rs2 = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT inschrijfId FROM Inschrijven ORDER BY inschrijfId DESC");
                     rs2.next();
                     DataShare.getInstance().setInschrijfId(rs2.getInt("inschrijfId"));
+                    DataShare.getInstance().setCursistEmail(rs1.getString("email"));
                     DataShare.getInstance().setNaamCursus(InschrijvenNaamCursusBox.getValue());
 
                     createAccessories(DataShare.getInstance().getInschrijfId());

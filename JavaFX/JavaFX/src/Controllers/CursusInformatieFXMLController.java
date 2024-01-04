@@ -75,7 +75,7 @@ public class CursusInformatieFXMLController implements Initializable {
         try {
             initTable();
             System.out.println("1");
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.titel, c.beschrijving, m.versie FROM contentItems JOIN Module m ON m.contentItemId = c.contentItemId WHERE c.naamCursus = '" + DataShare.getInstance().getNaamCursus() + "';");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.titel, c.beschrijving, m.versie FROM contentItems c JOIN Module m ON m.contentItemId = c.contentItemId WHERE c.naamCursus = '" + DataShare.getInstance().getNaamCursus() + "';");
             while (rs.next()) {
                 System.out.println("2");
                 ContentItem ContentItem = new ContentItem();
