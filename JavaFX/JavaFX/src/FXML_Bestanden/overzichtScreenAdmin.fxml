@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomeScreenFXMLController">
+  <children>
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" VBox.vgrow="ALWAYS">
+      <children>
+            <ImageView fitHeight="1100.0" fitWidth="800.0" layoutX="150.0" layoutY="-150.0" rotate="90.0">
+               <image>
+                  <Image url="@homeScreenCursistBackground.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="283.0" fitWidth="331.0" layoutX="385.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Logo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="WelcomeLabelHomeScreen" alignment="CENTER" layoutX="42.0" layoutY="271.0" prefHeight="53.0" prefWidth="1040.0" text="Hallo, " textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold Italic" size="45.0" />
+               </font>
+            </Label>
+            <GridPane alignment="CENTER" layoutX="1.0" layoutY="362.0" prefHeight="347.0" prefWidth="1100.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="152.0" onMouseClicked="#Ov1Clicked" stroke="#ffdbdb50" strokeType="INSIDE" width="254.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="152.0" onMouseClicked="#Ov8Clicked" stroke="#ffdbdb50" strokeType="INSIDE" width="254.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="152.0" onMouseClicked="#Ov7Clicked" stroke="#ffdbdb50" strokeType="INSIDE" width="254.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="152.0" onMouseClicked="#Ov6Clicked" stroke="#ffdbdb50" strokeType="INSIDE" width="254.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="152.0" onMouseClicked="#Ov5Clicked" stroke="#ffdbdb50" strokeType="INSIDE" width="254.0" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="152.0" onMouseClicked="#Ov4Clicked" stroke="#ffdbdb50" strokeType="INSIDE" width="254.0" GridPane.columnIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="152.0" onMouseClicked="#Ov3Clicked" stroke="#ffdbdb50" strokeType="INSIDE" width="254.0" GridPane.columnIndex="2" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="152.0" onMouseClicked="#Ov2Clicked" stroke="#ffdbdb50" strokeType="INSIDE" width="254.0" GridPane.columnIndex="1" />
+                  <Label onMouseClicked="#Ov1Clicked" prefHeight="54.0" prefWidth="242.0" text="Certificaat gehaald per inschrijving per geslacht" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label onMouseClicked="#Ov8Clicked" prefHeight="56.0" prefWidth="230.0" text="Certificaten behaald per cursus" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label onMouseClicked="#Ov4Clicked" prefHeight="54.0" prefWidth="227.0" text="Certificaten behaald per account" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label onMouseClicked="#Ov3Clicked" prefHeight="54.0" prefWidth="241.0" text="Voortgang per module voor cursus en account" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label onMouseClicked="#Ov7Clicked" prefHeight="54.0" prefWidth="235.0" text="Aanbevolen cursussen per cursus" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label onMouseClicked="#Ov6Clicked" prefHeight="54.0" prefWidth="238.0" text="Top 3 cursussen met meest uitgegeven certificaten" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label onMouseClicked="#Ov5Clicked" prefHeight="63.0" prefWidth="236.0" text="Top 3 meest bekeken webcasts" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label onMouseClicked="#Ov2Clicked" prefHeight="54.0" prefWidth="237.0" text="Gemiddelde voortgang per module per cursus" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
