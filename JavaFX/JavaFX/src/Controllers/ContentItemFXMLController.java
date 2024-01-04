@@ -66,7 +66,11 @@ public class ContentItemFXMLController implements Initializable {
             dialog.setDialogPane(pane);
             dialog.setTitle("Kies een soort ContentItem");
             dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-            dialog.showAndWait();
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
+
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.CANCEL) {
+                loadTableContentItem();
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,7 +192,7 @@ public class ContentItemFXMLController implements Initializable {
                     DataShare.getInstance().setVersie(rs.getString("versie"));
                     DataShare.getInstance().setNaamContactPersoon(rs.getString("naamContactPersoon"));
                     DataShare.getInstance().setEmailContactPersoon(rs.getString("emailContactPersoon"));
-                    DataShare.getInstance().setVolgordeNr(rs.getByte("volgNr"));
+                    DataShare.getInstance().setVolgordeNr(rs.getShort("volgNr"));
                     System.out.println(rs.getByte("volgNr"));
                     if (rs.getString("datumPublicatie") != null) {
                         DataShare.getInstance().setDatumPublicatie(LocalDate.parse(rs.getString("datumPublicatie")));
@@ -219,28 +223,20 @@ public class ContentItemFXMLController implements Initializable {
 
     void loadTableContentItem() {
         try {
-            System.out.println("test1");
             initTable();
-            System.out.println("test2");
-            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM contentItems").executeQuery()) {
+            try (ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM contentItems").executeQuery()) {
                 while (rs.next()) {
                     ContentItem ContentItem = new ContentItem();
-                    System.out.println("TESTING");
                     ContentItem.setContentItemId(rs.getInt("contentItemId"));
                     ContentItem.setTitel(rs.getString("titel"));
                     ContentItem.setDatum(LocalDate.parse(rs.getString("datum")));
                     ContentItem.setStatus(rs.getString("status"));
-
-                    System.out.println("Printline");
                     observableContentItem.add(ContentItem);
 
                 }
             }
-            System.out.println("PUNT 4");
             ContentItemTableView.setItems(observableContentItem);
-            System.out.println("PUNT 5");
             ContentItemTableView.refresh();
-            System.out.println("PUNT 6");
 
         } catch (SQLException ex) {
             Logger.getLogger(InschrijvenFXMLController.class

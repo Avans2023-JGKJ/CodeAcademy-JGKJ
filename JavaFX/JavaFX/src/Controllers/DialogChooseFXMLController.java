@@ -37,25 +37,22 @@ public class DialogChooseFXMLController implements Initializable {
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
+            dialog.setTitle("Webcast aanmaken");
 
             dialog.getDialogPane().getButtonTypes().clear();
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
 
-            Optional<ButtonType> clickedButton = dialog.showAndWait();
-
             Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
             applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
-                if (!createWebcastController.validateAndCreateContentItem()) {
+                if (!createWebcastController.ValidateAndCreateWebcast()) {
                     ae.consume();
                 }
             });
 
-            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.FINISH) {
-                createWebcastController.validateAndCreateContentItem();
-//                ContentItemFXMLController.loadTableContentItem();
-            }
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
 
-            dialog.setTitle("Webcast aanmaken");
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.CANCEL) {
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,18 +76,16 @@ public class DialogChooseFXMLController implements Initializable {
             dialog.getDialogPane().getButtonTypes().clear();
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
 
-            Optional<ButtonType> clickedButton = dialog.showAndWait();
-
             Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
             applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
-                if (!createModuleController.validateAndCreateContentItem()) {
+                if (!createModuleController.ValidateAndCreateModule()) {
                     ae.consume();
                 }
             });
 
-            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.FINISH) {
-                createModuleController.validateAndCreateContentItem();
-//                ContentItemFXMLController.loadTableContentItem();
+            Optional<ButtonType> clickedButton = dialog.showAndWait();
+
+            if (clickedButton.isPresent() && clickedButton.get() == ButtonType.CANCEL) {
             }
 
         } catch (IOException ex) {

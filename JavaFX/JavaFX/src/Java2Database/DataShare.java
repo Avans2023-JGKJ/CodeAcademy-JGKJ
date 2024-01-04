@@ -63,7 +63,7 @@ public class DataShare {
     private String ModuleBeschrijving;
     private String naamContactPersoon;
     private String emailContactPersoon;
-    private byte volgordeNr;
+    private Short volgordeNr;
 
     //Webcast-gerelateerde velden
     private short Tijdsduur;
@@ -102,6 +102,7 @@ public class DataShare {
 
     public void resetContentItem() {
         this.contentItemId = null;
+        this.naamCursus = null;
         this.titel = "";
         this.datum = null;
         this.status = null;
@@ -129,7 +130,7 @@ public class DataShare {
         this.ModuleBeschrijving = "";
         this.naamContactPersoon = "";
         this.emailContactPersoon = "";
-        this.volgordeNr = Byte.valueOf(null);
+        this.volgordeNr = Short.valueOf(null);
     }
 
     public void resetWebcast() {
@@ -281,7 +282,7 @@ public class DataShare {
         return emailContactPersoon;
     }
 
-    public byte getVolgordeNr() {
+    public Short getVolgordeNr() {
         return volgordeNr;
     }
 
@@ -453,7 +454,7 @@ public class DataShare {
         this.emailContactPersoon = emailContactPersoon;
     }
 
-    public void setVolgordeNr(byte volgordeNr) {
+    public void setVolgordeNr(Short volgordeNr) {
         this.volgordeNr = volgordeNr;
     }
 

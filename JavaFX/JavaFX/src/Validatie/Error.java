@@ -194,4 +194,12 @@ public class Error {
         ErrorAlert(ondrwrp+" niet gevonden!", "Er bestaat geen "+ondrwrp+" met "+type+": '"+var+"'.", "");
     }
 
+    void ErrorLegalDate(LocalDate publicatieDatum) {
+        ErrorAlert(publicatieDatum+" is niet geldig!", "De ingevoerde Datum: '"+publicatieDatum+"' is niet geldig.", "");
+    }
+
+    void ErrorURL(String URL) {
+        ErrorAlert("URL incorrect!", "De ingevoerde URL is niet juist geformatteerd:", "Ingevoerde URL: '"+URL+"'\nControleer de URL en probeer opnieuw.");
+    }
+
 }

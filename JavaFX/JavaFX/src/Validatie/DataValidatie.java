@@ -4,6 +4,7 @@ import Java2Database.DataBaseSQL;
 import static Controllers.CursistFXMLController.parseDate;
 import Java2Database.DataShare;
 import Objects.Niveau;
+import Objects.Status;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -42,6 +43,27 @@ public class DataValidatie {
     private static int naamMedewerkerCertificaatLenght = 255;
     private static int BeoordelingCertificaatMin = 1;
     private static int BeoordelingCertificaatMax = 10;
+
+    //DataBase velen ContentItem
+    private static int naamCursusContentItemLength = 255;
+    private static int beschrijvingContentItemLength = 255;
+    private static int titelContentItemLength = 255;
+    private static int statusContentItemLength = 12;
+
+    //DataBase velden Webcast
+    private static int titelWebcastLength = 255;
+    private static int tijdsDuurWebcastLength = 14400; // Maximale duur is 10 dagen...
+    private static int urlWebcastLength = 511;
+    private static int naamSprekerWebcastLength = 255;
+    private static int organisatieSprekerWebcastLength = 255;
+
+    //DataBase velden Module
+    private static int titelModuleLength = 255;
+    private static int versieModuleLength = 255;
+    private static int naamContactModuleLength = 255;
+    private static int emailContactModuleLength = 255;
+    private static int volgNrModuleMax = 255;
+    private static int volgNrModuleMin = 1;
 
     public static boolean InsertCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro, Niveau niveau) {
         if (checkForNull(naamCursus, aantalItems, onderwerp, intro)) {
@@ -177,6 +199,106 @@ public class DataValidatie {
         return false;
     }
 
+    public static boolean AlterContentItemValid(String naamCursus, String beschrijving, String titel, Status status) {
+        if (checkForNull(naamCursus, titel)) {
+            if (checkNVarChar(naamCursus, naamCursusContentItemLength)) {
+                if ((beschrijving == null || beschrijving.isEmpty()) || checkNVarChar(beschrijving, beschrijvingContentItemLength)) {
+                    if (checkNVarChar(titel, titelContentItemLength)) {
+                        if (status != null && status.name() != "" && !status.name().isEmpty()) {
+                            if (checkVarChar(status.name(), statusContentItemLength)) {
+                                System.out.println("VERIFICATION SUCCEEDED!");
+                                return true;
+                            } else {
+                                Error.ErrorLength(status.name(), statusContentItemLength);
+                            }
+                        } else {
+                            Error.ErrorNull("Status kan niet leeg zijn!");
+
+                        }
+                    } else {
+                        Error.ErrorLength(titel, titelContentItemLength);
+                    }
+                } else {
+                    Error.ErrorLength(beschrijving, beschrijvingContentItemLength);
+                }
+            } else {
+                Error.ErrorLength(naamCursus, naamCursusContentItemLength);
+            }
+        } else {
+            Error.ErrorEmpty();
+        }
+        return false;
+    }
+
+    public static boolean AlterWebcastValid(String titel, String tijdsDuur, LocalDate publicatieDatum, String URL, String naamSpreker, String organisatieSpreker) {
+        if (checkForNull(titel, tijdsDuur, String.valueOf(publicatieDatum), URL, naamSpreker)) {
+            if (checkNVarChar(titel, titelWebcastLength)) {
+                if (checkNVarChar(tijdsDuur, tijdsDuurWebcastLength)) {
+                    if (checkLegalDate(publicatieDatum)) {
+                        if (checkURL(URL)) {
+                            if (checkNVarChar(URL, urlWebcastLength)) {
+                                if (checkNVarChar(naamSpreker, naamSprekerWebcastLength)) {
+                                    if (organisatieSpreker.isEmpty() || checkNVarChar(organisatieSpreker, organisatieSprekerWebcastLength)) {
+                                        System.out.println("VERIFICATION SUCCEEDED!");
+                                        return true;
+                                    } else {
+                                        Error.ErrorLength(organisatieSpreker, organisatieSprekerWebcastLength);
+                                    }
+                                } else {
+                                    Error.ErrorLength(naamSpreker, naamSprekerWebcastLength);
+                                }
+                            } else {
+                                Error.ErrorLength(URL, urlWebcastLength);
+                            }
+                        } else {
+                            Error.ErrorURL(URL);
+                        }
+                    } else {
+                        Error.ErrorLegalDate(publicatieDatum);
+                    }
+                } else {
+                    Error.ErrorLength(tijdsDuur, tijdsDuurWebcastLength);
+                }
+            } else {
+                Error.ErrorLength(titel, titelWebcastLength);
+            }
+        } else {
+            Error.ErrorEmpty();
+        }
+        return false;
+    }
+
+    public static boolean AlterModuleValid(String titel, String versie, String naamContact, String emailContact, short volgNr) {
+        if (checkForNull(titel, versie, String.valueOf(volgNr))) {
+            if (checkNVarChar(titel, titelModuleLength)) {
+                if (checkNVarChar(versie, versieModuleLength)) {
+                    if (checkNVarChar(naamContact, naamContactModuleLength)) {
+                        if (checkNVarChar(emailContact, emailContactModuleLength)) {
+                            if (volgNr <= volgNrModuleMax && volgNr >= volgNrModuleMin) {
+                                System.out.println("VERIFICATION SUCCEEDED!");
+                                return true;
+                            } else {
+                                Error.ErrorLimit(volgNr, volgNrModuleMax, volgNrModuleMin);
+                            }
+                        } else {
+                            Error.ErrorLength(emailContact, emailContactModuleLength);
+                        }
+                    } else {
+                        Error.ErrorLength(naamContact, naamContactModuleLength);
+                    }
+                } else {
+                    Error.ErrorLength(versie, versieModuleLength);
+                }
+            } else {
+                Error.ErrorLength(titel, titelModuleLength);
+            }
+        } else {
+            Error.ErrorEmpty();
+        }
+        return false;
+    }
+
+
     public static boolean checkVarChar(String str, int lgh) {
         if (str != null) {
             if (str.length() <= lgh) {
@@ -248,6 +370,14 @@ public class DataValidatie {
 
     }
 
+    public static boolean checkLegalDate(LocalDate date) {
+        if (date != null && date.isBefore(LocalDate.now())) {
+            return true;
+        }
+        return false;
+
+    }
+
     public static boolean formatDate(String date) {
         LocalDate parsedDate = parseDate(date);
         String formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -288,6 +418,13 @@ public class DataValidatie {
 
     private static boolean checkForNull(String a, String b, String c, String d) {
         if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean checkForNull(String a, String b, String c, String d, String e) {
+        if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty() && !e.isEmpty()) {
             return true;
         }
         return false;
@@ -356,4 +493,5 @@ public class DataValidatie {
         }
         return false;
     }
+
 }
