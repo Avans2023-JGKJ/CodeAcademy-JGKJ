@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<DialogPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DialogContentItemFXMLController">
+<DialogPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DialogContentItemFXMLController">
    <graphic>
       <GridPane alignment="CENTER" maxWidth="-Infinity" prefHeight="372.0" prefWidth="425.0">
         <columnConstraints>

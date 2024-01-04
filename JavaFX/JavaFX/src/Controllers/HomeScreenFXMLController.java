@@ -92,9 +92,9 @@ public class HomeScreenFXMLController implements Initializable {
     }
     
     @FXML
-    void OverigButtonClicked(MouseEvent event) throws IOException {
-        System.out.println("Overig");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
+    void OverzichtButtonClicked(MouseEvent event) throws IOException {
+        System.out.println("Overzicht");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/overzichtScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
