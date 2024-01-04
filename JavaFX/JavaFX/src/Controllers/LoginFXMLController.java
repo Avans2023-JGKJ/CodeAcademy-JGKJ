@@ -87,35 +87,25 @@ public class LoginFXMLController implements Initializable {
     @FXML
     void LoginButtonClicked(ActionEvent event) throws MalformedURLException, IOException {
         System.out.println("Login Button Clicked");
-//        if (checkUserPassCombination(UserNameField.getText(), PassWordField.getText())) {
-//            String username = UserNameField.getText();
+        if (checkUserPassCombination(UserNameField.getText(), PassWordField.getText())) {
+            DataShare.getInstance().setUsername(UserNameField.getText());
 
-//            HomeScreenFXMLController homeScreenController = loader.getController();
-        DataShare.getInstance().setUsername(UserNameField.getText());
-
-        if (checkRole(UserNameField.getText(), PassWordField.getText())) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
-            root = loader.load();
-        } else {
-            try {
+            if (checkRole(UserNameField.getText(), PassWordField.getText())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
+                root = loader.load();
+            } else {
+                setEmail();
+                System.out.println(DataShare.getInstance().getEmail());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenCursist.fxml"));
-                ResultSet rs1 = DataBaseSQL.createConnection().prepareStatement("SELECT email from Cursist WHERE email = (SELECT email FROM Persoon WHERE UserName = '" + UserNameField.getText() + "');").executeQuery();
-                if (rs1.next()) {
-                    DataShare.getInstance().setCursistEmail(rs1.getString("email"));
-                    root = loader.load();
-                    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                } else {
-                    Error.ErrorNull("Er is geen email gekoppeld aan deze Username!");
-                }
+                root = loader.load();
 
-            } catch (SQLException ex) {
-                Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
+        Error.ErrorNull("Gebruikersnaam en Wachtwoord komen niet overeen.");
     }
 
     @FXML
@@ -157,7 +147,7 @@ public class LoginFXMLController implements Initializable {
                             + "',  '" + cursistLandCodeInput.getText() + "')");
 
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord, Email) VALUES("
-                            + "'Cursist' ,'"
+                            + "'CURSIST' ,'"
                             + UserNameFieldRegistreren.getText()
                             + "',  '" + PassWordFieldRegistreren.getText()
                             + "',  '" + cursistEmailInput.getText().toLowerCase() + "')");
@@ -235,5 +225,15 @@ public class LoginFXMLController implements Initializable {
             Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    private void setEmail() {
+        try {
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.email FROM Cursist c JOIN Persoon p ON p.Email = c.email WHERE p.UserName = '" + DataShare.getInstance().getUsername() + "'");
+            rs.next();
+            DataShare.getInstance().setCursistEmail(rs.getString("email"));
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

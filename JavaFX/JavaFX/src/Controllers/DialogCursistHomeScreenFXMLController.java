@@ -56,7 +56,7 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
     boolean ValidateAndSignUp() {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus FROM Cursus");
-            ResultSet rs1 = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.email FROM Cursist c JOIN Persoon p ON p.Email = c.email");
+            ResultSet rs1 = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.email FROM Cursist c JOIN Persoon p ON p.Email = c.email WHERE UserName = '"+DataShare.getInstance().getUsername()+"'");
             if (InschrijvenNaamCursusBox.getValue() != null || !InschrijvenNaamCursusBox.getValue().isEmpty()) {
                 if (rs.next()) {
                     rs1.next();
