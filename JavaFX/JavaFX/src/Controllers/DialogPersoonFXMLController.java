@@ -5,21 +5,22 @@
  */
 package Controllers;
 
-import static Controllers.DialogCertificaatFXMLController.dbConnection;
-import static Controllers.DialogCursistFXMLController.cursistDbConnection;
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 /**
  *
  * @author gijsv
  */
-public class DialogPersoonFXMLController {
+public class DialogPersoonFXMLController implements Initializable{
 
     @FXML
     TextField PersoonRoleInput;
@@ -65,5 +66,16 @@ public class DialogPersoonFXMLController {
             System.out.println(e);
         }
         return true;
+    }
+    private void loadData() {
+        PersoonRoleInput.setText(String.valueOf(DataShare.getInstance().getRol()));
+        PersoonUserNameInput.setText(String.valueOf(DataShare.getInstance().getUserName()));
+        PersoonPassWordInput.setText(String.valueOf(DataShare.getInstance().getPassWord()));
+        PersoonEmailInput.setText(String.valueOf(DataShare.getInstance().getEmail()));
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        loadData();
     }
 }
