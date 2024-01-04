@@ -94,10 +94,15 @@ public class DialogPersoonFXMLController implements Initializable {
 
     private void loadData() {
         PersoonRoleInput.setValue((DataShare.getInstance().getRol()));
-        PersoonUserNameInput.setText(String.valueOf(DataShare.getInstance().getPersoonUserName()));
-        PersoonPassWordInput.setText(String.valueOf(DataShare.getInstance().getPassWord()));
-        PersoonEmailInput.setText(String.valueOf(DataShare.getInstance().getEmail()));
-
+        if (DataShare.getInstance().getPersoonUserName() != null) {
+            PersoonUserNameInput.setText(String.valueOf(DataShare.getInstance().getPersoonUserName()));
+        }
+        if (DataShare.getInstance().getPassWord() != null) {
+            PersoonPassWordInput.setText(String.valueOf(DataShare.getInstance().getPassWord()));
+        }
+        if (DataShare.getInstance().getEmail() != null) {
+            PersoonEmailInput.setText(String.valueOf(DataShare.getInstance().getEmail()));
+        }
         if (DataShare.getInstance().getRol() == Rol.valueOf("ADMIN")) {
             PersoonRoleInput.setValue(Rol.ADMIN);
         } else if (DataShare.getInstance().getRol() == Rol.valueOf("CURSIST")) {
@@ -107,7 +112,9 @@ public class DialogPersoonFXMLController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        loadData();
+        if (DataShare.getInstance().getUsername() != null) {
+            loadData();
+        }
         PersoonRoleInput.setItems(FXCollections.observableArrayList(Rol.values()));
     }
 }

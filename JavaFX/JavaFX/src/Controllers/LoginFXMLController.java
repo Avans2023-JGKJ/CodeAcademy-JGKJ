@@ -99,23 +99,23 @@ public class LoginFXMLController implements Initializable {
         } else {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenCursist.fxml"));
-                ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT email from Cursist WHERE email = (SELECT email FROM Persoon WHERE UserName = '" + UserNameField.getText() + "');").executeQuery();
-                while (rs.next()) {
-                    DataShare.getInstance().setCursistEmail(rs.getString("email"));
+                ResultSet rs1 = DataBaseSQL.createConnection().prepareStatement("SELECT email from Cursist WHERE email = (SELECT email FROM Persoon WHERE UserName = '" + UserNameField.getText() + "');").executeQuery();
+                if (rs1.next()) {
+                    DataShare.getInstance().setCursistEmail(rs1.getString("email"));
+                    root = loader.load();
+                    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } else {
+                    Error.ErrorNull("Er is geen email gekoppeld aan deze Username!");
                 }
-                root = loader.load();
+
             } catch (SQLException ex) {
                 Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
 
-//        } else {
-//            showAlert();
-//        }
+        }
     }
 
     @FXML

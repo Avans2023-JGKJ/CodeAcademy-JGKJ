@@ -179,11 +179,11 @@ public class Error {
     }
 
     public void ErrorPassWord() {
-       WarningAlert("Wachtwoord incorrect", "De 2 wachtwoord velden komen niet overeen! \n Controleerd u nogmaals uw wachtwoord.",null);
+       WarningAlert("Wachtwoord incorrect", "De 2 wachtwoord velden komen niet overeen! \n Controleerd u nogmaals uw wachtwoord.", "");
     }
 
     public void ErrorSucces() {
-        InformationAlert("Succesvol","Succesvol Cursist Aangemaakt Je kunt nu inloggen!", null);
+        InformationAlert("Succesvol","Succesvol Cursist Aangemaakt Je kunt nu inloggen!", "");
     }
 
     void ErrorPKViolation(String input, String ondrwrp, String var) {
