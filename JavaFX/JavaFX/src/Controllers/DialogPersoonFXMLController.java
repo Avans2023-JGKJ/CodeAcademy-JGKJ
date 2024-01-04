@@ -103,9 +103,9 @@ public class DialogPersoonFXMLController implements Initializable {
         if (DataShare.getInstance().getEmail() != null) {
             PersoonEmailInput.setText(String.valueOf(DataShare.getInstance().getEmail()));
         }
-        if (DataShare.getInstance().getRol() == Rol.valueOf("Admin")) {
+        if (DataShare.getInstance().getRol() == Rol.valueOf("ADMIN")) {
             PersoonRoleInput.setValue(Rol.ADMIN);
-        } else if (DataShare.getInstance().getRol() == Rol.valueOf("Cursist")) {
+        } else if (DataShare.getInstance().getRol() == Rol.valueOf("CURSIST")) {
             PersoonRoleInput.setValue(Rol.CURSIST);
         }
     }

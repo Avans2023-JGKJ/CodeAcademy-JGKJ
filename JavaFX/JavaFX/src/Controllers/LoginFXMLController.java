@@ -96,6 +96,10 @@ public class LoginFXMLController implements Initializable {
         if (checkRole(UserNameField.getText(), PassWordField.getText())) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
             root = loader.load();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         } else {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenCursist.fxml"));
@@ -157,7 +161,7 @@ public class LoginFXMLController implements Initializable {
                             + "',  '" + cursistLandCodeInput.getText() + "')");
 
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord, Email) VALUES("
-                            + "'Cursist' ,'"
+                            + "'CURSIST' ,'"
                             + UserNameFieldRegistreren.getText()
                             + "',  '" + PassWordFieldRegistreren.getText()
                             + "',  '" + cursistEmailInput.getText().toLowerCase() + "')");
