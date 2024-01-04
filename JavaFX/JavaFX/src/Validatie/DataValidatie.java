@@ -43,6 +43,12 @@ public class DataValidatie {
     private static int BeoordelingCertificaatMin = 1;
     private static int BeoordelingCertificaatMax = 10;
 
+    //DataBase velden Persoon Tabel
+    private static int RolLength = 255;
+    private static int UserNameLength = 255;
+    private static int PassWordLength = 255;
+    private static int EmailPersoonLength = 255;
+
     public static boolean InsertCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro, Niveau niveau) {
         if (checkForNull(naamCursus, aantalItems, onderwerp, intro)) {
             if (checkPKCursus(naamCursus)) {
@@ -356,4 +362,80 @@ public class DataValidatie {
         }
         return false;
     }
+
+    private static boolean checkPKPersoon(String UserName) {
+        try {
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT UserName FROM Persoon WHERE UserName = '" + UserName + "'");
+            if (rs.next() && !rs.getString("UserName").equals(DataShare.getInstance().getPersoonUserName())) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DataValidatie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+
+    private static boolean checkFK1Persoon(String email) {
+        try {
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT email FROM Cursist WHERE email = '" + email + "'");
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DataValidatie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public static boolean InsertPersoonValid(String rol, String userName, String passWord, String email) {
+        if (checkForNull(rol, userName, passWord)) {
+            if (checkPKPersoon(userName)) {
+                if (checkNVarChar(rol, RolLength)) {
+                    if (checkNVarChar(userName, UserNameLength)) {
+                        if (checkNVarChar(passWord, PassWordLength)) {
+                            if (checkVarChar(email, EmailPersoonLength)) {
+                                if (checkEmailAddress(email)) {
+                                    if (checkFK1Persoon(email)) {
+                                        return true;
+                                    } else {
+                                        Error.ErrorFKViolation(email, "Persoon", "email");
+                                    }
+                                } else {
+                                    Error.ErrorEmail(email);
+                                }
+                            } else {
+                                Error.ErrorLength(email, EmailPersoonLength);
+                            }
+                        } else {
+                            Error.ErrorLength(passWord, PassWordLength);
+                        }
+                    } else {
+                        Error.ErrorLength(userName, UserNameLength);
+                    }
+                } else {
+                    Error.ErrorLength(rol, RolLength);
+                }
+            } else {
+                Error.ErrorPKViolation(userName, "UserName", "Persoon");
+            }
+        } else {
+            Error.ErrorEmpty();
+        }
+
+        return false;
+    }
+
+    public static boolean UpdatePersoonValid(String rol, String userName, String passWord, String email) {
+        if (InsertPersoonValid(rol, userName, passWord, email)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+

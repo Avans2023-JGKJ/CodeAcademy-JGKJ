@@ -122,12 +122,9 @@ public class PersoonFXMLController implements Initializable {
             Optional<ButtonType> clickedButton = dialog.showAndWait();
 
             if (clickedButton.isPresent() && clickedButton.get() == ButtonType.APPLY) {
-                System.out.println("voor jochem");
-                createPersoonController.FinishButtonCreatePersoonClicked();
-                System.out.println("na jochem");
+                createPersoonController.ValidateAndCreatePersoon();
                 loadTablePersoon();
             }
-
             dialog.setTitle("Persoon aanmaken");
 
         } catch (IOException ex) {
@@ -152,7 +149,7 @@ public class PersoonFXMLController implements Initializable {
 
             Button finishButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
             finishButton.addEventFilter(ActionEvent.ACTION, ae -> {
-                if (!updatePersoonController.FinishButtonUpdatePersoonClicked()) {
+                if (!updatePersoonController.ValidateAndUpdatePersoon()) {
                     ae.consume();
                 }
             });
@@ -211,7 +208,7 @@ public class PersoonFXMLController implements Initializable {
 
                 if (rs.next()) {
                     DataShare.getInstance().setRol(rs.getString("Rol"));
-                    DataShare.getInstance().setUserName(rs.getString("UserName"));
+                    DataShare.getInstance().setPersoonUserName(rs.getString("UserName"));
                     DataShare.getInstance().setPassWord(rs.getString("PassWord"));
                     DataShare.getInstance().setEmail(rs.getString("Email"));
                 } else {

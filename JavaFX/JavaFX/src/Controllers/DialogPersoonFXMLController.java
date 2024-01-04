@@ -5,6 +5,9 @@
  */
 package Controllers;
 
+import Validatie.DataValidatie;
+import Validatie.Error;
+import Objects.Rol;
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
 import java.net.URL;
@@ -34,7 +37,13 @@ public class DialogPersoonFXMLController implements Initializable{
     @FXML
     TextField PersoonEmailInput;
 
-    boolean FinishButtonUpdatePersoonClicked() {
+    boolean ValidateAndUpdatePersoon() {
+        if(DataValidatie.UpdatePersoonValid(
+        PersoonRoleInput.getText(),
+        PersoonUserNameInput.getText(),
+        PersoonPassWordInput.getText(),
+        PersoonEmailInput.getText()
+        ))
         try {
             DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
                     "UPDATE Persoon SET"
@@ -42,8 +51,8 @@ public class DialogPersoonFXMLController implements Initializable{
                     + "', UserName = '" + PersoonUserNameInput.getText()
                     + "', PassWord = '" + PersoonPassWordInput.getText()
                     + "', Email = '" + PersoonEmailInput.getText()
-                    + "'");
-            System.out.println("Cursist succesfully updated");
+                    + "' WHERE UserName = '" + DataShare.getInstance().getPersoonUserName() + "'");
+            System.out.println("Persoon succesfully updated");
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(DialogPersoonFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,7 +60,13 @@ public class DialogPersoonFXMLController implements Initializable{
         return true;
     }
 
-    boolean FinishButtonCreatePersoonClicked() {
+    boolean ValidateAndCreatePersoon() {
+         if(DataValidatie.InsertPersoonValid(
+        PersoonRoleInput.getText(),
+        PersoonUserNameInput.getText(),
+        PersoonPassWordInput.getText(),
+        PersoonEmailInput.getText()
+        ))
         try {
             DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord, Email) VALUES('"
                     + PersoonRoleInput.getText()
@@ -69,7 +84,7 @@ public class DialogPersoonFXMLController implements Initializable{
     }
     private void loadData() {
         PersoonRoleInput.setText(String.valueOf(DataShare.getInstance().getRol()));
-        PersoonUserNameInput.setText(String.valueOf(DataShare.getInstance().getUserName()));
+        PersoonUserNameInput.setText(String.valueOf(DataShare.getInstance().getPersoonUserName()));
         PersoonPassWordInput.setText(String.valueOf(DataShare.getInstance().getPassWord()));
         PersoonEmailInput.setText(String.valueOf(DataShare.getInstance().getEmail()));
     }

@@ -187,7 +187,7 @@ public class Error {
     }
 
     void ErrorPKViolation(String input, String ondrwrp, String var) {
-        ErrorAlert(ondrwrp+" is al in gebruik!", "Er bestaat al een "+var+" met "+ondrwrp+": '"+input,"");
+        ErrorAlert(ondrwrp+" is al in gebruik!", "Er bestaat al een "+var+" met "+ondrwrp+": '"+input + "'","");
     }
 
     void ErrorFKViolation(String var, String ondrwrp, String type) {

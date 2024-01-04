@@ -322,11 +322,11 @@ public class DataShare {
         this.rol = rol;
     }
 
-    public String getUserName() {
+    public String getPersoonUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public void setPersoonUserName(String userName) {
         this.userName = userName;
     }
 
