@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -30,9 +31,9 @@
             <TextField fx:id="PersoonUserNameInput" prefHeight="26.0" prefWidth="98.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="PersoonPassWordInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Rol" />
-            <TextField fx:id="PersoonRoleInput" prefHeight="26.0" prefWidth="98.0" GridPane.columnIndex="1" />
             <Label text="Email" GridPane.rowIndex="3" />
             <TextField fx:id="PersoonEmailInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="PersoonRoleInput" prefWidth="150.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </graphic>

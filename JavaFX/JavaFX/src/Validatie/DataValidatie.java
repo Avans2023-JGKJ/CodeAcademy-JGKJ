@@ -399,8 +399,8 @@ public class DataValidatie {
                     if (checkNVarChar(userName, UserNameLength)) {
                         if (checkNVarChar(passWord, PassWordLength)) {
                             if (checkVarChar(email, EmailPersoonLength)) {
-                                if (checkEmailAddress(email)) {
-                                    if (checkFK1Persoon(email)) {
+                                if (checkEmailAddress(email) || email.isEmpty()) {
+                                    if (checkFK1Persoon(email)|| email.isEmpty()) {
                                         return true;
                                     } else {
                                         Error.ErrorFKViolation(email, "Persoon", "email");

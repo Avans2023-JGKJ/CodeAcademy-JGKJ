@@ -15,18 +15,17 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 /**
  *
  * @author gijsv
  */
-public class DialogPersoonFXMLController implements Initializable{
-
-    @FXML
-    TextField PersoonRoleInput;
+public class DialogPersoonFXMLController implements Initializable {
 
     @FXML
     TextField PersoonUserNameInput;
@@ -37,17 +36,20 @@ public class DialogPersoonFXMLController implements Initializable{
     @FXML
     TextField PersoonEmailInput;
 
+    @FXML
+    ComboBox<Rol> PersoonRoleInput;
+
     boolean ValidateAndUpdatePersoon() {
-        if(DataValidatie.UpdatePersoonValid(
-        PersoonRoleInput.getText(),
-        PersoonUserNameInput.getText(),
-        PersoonPassWordInput.getText(),
-        PersoonEmailInput.getText()
+        if (DataValidatie.UpdatePersoonValid(
+                PersoonRoleInput.getValue().toString(),
+                PersoonUserNameInput.getText(),
+                PersoonPassWordInput.getText(),
+                PersoonEmailInput.getText()
         ))
         try {
             DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
                     "UPDATE Persoon SET"
-                    + " Rol = '" + PersoonRoleInput.getText()
+                    + " Rol = '" + PersoonRoleInput.getValue()
                     + "', UserName = '" + PersoonUserNameInput.getText()
                     + "', PassWord = '" + PersoonPassWordInput.getText()
                     + "', Email = '" + PersoonEmailInput.getText()
@@ -61,19 +63,26 @@ public class DialogPersoonFXMLController implements Initializable{
     }
 
     boolean ValidateAndCreatePersoon() {
-         if(DataValidatie.InsertPersoonValid(
-        PersoonRoleInput.getText(),
-        PersoonUserNameInput.getText(),
-        PersoonPassWordInput.getText(),
-        PersoonEmailInput.getText()
+        if (DataValidatie.InsertPersoonValid(
+                PersoonRoleInput.getValue().toString(),
+                PersoonUserNameInput.getText(),
+                PersoonPassWordInput.getText(),
+                PersoonEmailInput.getText()
         ))
         try {
-            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord, Email) VALUES('"
-                    + PersoonRoleInput.getText()
-                    + "',  '" + PersoonUserNameInput.getText()
-                    + "',  '" + PersoonPassWordInput.getText()
-                    + "',  '" + PersoonEmailInput.getText() + "')");
-            System.out.println("speciaal voor jochem");
+            if (PersoonRoleInput.getValue().equals("CURSIST")) {
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord, Email) VALUES('"
+                        + PersoonRoleInput.getValue()
+                        + "',  '" + PersoonUserNameInput.getText()
+                        + "',  '" + PersoonPassWordInput.getText()
+                        + "',  '" + PersoonEmailInput.getText() + "')");
+            } else {
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord) VALUES('"
+                        + PersoonRoleInput.getValue()
+                        + "',  '" + PersoonUserNameInput.getText()
+                        + "',  '" + PersoonPassWordInput.getText() + "')");
+            }
+
         } catch (SQLException ex) {
             CursistFXMLController.ErrorAlert("Er is iets fout gegaan!", "SQL Fout!");
             System.out.println(ex);
@@ -82,15 +91,23 @@ public class DialogPersoonFXMLController implements Initializable{
         }
         return true;
     }
+
     private void loadData() {
-        PersoonRoleInput.setText(String.valueOf(DataShare.getInstance().getRol()));
+        PersoonRoleInput.setValue((DataShare.getInstance().getRol()));
         PersoonUserNameInput.setText(String.valueOf(DataShare.getInstance().getPersoonUserName()));
         PersoonPassWordInput.setText(String.valueOf(DataShare.getInstance().getPassWord()));
         PersoonEmailInput.setText(String.valueOf(DataShare.getInstance().getEmail()));
+
+        if (DataShare.getInstance().getRol() == Rol.valueOf("ADMIN")) {
+            PersoonRoleInput.setValue(Rol.ADMIN);
+        } else if (DataShare.getInstance().getRol() == Rol.valueOf("CURSIST")) {
+            PersoonRoleInput.setValue(Rol.CURSIST);
+        }
     }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         loadData();
+        PersoonRoleInput.setItems(FXCollections.observableArrayList(Rol.values()));
     }
 }

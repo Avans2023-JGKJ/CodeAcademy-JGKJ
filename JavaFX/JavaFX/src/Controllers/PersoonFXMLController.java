@@ -10,6 +10,7 @@ import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
 import Objects.Persoon;
 import Objects.Niveau;
+import Objects.Rol;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -207,7 +208,7 @@ public class PersoonFXMLController implements Initializable {
                 ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Persoon WHERE userName = '" + clickedPersoon.getUserName() + "'");
 
                 if (rs.next()) {
-                    DataShare.getInstance().setRol(rs.getString("Rol"));
+                    DataShare.getInstance().setRol(Rol.valueOf(rs.getString("Rol")));
                     DataShare.getInstance().setPersoonUserName(rs.getString("UserName"));
                     DataShare.getInstance().setPassWord(rs.getString("PassWord"));
                     DataShare.getInstance().setEmail(rs.getString("Email"));

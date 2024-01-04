@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import static Controllers.CursistFXMLController.ErrorAlert;
+import Objects.Rol;
 
 public class DataShare {
 
@@ -74,7 +75,7 @@ public class DataShare {
     private String OrganisatieSpreker;
 
     //Persoon-gerelateerde velden
-    private String rol;
+    private Rol rol;
     private String userName;
     private String passWord;
     private String email;
@@ -314,11 +315,11 @@ public class DataShare {
         return OrganisatieSpreker;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol ;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
