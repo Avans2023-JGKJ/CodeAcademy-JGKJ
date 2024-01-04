@@ -106,6 +106,13 @@ public class DataShare {
         this.medeWerkerNaam = "";
     }
 
+    public void resetPersoon() {
+        this.rol = null;
+        this.userName = null;
+        this.passWord = null;
+        this.email = null;
+    }
+
     public void resetContentItem() {
         this.contentItemId = null;
         this.naamCursus = null;
@@ -317,7 +324,7 @@ public class DataShare {
     }
 
     public Rol getRol() {
-        return rol ;
+        return rol;
     }
 
     public void setRol(Rol rol) {

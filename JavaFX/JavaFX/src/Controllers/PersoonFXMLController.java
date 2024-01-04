@@ -105,7 +105,7 @@ public class PersoonFXMLController implements Initializable {
 
     @FXML
     void PersoonAanmakenClicked(MouseEvent event) {
-        DataShare.getInstance().resetCursus();
+        DataShare.getInstance().resetPersoon();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/createPersoonDialog.fxml"));
             DialogPane pane = loader.load();

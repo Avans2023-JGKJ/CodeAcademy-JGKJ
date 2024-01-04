@@ -67,8 +67,9 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
                     ResultSet rs2 = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT inschrijfId FROM Inschrijven ORDER BY inschrijfId DESC");
                     rs2.next();
                     DataShare.getInstance().setInschrijfId(rs2.getInt("inschrijfId"));
+                    DataShare.getInstance().setNaamCursus(InschrijvenNaamCursusBox.getValue());
 
-//                    createAccessories(DataShare.getInstance().getInschrijfId());
+                    createAccessories(DataShare.getInstance().getInschrijfId());
                     return true;
                 }
             } else {
@@ -83,8 +84,13 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
 
     private void createAccessories(int inschrijfId) {
         try {
-            String createVoortgang = "";
-            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), createVoortgang);
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT contentItemId FROM contentItems WHERE naamCursus = '" + DataShare.getInstance().getNaamCursus() + "'");
+            while (rs.next()) {
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Voortgang (inschrijfId, naamCursus, contentItemId, voortgangsPercentage) VALUES ("
+                        + "'" + inschrijfId + "', '"
+                        + DataShare.getInstance().getNaamCursus() + "', '" + rs.getString("contentItemId") + "', '0')");
+            }
+            System.out.println("Benodigde Tupels aangemaakt...");
         } catch (SQLException ex) {
             Logger.getLogger(DialogCursistHomeScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }

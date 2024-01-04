@@ -86,7 +86,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
         loadRecentCursussen();
     }
 
-    private void loadRecentCursussen() {
+    void loadRecentCursussen() {
         try {
             String command = "SELECT Cursus.naamCursus, Cursus.onderwerp, Cursus.introductieTekst "
                     + "FROM Cursus "
@@ -98,6 +98,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
             boolean skip = true;
 
             if (rs.next()) {
+                visibleEen(true);
                 CursusEenTitel.setText(rs.getString("onderwerp"));
                 CursusEenLabel.setText(rs.getString("introductieTekst"));
                 DataShare.getInstance().setNaamCursusEen(rs.getString("naamCursus"));
@@ -107,6 +108,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
             }
 
             if (rs.next() && skip) {
+                visibleTwee(true);
                 CursusTweeTitel.setText(rs.getString("onderwerp"));
                 CursusTweeLabel.setText(rs.getString("introductieTekst"));
                 DataShare.getInstance().setNaamCursusTwee(rs.getString("naamCursus"));
@@ -116,6 +118,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
             }
 
             if (rs.next() && skip) {
+                visibleDrie(true);
                 CursusDrieTitel.setText(rs.getString("onderwerp"));
                 CursusDrieLabel.setText(rs.getString("introductieTekst"));
                 DataShare.getInstance().setNaamCursusDrie(rs.getString("naamCursus"));

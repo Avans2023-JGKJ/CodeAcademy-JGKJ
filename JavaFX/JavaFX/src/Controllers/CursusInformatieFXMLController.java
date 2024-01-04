@@ -71,20 +71,20 @@ public class CursusInformatieFXMLController implements Initializable {
         ContentItemBeschrjivingColumn.setCellValueFactory(new PropertyValueFactory<>("beschrijving"));
     }
 
-    public void loadTableContentItems() {
+    public void loadTableContentItems()  {
         try {
             initTable();
             System.out.println("1");
-            try ( ResultSet rs = DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection).prepareStatement("SELECT contentItems.titel, contentItems.beschrijving, Module.versie from contentItems, Module WHERE contentItems.naamCursus = '" + DataShare.getInstance().getNaamCursus() + "';").executeQuery()) {
-                while (rs.next()) {
-                    System.out.println("2");
-                    ContentItem ContentItem = new ContentItem();
-                    ContentItem.setTitel(rs.getString("titel"));
-                    ContentItem.setVersie(rs.getString("versie"));
-                    ContentItem.setBeschrijving(rs.getString("beschrijving"));
-                    observableContentItems.add(ContentItem);
-                }
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.titel, c.beschrijving, m.versie FROM contentItems JOIN Module m ON m.contentItemId = c.contentItemId WHERE c.naamCursus = '" + DataShare.getInstance().getNaamCursus() + "';");
+            while (rs.next()) {
+                System.out.println("2");
+                ContentItem ContentItem = new ContentItem();
+                ContentItem.setTitel(rs.getString("titel"));
+                ContentItem.setVersie(rs.getString("versie"));
+                ContentItem.setBeschrijving(rs.getString("beschrijving"));
+                observableContentItems.add(ContentItem);
             }
+
             System.out.println("3");
             ContentItemsCursus.setItems(observableContentItems);
             ContentItemsCursus.refresh();
