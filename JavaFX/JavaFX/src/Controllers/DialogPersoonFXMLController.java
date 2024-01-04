@@ -80,7 +80,7 @@ public class DialogPersoonFXMLController implements Initializable {
                         + PersoonRoleInput.getValue()
                         + "',  '" + PersoonUserNameInput.getText()
                         + "',  '" + PersoonPassWordInput.getText()
-                        + "',  '" + PersoonEmailInput.getText() + "')");
+                        + "',  '" + PersoonEmailInput.getText().toLowerCase() + "')");
             }
 
         } catch (SQLException ex) {

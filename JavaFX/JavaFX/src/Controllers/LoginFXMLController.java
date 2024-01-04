@@ -149,7 +149,7 @@ public class LoginFXMLController implements Initializable {
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Cursist (naam, postCode, email, geboorteDatum, geslacht, huisNummer, woonPlaats, landCode) VALUES("
                             + "  '" + cursistNaamColumninput.getText()
                             + "',  '" + cursistPostcodeInput.getText()
-                            + "',  '" + cursistEmailInput.getText()
+                            + "',  '" + cursistEmailInput.getText().toLowerCase()
                             + "',  '" + cursistGeboortedatumInput.getValue()
                             + "',  '" + RadioButtonGeslachtCheck()
                             + "',   '" + cursistHuisnummerInput.getText()

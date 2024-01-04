@@ -74,7 +74,7 @@ public class DialogCursistFXMLController implements Initializable {
                 DataBaseSQL.sendCommand(cursistDbConnection, "INSERT INTO Cursist (naam, postCode, email, geboorteDatum, geslacht, huisNummer, woonPlaats, landCode) VALUES("
                         + "  '" + cursistNaamColumninput.getText()
                         + "',  '" + cursistPostcodeInput.getText()
-                        + "',  '" + cursistEmailInput.getText()
+                        + "',  '" + cursistEmailInput.getText().toLowerCase()
                         + "',  '" + cursistGeboortedatumInput.getValue()
                         + "',  '" + RadioButtonGeslachtCheck()
                         + "',   '" + cursistHuisnummerInput.getText()
