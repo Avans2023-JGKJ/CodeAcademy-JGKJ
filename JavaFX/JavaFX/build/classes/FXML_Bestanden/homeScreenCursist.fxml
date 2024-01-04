@@ -74,7 +74,7 @@
                         </Stop>
                         <Stop offset="1.0">
                            <color>
-                              <Color red="0.14152047038078308" green="0.035087719559669495" blue="0.2631579041481018" opacity="0.28999999165534973" />
+                              <Color red="0.13725490868091583" green="0.03529411926865578" blue="0.25882354378700256" opacity="0.28999999165534973" />
                            </color>
                         </Stop>
                      </stops>
@@ -136,6 +136,18 @@
             </Label>
             <Label fx:id="CursusDrieLabel" layoutX="260.0" layoutY="608.0" onMouseClicked="#CursusDrieClicked" prefHeight="86.0" prefWidth="178.0" text="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST " textFill="WHITE" wrapText="true" />
             <Button layoutX="43.0" layoutY="741.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#BekijkAlleCursussenCursistClicked" prefHeight="26.0" prefWidth="410.0" text="Bekijk alle Cursussen" underline="true" />
+            <Rectangle fx:id="InschrijvenRechthoek" arcHeight="5.0" arcWidth="5.0" fill="#41117c4a" height="106.0" layoutX="625.0" layoutY="397.0" onMouseClicked="#InschrijvenClicked" stroke="#00000094" strokeType="INSIDE" width="409.0" />
+            <Label fx:id="InschrijvenLabel" layoutX="720.0" layoutY="418.0" onMouseClicked="#InschrijvenClicked" text="Inschrijven" textFill="#ffffffed">
+               <font>
+                  <Font name="System Bold Italic" size="43.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="CertificatenRechthoek" arcHeight="5.0" arcWidth="5.0" fill="#41117c4a" height="106.0" layoutX="625.0" layoutY="529.0" onMouseClicked="#CertificaatClicked" stroke="#00000094" strokeType="INSIDE" width="409.0" />
+            <Label fx:id="CertificatenLabel" layoutX="712.0" layoutY="550.0" onMouseClicked="#CertificaatClicked" text="Certificaten" textFill="#ffffffed">
+               <font>
+                  <Font name="System Bold Italic" size="43.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </children>
