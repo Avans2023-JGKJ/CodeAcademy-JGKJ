@@ -5,7 +5,7 @@
             <url>src/Validatie/DataValidatie.java</url>
             <bookmark id="1">
                 <name/>
-                <line>191</line>
+                <line>313</line>
                 <key/>
             </bookmark>
         </file>
@@ -13,12 +13,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Validatie/DataValidatie.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/CursistFXMLController.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogCursistFXMLController.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/PersoonFXMLController.java</file>
+            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogContentItemFXMLController.java</file>
+            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Java2Database/DataShare.java</file>
+            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/CursusFXMLController.java</file>
             <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/JavaFXApplication.java</file>
+            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/ContentItemFXMLController.java</file>
             <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Validatie/Error.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/CertificaatFXMLController.java</file>
+            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogChooseFXMLController.java</file>
         </group>
     </open-files>
 </project-private>

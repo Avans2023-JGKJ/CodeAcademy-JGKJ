@@ -59,7 +59,7 @@ public class DialogPersoonFXMLController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(DialogPersoonFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return true;
+        return false;
     }
 
     boolean ValidateAndCreatePersoon() {
@@ -89,7 +89,7 @@ public class DialogPersoonFXMLController implements Initializable {
         } catch (Exception e) {
             System.out.println(e);
         }
-        return true;
+        return false;
     }
 
     private void loadData() {

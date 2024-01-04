@@ -521,8 +521,6 @@ public class DataValidatie {
         return false;
     }
 
-    <<<<<<<HEAD
-
     private static boolean checkPKPersoon(String UserName) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
@@ -598,5 +596,5 @@ public class DataValidatie {
         } else {
             return false;
         }
-    }=======>>>>>>>JochemBezig
+    }
 }
