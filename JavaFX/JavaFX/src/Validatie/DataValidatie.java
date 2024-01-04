@@ -4,6 +4,7 @@ import Java2Database.DataBaseSQL;
 import static Controllers.CursistFXMLController.parseDate;
 import Java2Database.DataShare;
 import Objects.Niveau;
+import Objects.Status;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -15,20 +16,20 @@ import java.util.regex.Pattern;
 
 public class DataValidatie {
 
-    //General Info
+    // General Info
     private static short minimaleLeeftijdCursist = 8;
 
-    //Error Object
+    // Error Object
     private static Error Error = new Error();
 
-    //DataBase velden Cursus Tabel
+    // DataBase velden Cursus Tabel
     private static int naamCursusLength = 255;
     private static int aantalContentitemsCursusMax = 32767;
     private static int onderwerpCursusLength = 255;
     private static int introductieTekstCursusLength = 43679;
     private static int niveauCursusLength = 9;
 
-    //DataBase velden Cursist Tabel
+    // DataBase velden Cursist Tabel
     private static int emailCursistLenght = 255;
     private static int naamCursistLength = 255;
     private static int postCodeCursistLenght = 15;
@@ -38,22 +39,45 @@ public class DataValidatie {
     private static int geboorteDatumCursistLenght = 10;
     private static boolean isUpdate = false;
 
-    //DataBase velden Certificaat Tabel
+    // DataBase velden Certificaat Tabel
     private static int naamMedewerkerCertificaatLenght = 255;
     private static int BeoordelingCertificaatMin = 1;
     private static int BeoordelingCertificaatMax = 10;
 
-    //DataBase velden Persoon Tabel
+    // DataBase velden Persoon Tabel
     private static int RolLength = 255;
     private static int UserNameLength = 255;
     private static int PassWordLength = 255;
     private static int EmailPersoonLength = 255;
 
-    public static boolean InsertCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro, Niveau niveau) {
+    // DataBase velen ContentItem
+    private static int naamCursusContentItemLength = 255;
+    private static int beschrijvingContentItemLength = 255;
+    private static int titelContentItemLength = 255;
+    private static int statusContentItemLength = 12;
+
+    // DataBase velden Webcast
+    private static int titelWebcastLength = 255;
+    private static int tijdsDuurWebcastLength = 14400; // Maximale duur is 10 dagen...
+    private static int urlWebcastLength = 511;
+    private static int naamSprekerWebcastLength = 255;
+    private static int organisatieSprekerWebcastLength = 255;
+
+    // DataBase velden Module
+    private static int titelModuleLength = 255;
+    private static int versieModuleLength = 255;
+    private static int naamContactModuleLength = 255;
+    private static int emailContactModuleLength = 255;
+    private static int volgNrModuleMax = 255;
+    private static int volgNrModuleMin = 1;
+
+    public static boolean InsertCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro,
+            Niveau niveau) {
         if (checkForNull(naamCursus, aantalItems, onderwerp, intro)) {
             if (checkPKCursus(naamCursus)) {
                 if (checkNVarChar(naamCursus, naamCursusLength)) {
-                    if (Integer.valueOf(aantalItems) <= aantalContentitemsCursusMax && Integer.valueOf(aantalItems) >= 1) {
+                    if (Integer.valueOf(aantalItems) <= aantalContentitemsCursusMax
+                            && Integer.valueOf(aantalItems) >= 1) {
                         if (checkNVarChar(onderwerp, onderwerpCursusLength)) {
                             if (checkNVarChar(intro, introductieTekstCursusLength)) {
                                 if (niveau != null && niveau.name() != "" && !niveau.name().isEmpty()) {
@@ -83,14 +107,16 @@ public class DataValidatie {
         return false;
     }
 
-    public static boolean UpdateCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro, Niveau niveau) {
+    public static boolean UpdateCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro,
+            Niveau niveau) {
         if (InsertCursusValid(naamCursus, aantalItems, onderwerp, intro, niveau)) {
             return true;
         }
         return false;
     }
 
-    public static boolean InsertCursistValid(String naamCursist, String postCode, String email, LocalDate geboorteDatum, boolean man, boolean vrouw, String huisnr, String woonplaats, String landcode) {
+    public static boolean InsertCursistValid(String naamCursist, String postCode, String email, LocalDate geboorteDatum,
+            boolean man, boolean vrouw, String huisnr, String woonplaats, String landcode) {
         if (checkForNull(naamCursist, postCode, email, String.valueOf(geboorteDatum), huisnr, woonplaats, landcode)) {
             if (checkPKCursist(email)) {
                 if (checkVarChar(naamCursist, naamCursistLength)) {
@@ -98,7 +124,8 @@ public class DataValidatie {
                         if (checkPostcode(postCode)) {
                             if (checkNVarChar(email, emailCursistLenght)) {
                                 if (checkEmailAddress(email)) {
-                                    if (checkNVarChar(String.valueOf(geboorteDatum), geboorteDatumCursistLenght) || isUpdate) {
+                                    if (checkNVarChar(String.valueOf(geboorteDatum), geboorteDatumCursistLenght)
+                                            || isUpdate) {
                                         if (checkBirthDate(geboorteDatum) || isUpdate) {
                                             if ((man == true && vrouw == false) || (man == false && vrouw == true)) {
                                                 if (checkNVarChar(huisnr, huisNummerCursistLenght)) {
@@ -117,7 +144,8 @@ public class DataValidatie {
                                                     Error.ErrorLength(huisnr, huisNummerCursistLenght);
                                                 }
                                             } else {
-                                                Error.ErrorNull("Er is iets mis gegaan bij het selecteren van de Gender.");
+                                                Error.ErrorNull(
+                                                        "Er is iets mis gegaan bij het selecteren van de Gender.");
                                             }
                                         } else {
                                             Error.ErrorAge(geboorteDatum, minimaleLeeftijdCursist);
@@ -149,9 +177,11 @@ public class DataValidatie {
         return false;
     }
 
-    public static boolean UpdateCursistValid(String naamCursist, String postCode, String email, boolean man, boolean vrouw, String huisnr, String woonplaats, String landcode) {
+    public static boolean UpdateCursistValid(String naamCursist, String postCode, String email, boolean man,
+            boolean vrouw, String huisnr, String woonplaats, String landcode) {
         isUpdate = true;
-        if (InsertCursistValid(naamCursist, postCode, email, LocalDate.now(), man, vrouw, huisnr, woonplaats, landcode)) {
+        if (InsertCursistValid(naamCursist, postCode, email, LocalDate.now(), man, vrouw, huisnr, woonplaats,
+                landcode)) {
             return true;
         }
         return false;
@@ -160,7 +190,8 @@ public class DataValidatie {
     public static boolean InsertCertificaatValid(String Beoordeling, String naamMedewerker, String inschrijfId) {
         if (checkForNull(Beoordeling, naamMedewerker, inschrijfId)) {
             if (checkNVarChar(naamMedewerker, naamMedewerkerCertificaatLenght)) {
-                if (Integer.valueOf(Beoordeling) <= BeoordelingCertificaatMax && Integer.valueOf(Beoordeling) >= BeoordelingCertificaatMin) {
+                if (Integer.valueOf(Beoordeling) <= BeoordelingCertificaatMax
+                        && Integer.valueOf(Beoordeling) >= BeoordelingCertificaatMin) {
                     if (checkFK1Certificaat(naamMedewerker)) {
                         if (checkFK2Certificaat(inschrijfId)) {
                             System.out.println("VALIDATION SUCCEEDED");
@@ -172,10 +203,114 @@ public class DataValidatie {
                         Error.ErrorFKViolation(naamMedewerker, "Medewerker", "Medewerker Naam");
                     }
                 } else {
-                    Error.ErrorLimit(Integer.valueOf(Beoordeling), BeoordelingCertificaatMin, BeoordelingCertificaatMax);
+                    Error.ErrorLimit(Integer.valueOf(Beoordeling), BeoordelingCertificaatMin,
+                            BeoordelingCertificaatMax);
                 }
             } else {
                 Error.ErrorLength(naamMedewerker, naamMedewerkerCertificaatLenght);
+            }
+        } else {
+            Error.ErrorEmpty();
+        }
+        return false;
+    }
+
+    public static boolean AlterContentItemValid(String naamCursus, String beschrijving, String titel, Status status) {
+        if (checkForNull(naamCursus, titel)) {
+            if (checkNVarChar(naamCursus, naamCursusContentItemLength)) {
+                if ((beschrijving == null || beschrijving.isEmpty())
+                        || checkNVarChar(beschrijving, beschrijvingContentItemLength)) {
+                    if (checkNVarChar(titel, titelContentItemLength)) {
+                        if (status != null && status.name() != "" && !status.name().isEmpty()) {
+                            if (checkVarChar(status.name(), statusContentItemLength)) {
+                                System.out.println("VERIFICATION SUCCEEDED!");
+                                return true;
+                            } else {
+                                Error.ErrorLength(status.name(), statusContentItemLength);
+                            }
+                        } else {
+                            Error.ErrorNull("Status kan niet leeg zijn!");
+
+                        }
+                    } else {
+                        Error.ErrorLength(titel, titelContentItemLength);
+                    }
+                } else {
+                    Error.ErrorLength(beschrijving, beschrijvingContentItemLength);
+                }
+            } else {
+                Error.ErrorLength(naamCursus, naamCursusContentItemLength);
+            }
+        } else {
+            Error.ErrorEmpty();
+        }
+        return false;
+    }
+
+    public static boolean AlterWebcastValid(String titel, String tijdsDuur, LocalDate publicatieDatum, String URL,
+            String naamSpreker, String organisatieSpreker) {
+        if (checkForNull(titel, tijdsDuur, String.valueOf(publicatieDatum), URL, naamSpreker)) {
+            if (checkNVarChar(titel, titelWebcastLength)) {
+                if (checkNVarChar(tijdsDuur, tijdsDuurWebcastLength)) {
+                    if (checkLegalDate(publicatieDatum)) {
+                        if (checkURL(URL)) {
+                            if (checkNVarChar(URL, urlWebcastLength)) {
+                                if (checkNVarChar(naamSpreker, naamSprekerWebcastLength)) {
+                                    if (organisatieSpreker.isEmpty()
+                                            || checkNVarChar(organisatieSpreker, organisatieSprekerWebcastLength)) {
+                                        System.out.println("VERIFICATION SUCCEEDED!");
+                                        return true;
+                                    } else {
+                                        Error.ErrorLength(organisatieSpreker, organisatieSprekerWebcastLength);
+                                    }
+                                } else {
+                                    Error.ErrorLength(naamSpreker, naamSprekerWebcastLength);
+                                }
+                            } else {
+                                Error.ErrorLength(URL, urlWebcastLength);
+                            }
+                        } else {
+                            Error.ErrorURL(URL);
+                        }
+                    } else {
+                        Error.ErrorLegalDate(publicatieDatum);
+                    }
+                } else {
+                    Error.ErrorLength(tijdsDuur, tijdsDuurWebcastLength);
+                }
+            } else {
+                Error.ErrorLength(titel, titelWebcastLength);
+            }
+        } else {
+            Error.ErrorEmpty();
+        }
+        return false;
+    }
+
+    public static boolean AlterModuleValid(String titel, String versie, String naamContact, String emailContact,
+            short volgNr) {
+        if (checkForNull(titel, versie, String.valueOf(volgNr))) {
+            if (checkNVarChar(titel, titelModuleLength)) {
+                if (checkNVarChar(versie, versieModuleLength)) {
+                    if (checkNVarChar(naamContact, naamContactModuleLength)) {
+                        if (checkNVarChar(emailContact, emailContactModuleLength)) {
+                            if (volgNr <= volgNrModuleMax && volgNr >= volgNrModuleMin) {
+                                System.out.println("VERIFICATION SUCCEEDED!");
+                                return true;
+                            } else {
+                                Error.ErrorLimit(volgNr, volgNrModuleMax, volgNrModuleMin);
+                            }
+                        } else {
+                            Error.ErrorLength(emailContact, emailContactModuleLength);
+                        }
+                    } else {
+                        Error.ErrorLength(naamContact, naamContactModuleLength);
+                    }
+                } else {
+                    Error.ErrorLength(versie, versieModuleLength);
+                }
+            } else {
+                Error.ErrorLength(titel, titelModuleLength);
             }
         } else {
             Error.ErrorEmpty();
@@ -207,8 +342,11 @@ public class DataValidatie {
     }
 
     private static boolean containsUnicodeCharacter(String str) {
-        // Use a regular expression to check if the string contains any Unicode character
-        return Pattern.compile("[\\p{InBasicLatin}\\p{InLatin-1Supplement}-\\p{InLatinExtended-C}&&[^\\p{InBasicLatin}]]").matcher(str).find();
+        // Use a regular expression to check if the string contains any Unicode
+        // character
+        return Pattern
+                .compile("[\\p{InBasicLatin}\\p{InLatin-1Supplement}-\\p{InLatinExtended-C}&&[^\\p{InBasicLatin}]]")
+                .matcher(str).find();
     }
 
     public static boolean checkPostcode(String postCode) {
@@ -248,6 +386,14 @@ public class DataValidatie {
 
     public static boolean checkDate(LocalDate date) {
         if (date.getMonthValue() <= 12 && date.getMonthValue() >= 1) {
+            return true;
+        }
+        return false;
+
+    }
+
+    public static boolean checkLegalDate(LocalDate date) {
+        if (date != null && date.isBefore(LocalDate.now())) {
             return true;
         }
         return false;
@@ -299,8 +445,16 @@ public class DataValidatie {
         return false;
     }
 
+    private static boolean checkForNull(String a, String b, String c, String d, String e) {
+        if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty() && !e.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
     private static boolean checkForNull(String a, String b, String c, String d, String e, String f, String g) {
-        if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty() && !e.isEmpty() && !f.isEmpty() && !g.isEmpty()) {
+        if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty() && !e.isEmpty() && !f.isEmpty()
+                && !g.isEmpty()) {
             return true;
         }
         return false;
@@ -308,7 +462,8 @@ public class DataValidatie {
 
     private static boolean checkPKCursus(String naamCursus) {
         try {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus FROM Cursus WHERE naamCursus = '" + naamCursus + "'");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
+                    "SELECT naamCursus FROM Cursus WHERE naamCursus = '" + naamCursus + "'");
             if (rs.next() && !rs.getString("naamCursus").equals(DataShare.getInstance().getNaamCursus())) {
                 return false;
             } else {
@@ -323,7 +478,8 @@ public class DataValidatie {
 
     private static boolean checkPKCursist(String email) {
         try {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT email FROM Cursist WHERE email = '" + email + "'");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
+                    "SELECT email FROM Cursist WHERE email = '" + email + "'");
             if (rs.next() && !rs.getString("email").equals(DataShare.getInstance().getCursistEmail())) {
                 return false;
             } else {
@@ -337,7 +493,8 @@ public class DataValidatie {
 
     private static boolean checkFK1Certificaat(String naamMedewerker) {
         try {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT UserName FROM Persoon WHERE UserName = '" + naamMedewerker + "'");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
+                    "SELECT UserName FROM Persoon WHERE UserName = '" + naamMedewerker + "'");
             if (rs.next()) {
                 return true;
             } else {
@@ -351,7 +508,8 @@ public class DataValidatie {
 
     private static boolean checkFK2Certificaat(String inschrijfId) {
         try {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT inschrijfId FROM Inschrijven WHERE inschrijfId = '" + inschrijfId + "'");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
+                    "SELECT inschrijfId FROM Inschrijven WHERE inschrijfId = '" + inschrijfId + "'");
             if (rs.next()) {
                 return true;
             } else {
@@ -363,9 +521,12 @@ public class DataValidatie {
         return false;
     }
 
+    <<<<<<<HEAD
+
     private static boolean checkPKPersoon(String UserName) {
         try {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT UserName FROM Persoon WHERE UserName = '" + UserName + "'");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
+                    "SELECT UserName FROM Persoon WHERE UserName = '" + UserName + "'");
             if (rs.next() && !rs.getString("UserName").equals(DataShare.getInstance().getPersoonUserName())) {
                 return false;
             } else {
@@ -380,7 +541,8 @@ public class DataValidatie {
 
     private static boolean checkFK1Persoon(String email) {
         try {
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT email FROM Cursist WHERE email = '" + email + "'");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
+                    "SELECT email FROM Cursist WHERE email = '" + email + "'");
             if (rs.next()) {
                 return true;
             } else {
@@ -400,7 +562,7 @@ public class DataValidatie {
                         if (checkNVarChar(passWord, PassWordLength)) {
                             if (checkVarChar(email, EmailPersoonLength)) {
                                 if (checkEmailAddress(email) || email.isEmpty()) {
-                                    if (checkFK1Persoon(email)|| email.isEmpty()) {
+                                    if (checkFK1Persoon(email) || email.isEmpty()) {
                                         return true;
                                     } else {
                                         Error.ErrorFKViolation(email, "Persoon", "email");
@@ -436,6 +598,5 @@ public class DataValidatie {
         } else {
             return false;
         }
-    }
+    }=======>>>>>>>JochemBezig
 }
-
