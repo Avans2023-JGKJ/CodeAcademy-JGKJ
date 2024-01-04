@@ -70,17 +70,17 @@ public class DialogPersoonFXMLController implements Initializable {
                 PersoonEmailInput.getText()
         ))
         try {
-            if (PersoonRoleInput.getValue().equals("CURSIST")) {
+            if (PersoonRoleInput.getValue().equals("ADMIN")) {
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord) VALUES('"
+                        + PersoonRoleInput.getValue()
+                        + "',  '" + PersoonUserNameInput.getText()
+                        + "',  '" + PersoonPassWordInput.getText() + "')");
+            } else {
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord, Email) VALUES('"
                         + PersoonRoleInput.getValue()
                         + "',  '" + PersoonUserNameInput.getText()
                         + "',  '" + PersoonPassWordInput.getText()
                         + "',  '" + PersoonEmailInput.getText() + "')");
-            } else {
-                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Persoon (Rol, UserName, PassWord) VALUES('"
-                        + PersoonRoleInput.getValue()
-                        + "',  '" + PersoonUserNameInput.getText()
-                        + "',  '" + PersoonPassWordInput.getText() + "')");
             }
 
         } catch (SQLException ex) {
