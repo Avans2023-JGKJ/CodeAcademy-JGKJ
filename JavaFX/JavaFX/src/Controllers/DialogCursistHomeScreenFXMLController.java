@@ -61,6 +61,10 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        setUpInschrijvenNaamCursus();
+    }
+
+    void setUpInschrijvenNaamCursus() {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus "
                     + "FROM Cursus");

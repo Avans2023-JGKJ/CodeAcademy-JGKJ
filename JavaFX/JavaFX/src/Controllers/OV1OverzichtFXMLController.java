@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Controllers.OverzichtFXMLController;
 import java.sql.ResultSet;
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
@@ -14,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
@@ -29,7 +33,7 @@ import javafx.stage.Stage;
  *
  * @author gijsv
  */
-public class DialogOverzichtFXMLController implements Initializable {
+public class OV1OverzichtFXMLController implements Initializable {
 
     private Stage stage;
     private Scene scene;
@@ -42,14 +46,16 @@ public class DialogOverzichtFXMLController implements Initializable {
 
     @FXML
     private Label percentageDisplayM;
+
     @FXML
     private Label percentageDisplayV;
 
     @FXML
     private ProgressBar ProgressVrouw;
+
     @FXML
     private ProgressBar ProgressMan;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         calcPercentageVrouwCertificaat();
@@ -81,7 +87,7 @@ public class DialogOverzichtFXMLController implements Initializable {
             percentageDisplayV.setText((CertPercentage) + "%");
             ProgressVrouw.setProgress(CertPercentage / 100);
         } catch (SQLException ex) {
-            Logger.getLogger(DialogOverzichtFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OV1OverzichtFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -107,16 +113,15 @@ public class DialogOverzichtFXMLController implements Initializable {
             float manCert = MCERT.getInt("MCERT");
             if (manTot == 0) {
                 percentageDisplayM.setText(0 + "%");
-                ProgressMan.setProgress(0); 
+                ProgressMan.setProgress(0);
             } else {
                 float CertPercentage = (manCert / manTot) * 100;
                 percentageDisplayM.setText((CertPercentage) + "%");
-            ProgressMan.setProgress(CertPercentage / 100);
+                ProgressMan.setProgress(CertPercentage / 100);
             }
 
-
         } catch (SQLException ex) {
-            Logger.getLogger(DialogOverzichtFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OV1OverzichtFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -129,4 +134,5 @@ public class DialogOverzichtFXMLController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
 }

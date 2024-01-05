@@ -19,34 +19,33 @@ public class Error {
     private ButtonType buttonTypeYes = new ButtonType("Ja");
     private ButtonType buttonTypeNo = new ButtonType("Nee");
     private ButtonType buttonTypeOk = new ButtonType("Oke");
-   
 
     public boolean removeCursusAlert(String str) {
         if (ConfirmationAlert("Cursus Verwijderen!", "Weet je zeker dat je de Cursus met naam: " + str + " wilt verwijderen?", ""
-                + "Cursus naam = '"+str+"'\nAantalContentItems = '"+DataShare.getInstance().getAantalContentItems()+"'\nOnderwerp = '"+DataShare.getInstance().getOnderwerp()+"'\n"
-                        + "Niveau = '"+DataShare.getInstance().getNiveau().name()+"'")) {
+                + "Cursus naam = '" + str + "'\nAantalContentItems = '" + DataShare.getInstance().getAantalContentItems() + "'\nOnderwerp = '" + DataShare.getInstance().getOnderwerp() + "'\n"
+                + "Niveau = '" + DataShare.getInstance().getNiveau().name() + "'")) {
             return true;
         }
         return false;
     }
-    
+
     public boolean removeCertificaatAlert(Integer certificaatId) {
         if (ConfirmationAlert("Certificaat Verwijderen!", "Weet je zeker dat je de Certificaat met certificaatId: " + certificaatId + " wilt verwijderen?", ""
-                + "CertificaatId = '"+certificaatId+"'\nBeoordeling = '"+DataShare.getInstance().getBeoordeling()+"'\nMedewerker Naam = '"+DataShare.getInstance().getMedeWerkerNaam()+"'\nInschrijfId = '"+DataShare.getInstance().getCertificaatInschrijfId()+"'")) {
+                + "CertificaatId = '" + certificaatId + "'\nBeoordeling = '" + DataShare.getInstance().getBeoordeling() + "'\nMedewerker Naam = '" + DataShare.getInstance().getMedeWerkerNaam() + "'\nInschrijfId = '" + DataShare.getInstance().getCertificaatInschrijfId() + "'")) {
             return true;
         }
         return false;
     }
-    
+
     public boolean removeCursistAlert(String str) {
         if (ConfirmationAlert("Cursist Verwijderen!", "Weet je zeker dat je de Cursist met naam: " + str + " wilt verwijderen?", ""
-                + "GeboorteDatum = '"+DataShare.getInstance().getCursistGeboorteDatum()+"'\nGeslacht = '"+DataShare.getInstance().getCursistGeslacht()+"'\n"
-                        + "PostCode = '"+DataShare.getInstance().getCursistPostCode()+"'")) {
+                + "GeboorteDatum = '" + DataShare.getInstance().getCursistGeboorteDatum() + "'\nGeslacht = '" + DataShare.getInstance().getCursistGeslacht() + "'\n"
+                + "PostCode = '" + DataShare.getInstance().getCursistPostCode() + "'")) {
             return true;
         }
         return false;
     }
-    
+
     public boolean removeContentItemsAlert(String str) {
         if (ConfirmationAlert("ContentItem Verwijderen!", "Weet je zeker dat je het ContentItem met naam: " + str + " wilt verwijderen?", "")) {
             return true;
@@ -61,7 +60,7 @@ public class Error {
     public void ErrorLimit(int input, int min, int max) {
         WarningAlert("Limiet Overschreden", "Het ingevoerde getal: " + input + " valt niet binnen het bereik van: " + min + " - " + max + "", "");
     }
-    
+
     public void ErrorLimit(String input, int min, int max) {
         WarningAlert("Limiet Overschreden", "Het ingevoerde getal: " + input + " valt niet binnen het bereik van: " + min + " - " + max + "", "");
     }
@@ -87,8 +86,7 @@ public class Error {
         if (!contentText.isEmpty()) {
             ConfirmationAlert.setContentText(contentText);
         }
-        
-        
+
         ConfirmationAlert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, ButtonType.CANCEL);
         Optional<ButtonType> result = ConfirmationAlert.showAndWait();
         return result.isPresent() && result.get() == buttonTypeYes;
@@ -167,11 +165,11 @@ public class Error {
     }
 
     void ErrorPostCode(String input) {
-        WarningAlert("PostCode incorrect", "Uw ingevoerde waarde voor postcode: '"+input+"' is niet correct geformatteerd.", "Voorbeeld: \nPostcode: 9999 AB \n4 getallen - 1 spatie - 2 hoofdletters.");
+        WarningAlert("PostCode incorrect", "Uw ingevoerde waarde voor postcode: '" + input + "' is niet correct geformatteerd.", "Voorbeeld: \nPostcode: 9999 AB \n4 getallen - 1 spatie - 2 hoofdletters.");
     }
 
     void ErrorEmail(String input) {
-       WarningAlert("Email incorrect", "Uw ingevoerde waarde voor email: '"+input+"' is niet correct geformatteerd.", "Voorbeeld: \nEmail: test@test.nl");
+        WarningAlert("Email incorrect", "Uw ingevoerde waarde voor email: '" + input + "' is niet correct geformatteerd.", "Voorbeeld: \nEmail: test@test.nl");
     }
 
     void ErrorLeefTijd() {
@@ -179,39 +177,43 @@ public class Error {
     }
 
     void ErrorAge(LocalDate input, short min) {
-        WarningAlert("Leeftijd incorrect", "Uit uw ingevoerde waarde voor geboortedatum: '"+input+"' wordt afgeleid,\n dat u niet voldoet aan onze minimumleeftijd van: "+min, "");
+        WarningAlert("Leeftijd incorrect", "Uit uw ingevoerde waarde voor geboortedatum: '" + input + "' wordt afgeleid,\n dat u niet voldoet aan onze minimumleeftijd van: " + min, "");
     }
 
     public void ErrorPassWord() {
-       WarningAlert("Wachtwoord incorrect", "De 2 wachtwoord velden komen niet overeen! \n Controleerd u nogmaals uw wachtwoord.", "");
+        WarningAlert("Wachtwoord incorrect", "De 2 wachtwoord velden komen niet overeen! \n Controleerd u nogmaals uw wachtwoord.", "");
     }
 
     public void ErrorSucces() {
-        InformationAlert("Succesvol","Succesvol Cursist Aangemaakt Je kunt nu inloggen!", "");
+        InformationAlert("Succesvol", "Succesvol Cursist Aangemaakt Je kunt nu inloggen!", "");
     }
 
     void ErrorPKViolation(String input, String ondrwrp, String var) {
-        ErrorAlert(ondrwrp+" is al in gebruik!", "Er bestaat al een "+var+" met "+ondrwrp+": '"+input + "'","");
+        ErrorAlert(ondrwrp + " is al in gebruik!", "Er bestaat al een " + var + " met " + ondrwrp + ": '" + input + "'", "");
     }
 
     void ErrorFKViolation(String var, String ondrwrp, String type) {
-        ErrorAlert(ondrwrp+" niet gevonden!", "Er bestaat geen "+ondrwrp+" met "+type+": '"+var+"'.", "");
+        ErrorAlert(ondrwrp + " niet gevonden!", "Er bestaat geen " + ondrwrp + " met " + type + ": '" + var + "'.", "");
     }
 
     void ErrorLegalDate(LocalDate publicatieDatum) {
-        ErrorAlert(publicatieDatum+" is niet geldig!", "De ingevoerde Datum: '"+publicatieDatum+"' is niet geldig.", "");
+        ErrorAlert(publicatieDatum + " is niet geldig!", "De ingevoerde Datum: '" + publicatieDatum + "' is niet geldig.", "");
     }
 
     void ErrorURL(String URL) {
-        ErrorAlert("URL incorrect!", "De ingevoerde URL is niet juist geformatteerd:", "Ingevoerde URL: '"+URL+"'\nControleer de URL en probeer opnieuw.");
+        ErrorAlert("URL incorrect!", "De ingevoerde URL is niet juist geformatteerd:", "Ingevoerde URL: '" + URL + "'\nControleer de URL en probeer opnieuw.");
     }
 
     public void ContentItemBekeken(String module, int i) {
-        InformationAlert(module+" bekeken", "Je hebt deze "+module+" bekeken voor "+i+"%","");
+        InformationAlert(module + " bekeken", "Je hebt deze " + module + " bekeken voor " + i + "%", "");
     }
 
-    public void Ov2Clicked() {
-        InformationAlert("Overzicht 2", "Om dit overzicht te zien moet je inoggen als Cursist en dan op een ingeschreven cursus klikken om de voortgang per module te bekijken", "");
+    public void Ov3Clicked() {
+        InformationAlert("Overzicht 3", "Om dit overzicht te zien moet je inoggen als Cursist en dan op een ingeschreven cursus klikken om de voortgang per module te bekijken", "");
+    }
+
+    public void OV4Clicked() {
+        InformationAlert("Overzicht 4", "Om dit overzicht te zien moet je inoggen als Cursist en dan op Certificaten klikken om de behaalde certificaten te bekijken", "");
     }
 
 }

@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/Validatie/DataValidatie.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>313</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogContentItemFXMLController.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Java2Database/DataShare.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/CursusInformatieFXMLController.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/LoginFXMLController.java</file>
-            <file>file:/C:/Users/Jochem/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/HomeScreenCursistFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/FXML_Bestanden/ov1ScreenAdmin.fxml</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Validatie/Error.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogOverzichtFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogCursistHomeScreenFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/HomeScreenFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/OverzichtFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/CursusInformatieFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogPersoonFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/CursusFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/FXML_Bestanden/overzichtScreenAdmin.fxml</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/PersoonFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/FXML_Bestanden/homeScreenAdmin.fxml</file>
         </group>
     </open-files>
 </project-private>
