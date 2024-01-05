@@ -78,6 +78,7 @@ public class CursusInformatieFXMLController implements Initializable {
             rs.next();
             DataShare.getInstance().setInschrijfId(rs.getInt("inschrijfId"));
             loadTableContentItems();
+            
 
 //        LoadDataCursus();
         } catch (SQLException ex) {

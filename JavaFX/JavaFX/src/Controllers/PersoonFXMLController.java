@@ -6,6 +6,7 @@
 package Controllers;
 
 import static Controllers.CursistFXMLController.ErrorAlert;
+import Controllers.DialogPersoonFXMLController;
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
 import Objects.Persoon;
@@ -59,7 +60,7 @@ public class PersoonFXMLController implements Initializable {
 
     @FXML
     private TableColumn<Persoon, String> emailPersoonColumn;
-
+    
     @FXML
     private ObservableList<Persoon> observablePersoon;
 
@@ -105,7 +106,9 @@ public class PersoonFXMLController implements Initializable {
 
     @FXML
     void PersoonAanmakenClicked(MouseEvent event) {
+        DialogPersoonFXMLController.setIsUpdatePersoon(false);
         DataShare.getInstance().resetPersoon();
+        DataShare.getInstance().setRol(Rol.ADMIN);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/createPersoonDialog.fxml"));
             DialogPane pane = loader.load();
@@ -119,11 +122,15 @@ public class PersoonFXMLController implements Initializable {
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
             Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.APPLY);
+            applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                if (!createPersoonController.ValidateAndCreatePersoon()) {
+                    ae.consume();
+                }
+            });
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
 
             if (clickedButton.isPresent() && clickedButton.get() == ButtonType.APPLY) {
-                createPersoonController.ValidateAndCreatePersoon();
                 loadTablePersoon();
             }
             dialog.setTitle("Persoon aanmaken");
@@ -135,7 +142,7 @@ public class PersoonFXMLController implements Initializable {
 
     @FXML
     void PersoonAanpassenClicked(MouseEvent event) {
-        System.out.println("PersoonAanpassenClicked");
+        DialogPersoonFXMLController.setIsUpdatePersoon(true);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/updatePersoonDialog.fxml"));
             DialogPane pane = loader.load();
@@ -210,6 +217,7 @@ public class PersoonFXMLController implements Initializable {
                 if (rs.next()) {
                     DataShare.getInstance().setRol(Rol.valueOf(rs.getString("Rol")));
                     DataShare.getInstance().setPersoonUserName(rs.getString("UserName"));
+                    System.out.println("USERNAME is "+(rs.getString("UserName")));
                     DataShare.getInstance().setPassWord(rs.getString("PassWord"));
                     DataShare.getInstance().setEmail(rs.getString("Email"));
                 } else {

@@ -90,6 +90,7 @@ public class DialogContentItemFXMLController implements Initializable {
 
     //Variable
     private boolean checkId;
+    private short VolgNrInput;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -192,6 +193,13 @@ public class DialogContentItemFXMLController implements Initializable {
 
     boolean ValidateAndCreateModule() {
         try {
+            if (ModuleVolgNrColumnInput.getValue() == null) {
+                VolgNrInput = -1;
+            }
+            else{
+                VolgNrInput = ModuleVolgNrColumnInput.getValue();
+            }
+
             checkId = false;
             if (DataValidatie.AlterContentItemValid(
                     contentItemsNaamCursusComboBoxInput.getValue(),
@@ -203,7 +211,7 @@ public class DialogContentItemFXMLController implements Initializable {
                             ModuleVersieColumnInput.getText(),
                             ModuleNaamContactColumnInput.getText(),
                             ModuleEmailContactColumnInput.getText(),
-                            ModuleVolgNrColumnInput.getValue())) {
+                            VolgNrInput)) {
 
                 String insertSQLContentitem = String.format("INSERT INTO contentItems (naamCursus, beschrijving, titel, datum, status) VALUES ('%s','%s', '%s', '%s', '%s')",
                         contentItemsNaamCursusComboBoxInput.getValue(),
@@ -240,6 +248,7 @@ public class DialogContentItemFXMLController implements Initializable {
 
     boolean ValidateAndCreateWebcast() {
         try {
+            DataShare.getInstance().setNaamCursus(contentItemsNaamCursusComboBoxInput.getValue());
             checkId = false;
             System.out.println(statusComboBox.getValue());
             if (DataValidatie.AlterContentItemValid(
@@ -297,6 +306,7 @@ public class DialogContentItemFXMLController implements Initializable {
         //VALIDATE ALL FIELDS
         if (DataShare.getInstance().getCreatedItem().toLowerCase().equals("module")) {
             try {
+                DataShare.getInstance().setNaamCursus(contentItemsNaamCursusComboBoxInput.getValue());
                 if (DataValidatie.AlterContentItemValid(
                         contentItemsNaamCursusComboBoxInput.getValue(),
                         ModuleBeschrijvingColumnInput.getText(),

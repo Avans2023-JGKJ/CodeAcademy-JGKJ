@@ -61,6 +61,10 @@ public class Error {
     public void ErrorLimit(int input, int min, int max) {
         WarningAlert("Limiet Overschreden", "Het ingevoerde getal: " + input + " valt niet binnen het bereik van: " + min + " - " + max + "", "");
     }
+    
+    public void ErrorLimit(String input, int min, int max) {
+        WarningAlert("Limiet Overschreden", "Het ingevoerde getal: " + input + " valt niet binnen het bereik van: " + min + " - " + max + "", "");
+    }
 
     public void ErrorNull(String str) {
         WarningAlert("Error", str, "");
