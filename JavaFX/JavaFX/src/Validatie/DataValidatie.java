@@ -71,8 +71,7 @@ public class DataValidatie {
     private static int volgNrModuleMax = 255;
     private static int volgNrModuleMin = 1;
 
-    public static boolean InsertCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro,
-            Niveau niveau) {
+    public static boolean InsertCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro, Niveau niveau) {
         if (checkForNull(naamCursus, aantalItems, onderwerp, intro)) {
             if (checkPKCursus(naamCursus)) {
                 if (checkNVarChar(naamCursus, naamCursusLength)) {
@@ -107,8 +106,7 @@ public class DataValidatie {
         return false;
     }
 
-    public static boolean UpdateCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro,
-            Niveau niveau) {
+    public static boolean UpdateCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro, Niveau niveau) {
         if (InsertCursusValid(naamCursus, aantalItems, onderwerp, intro, niveau)) {
             return true;
         }
@@ -249,47 +247,52 @@ public class DataValidatie {
 
     public static boolean AlterWebcastValid(String titel, String tijdsDuur, LocalDate publicatieDatum, String URL,
             String naamSpreker, String organisatieSpreker) {
-        if (checkForNull(titel, tijdsDuur, String.valueOf(publicatieDatum), URL, naamSpreker)) {
-            if (checkNVarChar(titel, titelWebcastLength)) {
-                if (checkNVarChar(tijdsDuur, tijdsDuurWebcastLength)) {
-                    if (checkLegalDate(publicatieDatum)) {
-                        if (checkURL(URL)) {
-                            if (checkNVarChar(URL, urlWebcastLength)) {
-                                if (checkNVarChar(naamSpreker, naamSprekerWebcastLength)) {
-                                    if (organisatieSpreker.isEmpty()
-                                            || checkNVarChar(organisatieSpreker, organisatieSprekerWebcastLength)) {
-                                        System.out.println("VERIFICATION SUCCEEDED!");
-                                        return true;
+        if (checkMinModule(DataShare.getInstance().getNaamCursus())) {
+            if (checkForNull(titel, tijdsDuur, String.valueOf(publicatieDatum), URL, naamSpreker)) {
+                if (checkNVarChar(titel, titelWebcastLength)) {
+                    if (checkValidNumber(tijdsDuur, tijdsDuurWebcastLength)) {
+                        if (checkLegalDate(publicatieDatum)) {
+                            if (checkURL(URL)) {
+                                if (checkNVarChar(URL, urlWebcastLength)) {
+                                    if (checkNVarChar(naamSpreker, naamSprekerWebcastLength)) {
+                                        if (organisatieSpreker == null || organisatieSpreker.isEmpty()
+                                                || checkNVarChar(organisatieSpreker, organisatieSprekerWebcastLength)) {
+                                            System.out.println("VERIFICATION SUCCEEDED!");
+                                            return true;
+                                        } else {
+                                            Error.ErrorLength(organisatieSpreker, organisatieSprekerWebcastLength);
+                                        }
                                     } else {
-                                        Error.ErrorLength(organisatieSpreker, organisatieSprekerWebcastLength);
+                                        Error.ErrorLength(naamSpreker, naamSprekerWebcastLength);
                                     }
                                 } else {
-                                    Error.ErrorLength(naamSpreker, naamSprekerWebcastLength);
+                                    Error.ErrorLength(URL, urlWebcastLength);
                                 }
                             } else {
-                                Error.ErrorLength(URL, urlWebcastLength);
+                                Error.ErrorURL(URL);
                             }
                         } else {
-                            Error.ErrorURL(URL);
+                            Error.ErrorLegalDate(publicatieDatum);
                         }
+
                     } else {
-                        Error.ErrorLegalDate(publicatieDatum);
+                        Error.ErrorLimit(tijdsDuur, 1, tijdsDuurWebcastLength);
                     }
                 } else {
-                    Error.ErrorLength(tijdsDuur, tijdsDuurWebcastLength);
+                    Error.ErrorLength(titel, titelWebcastLength);
                 }
             } else {
-                Error.ErrorLength(titel, titelWebcastLength);
+                Error.ErrorEmpty();
             }
         } else {
-            Error.ErrorEmpty();
+            Error.ErrorNull("Er moet minimaal 1 Module zijn toegevoegd aan deze Cursus!");
         }
         return false;
     }
 
     public static boolean AlterModuleValid(String titel, String versie, String naamContact, String emailContact,
             short volgNr) {
-        if (checkForNull(titel, versie, String.valueOf(volgNr))) {
+        if (checkForNull(titel, versie) && volgNr != -1) {
             if (checkNVarChar(titel, titelModuleLength)) {
                 if (checkNVarChar(versie, versieModuleLength)) {
                     if (checkNVarChar(naamContact, naamContactModuleLength)) {
@@ -351,6 +354,22 @@ public class DataValidatie {
 
     public static boolean checkPostcode(String postCode) {
         return postCode.matches("[1-9]{1}[0-9]{3} [A-Z]{2}");
+    }
+
+    private static boolean checkValidNumber(String str, int limit) {
+        if (str != null && !str.isEmpty()) {
+            try {
+
+                if (Integer.parseInt(str) > 0 && Integer.parseInt(str) <= limit) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return false;
     }
 
     public static boolean checkEmailAddress(String email) {
@@ -418,46 +437,27 @@ public class DataValidatie {
     }
 
     private static boolean checkForNull(String a) {
-        if (a != null) {
-            return true;
-        }
-        return false;
+        return a != null && !a.isEmpty();
     }
 
     private static boolean checkForNull(String a, String b) {
-        if (a != null && b != null) {
-            return true;
-        }
-        return false;
+        return a != null && !a.isEmpty() && b != null && !b.isEmpty();
     }
 
     private static boolean checkForNull(String a, String b, String c) {
-        if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty()) {
-            return true;
-        }
-        return false;
+        return a != null && !a.isEmpty() && b != null && !b.isEmpty() && c != null && !c.isEmpty();
     }
 
     private static boolean checkForNull(String a, String b, String c, String d) {
-        if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty()) {
-            return true;
-        }
-        return false;
+        return a != null && !a.isEmpty() && b != null && !b.isEmpty() && c != null && !c.isEmpty() && d != null && !d.isEmpty();
     }
 
     private static boolean checkForNull(String a, String b, String c, String d, String e) {
-        if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty() && !e.isEmpty()) {
-            return true;
-        }
-        return false;
+        return a != null && !a.isEmpty() && b != null && !b.isEmpty() && c != null && !c.isEmpty() && d != null && !d.isEmpty() && e != null && !e.isEmpty();
     }
 
     private static boolean checkForNull(String a, String b, String c, String d, String e, String f, String g) {
-        if (!a.isEmpty() && !b.isEmpty() && !c.isEmpty() && !d.isEmpty() && !e.isEmpty() && !f.isEmpty()
-                && !g.isEmpty()) {
-            return true;
-        }
-        return false;
+        return a != null && !a.isEmpty() && b != null && !b.isEmpty() && c != null && !c.isEmpty() && d != null && !d.isEmpty() && e != null && !e.isEmpty() && f != null && !f.isEmpty() && g != null && !g.isEmpty();
     }
 
     private static boolean checkPKCursus(String naamCursus) {
@@ -480,8 +480,11 @@ public class DataValidatie {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
                     "SELECT email FROM Cursist WHERE email = '" + email + "'");
-            if (rs.next() && !rs.getString("email").equals(DataShare.getInstance().getCursistEmail())) {
-                return false;
+            if (rs.next()) {
+                if(!rs.getString("email").equals(DataShare.getInstance().getCursistEmail())){
+                    return false;
+                }
+                return true;
             } else {
                 return true;
             }
@@ -552,7 +555,7 @@ public class DataValidatie {
         return false;
     }
 
-    public static boolean InsertPersoonValid(String rol, String userName, String passWord, String email) {
+    public static boolean InsertPersoonValid(String rol, String userName, String passWord, String email, boolean isUpdatePersoon) {
         if (checkForNull(rol, userName, passWord)) {
             if (checkPKPersoon(userName)) {
                 if (checkNVarChar(rol, RolLength)) {
@@ -560,7 +563,7 @@ public class DataValidatie {
                         if (checkNVarChar(passWord, PassWordLength)) {
                             if (checkVarChar(email, EmailPersoonLength)) {
                                 if (checkEmailAddress(email) || email.isEmpty()) {
-                                    if (checkFK1Persoon(email) || email.isEmpty()) {
+                                    if (isUpdatePersoon || checkFK1Persoon(email) || email.isEmpty()) {
                                         return true;
                                     } else {
                                         Error.ErrorFKViolation(email, "Persoon", "email");
@@ -590,11 +593,33 @@ public class DataValidatie {
         return false;
     }
 
-    public static boolean UpdatePersoonValid(String rol, String userName, String passWord, String email) {
-        if (InsertPersoonValid(rol, userName, passWord, email)) {
-            return true;
-        } else {
-            return false;
+    public static boolean UpdatePersoonValid(String rol, String userName, String passWord, String email, String newEmail) {
+        if (InsertPersoonValid(rol, userName, passWord, email, true)) {
+            if (newEmail.equals(email) || checkPKCursist(newEmail)) {
+                return true;
+            } 
+            else {
+             Error.ErrorNull("Nieuwe Email: '"+newEmail+"' bestaat al.");
+             return false;
+            }
         }
+        return false;
     }
+
+    private static boolean checkMinModule(String naamCursus) {
+        try {
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT m.versie FROM Module m "
+                    + "JOIN contentItems c ON c.contentItemId = m.contentitemId "
+                    + "JOIN Cursus cu ON cu.naamCursus = c.naamCursus "
+                    + "WHERE cu.naamCursus = '" + naamCursus + "'");
+            if (rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataValidatie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }

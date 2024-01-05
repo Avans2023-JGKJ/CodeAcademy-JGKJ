@@ -30,6 +30,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -91,11 +92,17 @@ public class ContentItemFXMLController implements Initializable {
                 dialog.setTitle("Webcast aanpassen");
                 dialog.getDialogPane().getButtonTypes().clear();
                 dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
-                
+
+                Button applyButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.APPLY);
+                applyButton.addEventFilter(ActionEvent.ACTION, ae -> {
+                    if (!updateContentItemController.validateAndUpdateContentItem()) {
+                        ae.consume();
+                    }
+                });
+
                 Optional<ButtonType> clickedApply = dialog.showAndWait();
 
                 if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
-                    updateContentItemController.validateAndUpdateContentItem();
                     loadTableContentItem();
                 }
 
@@ -114,7 +121,7 @@ public class ContentItemFXMLController implements Initializable {
                 dialog.setTitle("Module aanpassen");
                 dialog.getDialogPane().getButtonTypes().clear();
                 dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
-                
+
                 Optional<ButtonType> clickedApply = dialog.showAndWait();
 
                 if (clickedApply.isPresent() && clickedApply.get() == ButtonType.APPLY) {
@@ -182,6 +189,21 @@ public class ContentItemFXMLController implements Initializable {
                 ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.naamCursus,c.contentItemId,c.beschrijving,c.titel,c.datum,c.status, m.versie, m.naamContactPersoon, m.emailContactPersoon, m.volgNr, w.datumPublicatie, w.url, w.naamSpreker, w.organisatieSpreker, w.tijdsDuur FROM contentItems c LEFT JOIN Module m ON m.contentItemId = c.contentItemId LEFT JOIN Webcast w ON w.contentItemId = c.contentItemId WHERE c.contentItemId = '" + clickedContentItem.getContentItemId() + "'");
 
                 if (rs.next()) {
+                    System.out.println("naamCursus: " + rs.getString("naamCursus"));
+                    System.out.println("contentItemId: " + rs.getInt("contentItemId"));
+                    System.out.println("beschrijving: " + rs.getString("beschrijving"));
+                    System.out.println("titel: " + rs.getString("titel"));
+                    System.out.println("datum: " + rs.getString("datum"));
+                    System.out.println("status: " + rs.getString("status"));
+                    System.out.println("versie: " + rs.getString("versie"));
+                    System.out.println("naamContactPersoon: " + rs.getString("naamContactPersoon"));
+                    System.out.println("emailContactPersoon: " + rs.getString("emailContactPersoon"));
+                    System.out.println("volgNr: " + rs.getShort("volgNr"));
+                    System.out.println("datumPublicatie: " + rs.getString("datumPublicatie"));
+                    System.out.println("url: " + rs.getString("url"));
+                    System.out.println("naamSpreker: " + rs.getString("naamSpreker"));
+                    System.out.println("organisatieSpreker: " + rs.getString("organisatieSpreker"));
+                    System.out.println("tijdsDuur: " + rs.getShort("tijdsDuur"));
 
                     DataShare.getInstance().setNaamCursus(rs.getString("naamCursus"));
                     DataShare.getInstance().setContentItemId(rs.getInt("contentItemId"));
@@ -201,7 +223,7 @@ public class ContentItemFXMLController implements Initializable {
                     DataShare.getInstance().setNaamSpreker(rs.getString("naamSpreker"));
                     DataShare.getInstance().setOrganisatieSpreker(rs.getString("organisatieSpreker"));
                     DataShare.getInstance().setTijdsduur(rs.getShort("tijdsDuur"));
-                    
+
                 } else {
                     ErrorAlert("Dit ContentItem bestaat niet meer!", "Onbekend ContentItem");
                 }
@@ -224,7 +246,7 @@ public class ContentItemFXMLController implements Initializable {
     void loadTableContentItem() {
         try {
             initTable();
-            try (ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM contentItems").executeQuery()) {
+            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM contentItems").executeQuery()) {
                 while (rs.next()) {
                     ContentItem ContentItem = new ContentItem();
                     ContentItem.setContentItemId(rs.getInt("contentItemId"));
