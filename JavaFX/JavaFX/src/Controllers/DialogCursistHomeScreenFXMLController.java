@@ -8,6 +8,7 @@ package Controllers;
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
 import Objects.Status;
+import Validatie.Error;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +29,8 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
 
     @FXML
     private ObservableList<String> naamCursusList = FXCollections.observableArrayList();
+    
+    private Error Error = new Error();
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -57,7 +60,7 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus FROM Cursus");
             ResultSet rs1 = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.email FROM Cursist c JOIN Persoon p ON p.Email = c.email WHERE UserName = '"+DataShare.getInstance().getUsername()+"'");
-            if (InschrijvenNaamCursusBox.getValue() != null || !InschrijvenNaamCursusBox.getValue().isEmpty()) {
+            if (InschrijvenNaamCursusBox.getValue() != null && !InschrijvenNaamCursusBox.getValue().isEmpty()) {
                 if (rs.next()) {
                     rs1.next();
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Inschrijven (email, naamCursus, datum, totaalVoortgang) VALUES "
@@ -74,6 +77,7 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
                     return true;
                 }
             } else {
+                Error.ErrorNull("Je hebt nog geen Cursus geselecteerd");
                 return false;
             }
         } catch (SQLException ex) {

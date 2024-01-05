@@ -62,12 +62,12 @@
                   <Font name="Calibri Bold Italic" size="45.0" />
                </font>
             </Label>
-            <TableView fx:id="ContentItemsCursus" layoutX="42.0" layoutY="392.0" prefHeight="369.0" prefWidth="515.0">
+            <TableView fx:id="ContentItemsCursus" layoutX="42.0" layoutY="392.0" onMouseClicked="#rowClicked" prefHeight="369.0" prefWidth="515.0">
               <columns>
                 <TableColumn fx:id="ContentItemTitelColumn" prefWidth="180.0" text="Titel" />
                 <TableColumn fx:id="ContentItemVersieColumn" prefWidth="48.0" text="Versie" />
                   <TableColumn fx:id="ContentItemBeschrjivingColumn" prefWidth="235.0" text="Beschrijving" />
-                  <TableColumn fx:id="ContentItemBeschrjivingColumn1" prefWidth="51.0" text="\%" />
+                  <TableColumn fx:id="ContentItemPercentageColumn" prefWidth="51.0" text="\%" />
               </columns>
             </TableView>
             <Label fx:id="LabelPercentage" layoutX="735.0" layoutY="451.0" text="80 %" textFill="WHITE">

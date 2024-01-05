@@ -142,12 +142,12 @@ public class DialogContentItemFXMLController implements Initializable {
                 volgNrList.add(i);
             }
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT m.volgNr from Module m "
-                    + "JOIN contentItems co on co.contentItemId =m.contentitemId "
-                    + "JOIN Cursus cu on cu.naamCursus = co.naamCursus "
+                    + "JOIN contentItems co ON co.contentItemId = m.contentitemId "
+                    + "JOIN Cursus cu ON cu.naamCursus = co.naamCursus "
                     + "WHERE cu.naamCursus = '" + contentItemsNaamCursusComboBoxInput.getValue() + "'");
             while (rs.next()) {
                 if (rs.getShort("volgNr") != DataShare.getInstance().getVolgordeNr()) {
-                    volgNrList.remove(rs.getShort("volgNr") - 1);
+                    volgNrList.remove(Short.valueOf(rs.getShort("volgNr")));
                 }
             }
             ModuleVolgNrColumnInput.setItems(volgNrList);

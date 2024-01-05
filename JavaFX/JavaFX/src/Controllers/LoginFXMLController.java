@@ -95,7 +95,6 @@ public class LoginFXMLController implements Initializable {
                 root = loader.load();
             } else {
                 setEmail();
-                System.out.println(DataShare.getInstance().getEmail());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenCursist.fxml"));
                 root = loader.load();
 
@@ -104,8 +103,9 @@ public class LoginFXMLController implements Initializable {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+        } else {
+            Error.ErrorNull("Gebruikersnaam en Wachtwoord komen niet overeen.");
         }
-        Error.ErrorNull("Gebruikersnaam en Wachtwoord komen niet overeen.");
     }
 
     @FXML

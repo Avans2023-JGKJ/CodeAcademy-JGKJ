@@ -3,6 +3,7 @@ package Controllers;
 import Java2Database.DataShare;
 
 import Java2Database.DataBaseSQL;
+import Validatie.Error;
 import Objects.ContentItem;
 import Objects.Cursist;
 import java.io.IOException;
@@ -15,6 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Controllers.CursistFXMLController;
 import Controllers.DialogCursistFXMLController;
+import java.util.Random;
+import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,6 +48,9 @@ public class CursusInformatieFXMLController implements Initializable {
     private TableColumn<ContentItem, String> ContentItemVersieColumn;
 
     @FXML
+    private TableColumn<ContentItem, Short> ContentItemPercentageColumn;
+
+    @FXML
     private TableView<ContentItem> ContentItemsCursus;
 
     @FXML
@@ -58,10 +64,27 @@ public class CursusInformatieFXMLController implements Initializable {
 
     private ObservableList<ContentItem> observableContentItems;
 
+    private Error Error = new Error();
+
+    private Random rand = new Random();
+
+    private ContentItem clickedContentItem;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        LoadDataCursus();
-        loadTableContentItems();
+        try {
+            LabelCursusName.setText("Cursus: " + DataShare.getInstance().getNaamCursus());
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "(SELECT inschrijfId FROM Inschrijven WHERE email = '" + DataShare.getInstance().getCursistEmail() + "' AND naamCursus = '" + DataShare.getInstance().getNaamCursus() + "')");
+            rs.next();
+            DataShare.getInstance().setInschrijfId(rs.getInt("inschrijfId"));
+            loadTableContentItems();
+
+//        LoadDataCursus();
+        } catch (SQLException ex) {
+            Logger.getLogger(CursusInformatieFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
     }
 
     private void initTable() {
@@ -69,23 +92,30 @@ public class CursusInformatieFXMLController implements Initializable {
         ContentItemTitelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
         ContentItemVersieColumn.setCellValueFactory(new PropertyValueFactory<>("versie"));
         ContentItemBeschrjivingColumn.setCellValueFactory(new PropertyValueFactory<>("beschrijving"));
+        ContentItemPercentageColumn.setCellValueFactory(new PropertyValueFactory<>("percentage"));
     }
 
-    public void loadTableContentItems()  {
+    private void loadTableContentItems() {
         try {
             initTable();
-            System.out.println("1");
-            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.titel, c.beschrijving, m.versie FROM contentItems c JOIN Module m ON m.contentItemId = c.contentItemId WHERE c.naamCursus = '" + DataShare.getInstance().getNaamCursus() + "';");
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT v.contentItemId ,v.voortgangsPercentage, c.titel, c.beschrijving, m.versie FROM "
+                    + "contentItems c "
+                    + "JOIN Voortgang v ON v.contentItemId = c.contentItemId "
+                    + "LEFT JOIN Module m ON m.contentitemId = c.contentItemId "
+                    + "LEFT JOIN Webcast w ON w.contentitemId = c.contentItemId "
+                    + "WHERE c.naamCursus = '" + DataShare.getInstance().getNaamCursus() + "' "
+                    + "AND v.inschrijfId IN (SELECT inschrijfId FROM Inschrijven WHERE email = '" + DataShare.getInstance().getCursistEmail() + "') "
+                    + "ORDER BY m.volgNr");
             while (rs.next()) {
-                System.out.println("2");
                 ContentItem ContentItem = new ContentItem();
                 ContentItem.setTitel(rs.getString("titel"));
                 ContentItem.setVersie(rs.getString("versie"));
                 ContentItem.setBeschrijving(rs.getString("beschrijving"));
+                ContentItem.setPercentage(rs.getShort("voortgangsPercentage"));
+                ContentItem.setContentItemId(Integer.valueOf(rs.getString("contentItemId")));
                 observableContentItems.add(ContentItem);
             }
-
-            System.out.println("3");
+            refreshTotalProgress();
             ContentItemsCursus.setItems(observableContentItems);
             ContentItemsCursus.refresh();
 
@@ -95,7 +125,7 @@ public class CursusInformatieFXMLController implements Initializable {
     }
 
     public void LoadDataCursus() {
-        LabelCursusName.setText("Cursus: " + DataShare.getInstance().getNaamCursus());
+
         double progress = 0.0;
         try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT totaalVoortgang from Inschrijven WHERE email = '" + DataShare.getInstance().getCursistEmail() + "' AND naamCursus = '" + DataShare.getInstance().getNaamCursus() + "';").executeQuery()) {
             while (rs.next()) {
@@ -105,8 +135,71 @@ public class CursusInformatieFXMLController implements Initializable {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         ProgressBarCursus.setProgress(progress);
-        LabelPercentage.setText(String.valueOf((int) (progress * 100)) + "%");
+        LabelPercentage.setText(String.valueOf((float) progress / 100 + "%"));
 
+    }
+
+    private void refreshTotalProgress() {
+        try {
+            ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT COUNT(*) AS row, SUM(v.voortgangsPercentage) AS totalPerc  FROM "
+                    + "contentItems c "
+                    + "JOIN Voortgang v ON v.contentItemId = c.contentItemId "
+                    + "LEFT JOIN Module m ON m.contentitemId = c.contentItemId "
+                    + "LEFT JOIN Webcast w ON w.contentitemId = c.contentItemId "
+                    + "WHERE c.naamCursus = '" + DataShare.getInstance().getNaamCursus() + "' "
+                    + "AND v.inschrijfId IN (SELECT inschrijfId FROM Inschrijven WHERE email = '" + DataShare.getInstance().getCursistEmail() + "')");
+            rs.next();
+            float TotaalPercentage = 0;
+            if (rs.getInt("row") != 0) {
+                TotaalPercentage = rs.getInt("totalPerc") / (rs.getInt("row"));
+            }
+
+            DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "UPDATE Inschrijven SET totaalVoortgang = '" + Short.valueOf((short) TotaalPercentage) + "' WHERE inschrijfId = '" + DataShare.getInstance().getInschrijfId() + "'");
+            ProgressBarCursus.setProgress(TotaalPercentage / 100);
+            LabelPercentage.setText(String.valueOf((float) TotaalPercentage + "%"));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CursusInformatieFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void rowClicked(MouseEvent event) {
+        try {
+            clickedContentItem = ContentItemsCursus.getSelectionModel().getSelectedItem();
+            if (clickedContentItem != null) {
+                if (clickedContentItem.getVersie() == null || clickedContentItem.getVersie().isEmpty()) {
+                    try {
+                        Error.ContentItemBekeken("Webcast", 100);
+                        DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "UPDATE Voortgang SET voortgangsPercentage = '100' "
+                                + "WHERE naamCursus = '" + DataShare.getInstance().getNaamCursus() + "' "
+                                + "AND contentItemId = '" + clickedContentItem.getContentItemId() + "' "
+                                + "AND inschrijfId = '" + DataShare.getInstance().getInschrijfId() + "'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CursusInformatieFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        int random = rand.nextInt(25) + 20;
+                        Error.ContentItemBekeken("Module", random);
+                        if (clickedContentItem.getPercentage() + random <= 100) {
+                            random = random + clickedContentItem.getPercentage();
+                        } else if (clickedContentItem.getPercentage() + random > 100) {
+                            random = 100;
+                        }
+                        DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "UPDATE Voortgang SET voortgangsPercentage = '" + random + "' "
+                                + "WHERE naamCursus = '" + DataShare.getInstance().getNaamCursus() + "' "
+                                + "AND contentItemId = '" + clickedContentItem.getContentItemId() + "' "
+                                + "AND inschrijfId = '" + DataShare.getInstance().getInschrijfId() + "'");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CursusInformatieFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        } finally {
+            loadTableContentItems();
+            refreshTotalProgress();
+        }
     }
 
     @FXML

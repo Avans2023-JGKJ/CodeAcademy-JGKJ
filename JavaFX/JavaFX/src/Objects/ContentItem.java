@@ -17,6 +17,7 @@ public class ContentItem {
     private String naamContactPersoon;
     private String emailContactPersoon;
     private int volgNr;
+    private Short percentage;
 
     public ContentItem(int contentItemId, String titel, LocalDate datum, String Status) {
         this.contentItemId = contentItemId;
@@ -83,6 +84,16 @@ public class ContentItem {
     public int getVolgNr() {
         return volgNr;
     }
+
+    public Short getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(Short percentage) {
+        this.percentage = percentage;
+    }
+    
+    
 
     public void setContentItemId(Integer contentItemId) {
         this.contentItemId = contentItemId;

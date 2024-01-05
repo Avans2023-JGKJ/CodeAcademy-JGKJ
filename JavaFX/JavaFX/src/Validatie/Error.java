@@ -202,4 +202,8 @@ public class Error {
         ErrorAlert("URL incorrect!", "De ingevoerde URL is niet juist geformatteerd:", "Ingevoerde URL: '"+URL+"'\nControleer de URL en probeer opnieuw.");
     }
 
+    public void ContentItemBekeken(String module, int i) {
+        InformationAlert(module+" bekeken", "Je hebt deze "+module+" bekeken voor "+i+"%","");
+    }
+
 }
