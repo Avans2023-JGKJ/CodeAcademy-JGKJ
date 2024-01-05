@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Validatie.Error;
 import Java2Database.DataShare;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,7 @@ public class OverzichtFXMLController implements Initializable {
     private Parent root;
     
     Label displayUserNameLabel;
+    private Error Error = new Error();
     
     @FXML
     private Label WelcomeLabelHomeScreen;
@@ -51,12 +53,7 @@ public class OverzichtFXMLController implements Initializable {
         @FXML
     void Ov2Clicked(MouseEvent event) throws IOException{
     System.out.println("Overzicht 2");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov2ScreenAdmin.fxml"));
-            root = loader.load();
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+    Error.Ov2Clicked();
     }
 
     @FXML

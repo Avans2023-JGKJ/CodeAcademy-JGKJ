@@ -206,4 +206,8 @@ public class Error {
         InformationAlert(module+" bekeken", "Je hebt deze "+module+" bekeken voor "+i+"%","");
     }
 
+    public void Ov2Clicked() {
+        InformationAlert("Overzicht 2", "Om dit overzicht te zien moet je inoggen als Cursist en dan op een ingeschreven cursus klikken om de voortgang per module te bekijken", "");
+    }
+
 }

@@ -63,7 +63,7 @@
                               <Insets top="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="\%" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Label fx:id="percentageDisplayM" text="\%" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font name="System Bold" size="45.0" />
                            </font>
@@ -96,7 +96,7 @@
                               <Insets top="30.0" />
                            </padding>
                         </Label>
-                        <Label text="\%" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Label fx:id="percentageDisplayV" text="\%" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font name="System Bold" size="45.0" />
                            </font>
