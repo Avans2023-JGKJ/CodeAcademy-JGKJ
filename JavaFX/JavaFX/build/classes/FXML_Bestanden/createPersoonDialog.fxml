@@ -11,7 +11,7 @@
 
 <!-- Add the fx:controller attribute to the DialogPane element -->
 
-<DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DialogPersoonFXMLController">
+<DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DialogPersoonFXMLController">
    <graphic>
       <GridPane alignment="CENTER" prefHeight="171.0" prefWidth="376.0">
         <columnConstraints>
