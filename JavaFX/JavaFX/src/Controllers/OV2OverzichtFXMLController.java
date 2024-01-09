@@ -60,6 +60,7 @@ public class OV2OverzichtFXMLController implements Initializable {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus "
                     + "FROM Cursus");
+
             while (rs.next()) {
                 naamCursusList.add(rs.getString("naamCursus"));
             }
@@ -72,9 +73,7 @@ public class OV2OverzichtFXMLController implements Initializable {
 
     @FXML
     void calcVoortgangsPercentageCursus(ActionEvent event) {
-        selecteerNaamCursus();
         try {
-
             float i = 0;
             float sum = 0;
             ResultSet VoortgangCursus = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT voortgangsPercentage AS VrtPerct FROM Voortgang WHERE naamCursus = '" + SelecteerNaamCursusBox.getValue() + "'");
@@ -82,13 +81,17 @@ public class OV2OverzichtFXMLController implements Initializable {
                 sum = sum + VoortgangCursus.getInt("VrtPerct");
                 i++;
             }
-            float TotPerct = sum / i;
-            percentageDisplayCursus.setText((TotPerct) + "%");
-            ProgressCursus.setProgress(TotPerct / 100);
-            System.out.println(sum);
-            System.out.println(i);
-            System.out.println(TotPerct);
-            setmessageDisplayCursus();
+            if (i == 0) {
+                percentageDisplayCursus.setText(0 + "%");
+            } else {
+                float TotPerct = sum / i;
+                percentageDisplayCursus.setText((TotPerct) + "%");
+                ProgressCursus.setProgress(TotPerct / 100);
+                System.out.println(sum);
+                System.out.println(i);
+                System.out.println(TotPerct);
+                setmessageDisplayCursus();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(OV1OverzichtFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -86,6 +86,11 @@
                         <Insets bottom="30.0" />
                      </padding>
                   </Label>
+                  <Label text="Meest bekeken webcast" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="45.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
             <Button layoutX="42.0" layoutY="31.0" mnemonicParsing="false" onAction="#OverzichtBackClicked" text="Back" />

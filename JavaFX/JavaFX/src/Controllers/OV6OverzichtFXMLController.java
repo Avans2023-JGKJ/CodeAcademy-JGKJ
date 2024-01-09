@@ -1,21 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -28,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author gijsv
  */
-public class OV5OverzichtFXMLController implements Initializable {
+public class OV6OverzichtFXMLController implements Initializable {
 
     private Stage stage;
     private Scene scene;
@@ -38,31 +33,30 @@ public class OV5OverzichtFXMLController implements Initializable {
     private Label WelcomeLabelHomeScreen;
 
     @FXML
-    private Label firstWebcastDisplay;
+    private Label firstCursusDisplay;
 
     @FXML
-    private Label secondWebcastDisplay;
+    private Label secondCursusDisplay;
 
     @FXML
-    private Label thirdWebcastDisplay;
+    private Label thirdCursusDisplay;
 
-    void DisplayWebcasts() throws SQLException {
-        ResultSet webcasts = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT COUNT(*) AS #Webcasts_Bekeken, Voortgang.naamCursus, contentItems.titel\n"
-                + "FROM contentItems\n"
-                + "JOIN Voortgang ON Voortgang.contentItemId = contentItems.contentItemId\n"
-                + "JOIN Webcast ON Webcast.contentitemId = contentItems.contentItemId\n"
-                + "GROUP BY Voortgang.naamCursus, Voortgang.voortgangsPercentage, contentItems.titel\n"
-                + "HAVING COUNT(voortgang.naamCursus) > 0 AND Voortgang.voortgangspercentage = 100 ");
+    void DisplayCertificaatPerCursus() throws SQLException {
+        ResultSet certcurs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT COUNT(*) AS CertPerCur ,naamCursus\n"
+                + "FROM Inschrijven\n"
+                + "JOIN Certificaat ON Certificaat.inschrijfId = Inschrijven.inschrijfId\n"
+                + "GROUP BY naamCursus\n"
+                + "ORDER BY CertPerCur DESC");
         int i = 0;
-        while (webcasts.next()) {
+        while (certcurs.next()) {
             if (i == 0) {
-                firstWebcastDisplay.setText(webcasts.getString("titel"));
+                firstCursusDisplay.setText(certcurs.getString("naamCursus"));
             }
             if (i == 1) {
-                secondWebcastDisplay.setText(webcasts.getString("titel"));
+                secondCursusDisplay.setText(certcurs.getString("naamCursus"));
             }
             if (i == 2) {
-                thirdWebcastDisplay.setText(webcasts.getString("titel"));
+                thirdCursusDisplay.setText(certcurs.getString("naamCursus"));
                 break;
             }
             i++;
@@ -73,7 +67,7 @@ public class OV5OverzichtFXMLController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         WelcomeLabelHomeScreen.setText("Hallo, " + DataShare.getInstance().getUsername());
         try {
-            DisplayWebcasts();
+            DisplayCertificaatPerCursus();
         } catch (SQLException ex) {
             Logger.getLogger(OV5OverzichtFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }

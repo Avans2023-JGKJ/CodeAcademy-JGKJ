@@ -102,12 +102,7 @@ public class OverzichtFXMLController implements Initializable {
     @FXML
     void Ov7Clicked(MouseEvent event) throws IOException {
         System.out.println("Overzicht 7");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov7ScreenAdmin.fxml"));
-        root = loader.load();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Error.OV7Clicked();
     }
 
     @FXML
