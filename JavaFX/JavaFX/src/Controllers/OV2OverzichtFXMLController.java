@@ -38,8 +38,6 @@ public class OV2OverzichtFXMLController implements Initializable {
     private Scene scene;
     private Parent root;
 
-    Label displayUserNameLabel;
-
     @FXML
     private Label WelcomeLabelHomeScreen;
 
