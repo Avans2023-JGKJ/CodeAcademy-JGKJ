@@ -9,22 +9,46 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DialogCursistHomeScreenFXMLController">
+<DialogPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DialogCursistHomeScreenFXMLController">
    <graphic>
-      <GridPane alignment="CENTER" maxWidth="-Infinity" prefHeight="108.0" prefWidth="480.0">
+      <GridPane alignment="CENTER" maxWidth="-Infinity" prefHeight="300.0" prefWidth="601.0">
         <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="206.0" minWidth="10.0" prefWidth="143.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="178.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="235.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="266.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="17.0" prefWidth="162.0" text="Selecteer een Cursus" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Label prefHeight="26.0" prefWidth="186.0" text="Selecteer een Cursus" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <ComboBox fx:id="InschrijvenNaamCursusBox" prefHeight="49.0" prefWidth="232.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Label fx:id="Voorstel1" prefHeight="76.0" prefWidth="188.0" text="Voorstel 1" wrapText="true" GridPane.rowIndex="2">
                <font>
                   <Font size="16.0" />
                </font></Label>
-            <ComboBox fx:id="InschrijvenNaamCursusBox" prefHeight="49.0" prefWidth="232.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Label fx:id="Voorstel2" prefHeight="74.0" prefWidth="235.0" text="Voorstel 2" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <Label fx:id="Voorstel3" prefHeight="76.0" prefWidth="182.0" text="Voorstel 3" wrapText="true" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <Label fx:id="Voorstel4" prefHeight="74.0" prefWidth="235.0" text="Voorstel 4" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <Label alignment="CENTER" prefHeight="25.0" prefWidth="199.0" text="Voorgestelde Cursussen:" textAlignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </graphic>

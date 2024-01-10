@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.OV5OverzichtFXMLController">
+  <children>
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" VBox.vgrow="ALWAYS">
+      <children>
+            <ImageView fitHeight="1100.0" fitWidth="800.0" layoutX="151.0" layoutY="-150.0" rotate="90.0">
+               <image>
+                  <Image url="@homeScreenCursistBackground.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="283.0" fitWidth="331.0" layoutX="385.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Logo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="WelcomeLabelHomeScreen" alignment="CENTER" layoutX="42.0" layoutY="271.0" prefHeight="53.0" prefWidth="1040.0" text="Hallo, " textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold Italic" size="45.0" />
+               </font>
+            </Label>
+            <GridPane alignment="CENTER" layoutY="355.0" prefHeight="446.0" prefWidth="1100.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="218.0" minHeight="10.0" prefHeight="132.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="314.0" minHeight="10.0" prefHeight="314.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="314.0" minHeight="10.0" prefHeight="314.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="189.0" stroke="#ffdbdb50" strokeType="INSIDE" width="368.0" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="250.0" stroke="#ffdbdb50" strokeType="INSIDE" width="368.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#39146e90" height="155.0" stroke="#ffdbdb50" strokeType="INSIDE" width="368.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                  <Label text="1st" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BASELINE">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="45.0" />
+                     </font>
+                  </Label>
+                  <Label text="3rd" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="45.0" />
+                     </font>
+                     <padding>
+                        <Insets top="40.0" />
+                     </padding>
+                  </Label>
+                  <Label text="2nd" textFill="WHITE" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="45.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="thirdWebcastDisplay" text="3rd webcast" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="45.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="firstWebcastDisplay" text="1st webcast" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="45.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="secondWebcastDisplay" text="2nd webcast" textFill="WHITE" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="45.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="30.0" />
+                     </padding>
+                  </Label>
+                  <Label text="Meest bekeken webcast" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="45.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <Button layoutX="42.0" layoutY="31.0" mnemonicParsing="false" onAction="#OverzichtBackClicked" text="Back" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

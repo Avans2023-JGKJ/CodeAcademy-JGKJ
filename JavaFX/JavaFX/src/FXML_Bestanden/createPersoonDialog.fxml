@@ -31,9 +31,10 @@
             <TextField fx:id="PersoonUserNameInput" prefHeight="26.0" prefWidth="98.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="PersoonPassWordInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Rol" />
-            <Label text="Email" GridPane.rowIndex="3" />
+            <Label fx:id="PersoonEmailLabel" text="Email" GridPane.rowIndex="3" />
             <TextField fx:id="PersoonEmailInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="PersoonRoleInput" prefWidth="150.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="PersoonRoleInput" onAction="#checkRolHide" prefWidth="150.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="PersoonEmailComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </graphic>
