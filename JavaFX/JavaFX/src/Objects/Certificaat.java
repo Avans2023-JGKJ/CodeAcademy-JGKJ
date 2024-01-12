@@ -11,6 +11,7 @@ public class Certificaat {
     private int certificaatId;
     private byte beoordeling;
     private String medeWerkerNaam;
+    private String naamCursus;
 
 
 
@@ -76,6 +77,14 @@ public class Certificaat {
 
     public Integer getInschrijfId() {
         return inschrijfId;
+    }
+
+    public String getNaamCursus() {
+        return naamCursus;
+    }
+
+    public void setNaamCursus(String naamCursus) {
+        this.naamCursus = naamCursus;
     }
     
     

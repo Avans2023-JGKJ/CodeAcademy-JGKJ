@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,7 +86,9 @@ public class OV2OverzichtFXMLController implements Initializable {
                 percentageDisplayCursus.setText(0 + "%");
             } else {
                 float TotPerct = sum / i;
-                percentageDisplayCursus.setText((TotPerct) + "%");
+                DecimalFormat perct = new DecimalFormat("#.##");
+                percentageDisplayCursus.setText((perct.format(TotPerct)) + "%");
+                System.out.println(TotPerct);
                 ProgressCursus.setProgress(TotPerct / 100);
                 System.out.println(sum);
                 System.out.println(i);

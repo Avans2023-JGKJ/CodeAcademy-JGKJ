@@ -217,7 +217,7 @@ public class Error {
     }
 
     public void OV7Clicked() {
-        InformationAlert("Overzicht 4", "Om dit overzicht te zien moet je inoggen als Cursist en dan op Inschrijven klikken om de aanbevelingen te bekijken", "");
+        InformationAlert("Overzicht 7", "Om dit overzicht te zien moet je inoggen als Cursist en dan op Inschrijven klikken om de aanbevelingen te bekijken", "");
     }
 
 }
