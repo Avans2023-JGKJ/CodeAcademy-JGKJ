@@ -30,7 +30,7 @@
             <TextField fx:id="CertificaatBeoordeling" prefHeight="26.0" prefWidth="98.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="CertificaatNaamMedewerker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="InschrijfId" />
-            <ComboBox fx:id="inschrijfIdSelectBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="inschrijfIdSelectBox" editable="false" prefWidth="150.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </graphic>

@@ -77,7 +77,10 @@ public class DialogCertificaatFXMLController implements Initializable {
         try {
             loadData();
             dbConnection = DataBaseSQL.createConnection(dbConnection);
-            rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT inschrijfId FROM inschrijven WHERE totaalVoortgang = '100'");
+            rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT inschrijfId \n"
+                    + "FROM inschrijven \n"
+                    + "WHERE totaalVoortgang = '100' AND  inschrijfid NOT IN(SELECT inschrijfId\n"
+                    + "FROM Certificaat)");
             while (rs.next()) {
                 inschrijfIdList.add(rs.getString("inschrijfId"));
             }

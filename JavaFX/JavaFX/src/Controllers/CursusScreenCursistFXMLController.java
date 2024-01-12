@@ -54,9 +54,6 @@ public class CursusScreenCursistFXMLController implements Initializable {
     private TableColumn<Niveau, Niveau> niveauCursusColumn;
 
     @FXML
-    private TableColumn<Cursus, String> onderwerpCursusColumn;
-
-    @FXML
     private ObservableList<Cursus> observableCursus;
 
     private void loadTableCursus() {
@@ -70,6 +67,7 @@ public class CursusScreenCursistFXMLController implements Initializable {
                 Cursus cursus = new Cursus();
                 cursus.setNaamCursus(rs.getString("naamCursus"));
                 cursus.setDatum(LocalDate.parse(rs.getString("datum")));
+                System.out.println(rs.getString("datum"));
                 cursus.setAantalContentItems(rs.getShort("aantalContentItems"));
                 String niveauString = rs.getString("niveau");
                 try {
@@ -120,6 +118,7 @@ public class CursusScreenCursistFXMLController implements Initializable {
     private void initTable() {
         observableCursus = FXCollections.observableArrayList();
         naamCursusCursusColumn.setCellValueFactory(new PropertyValueFactory<>("naamCursus"));
+        DatumInschrijvenColumn.setCellValueFactory(new PropertyValueFactory<>("datum"));
         aantalContentItemsCursusColumn.setCellValueFactory(new PropertyValueFactory<>("aantalContentItems"));
         introductieTekstCursusColumn.setCellValueFactory(new PropertyValueFactory<>("introductieTekst"));
         niveauCursusColumn.setCellValueFactory(new PropertyValueFactory<>("niveau"));
