@@ -88,11 +88,7 @@ public class OV2OverzichtFXMLController implements Initializable {
                 float TotPerct = sum / i;
                 DecimalFormat perct = new DecimalFormat("#.##");
                 percentageDisplayCursus.setText((perct.format(TotPerct)) + "%");
-                System.out.println(TotPerct);
                 ProgressCursus.setProgress(TotPerct / 100);
-                System.out.println(sum);
-                System.out.println(i);
-                System.out.println(TotPerct);
                 setmessageDisplayCursus();
             }
         } catch (SQLException ex) {

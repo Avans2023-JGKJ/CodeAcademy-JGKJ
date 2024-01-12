@@ -220,7 +220,6 @@ public class DialogContentItemFXMLController implements Initializable {
                         LocalDate.now().toString(),
                         statusComboBox.getValue().name());
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQLContentitem);
-                System.out.println("ContentItem successfully created.");
 
                 String selectSQLId = "SELECT contentItemId FROM contentItems ORDER BY contentItemId desc";
                 ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), selectSQLId);
@@ -236,7 +235,6 @@ public class DialogContentItemFXMLController implements Initializable {
                         ModuleVolgNrColumnInput.getValue());
 
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQLModule);
-                System.out.println("Module successfully created.");
                 return true;
             }
 
@@ -250,7 +248,6 @@ public class DialogContentItemFXMLController implements Initializable {
         try {
             DataShare.getInstance().setNaamCursus(contentItemsNaamCursusComboBoxInput.getValue());
             checkId = false;
-            System.out.println(statusComboBox.getValue());
             if (DataValidatie.AlterContentItemValid(
                     contentItemsNaamCursusComboBoxInput.getValue(),
                     WebcastBeschrijvingColumnInput.getText(),
@@ -271,12 +268,10 @@ public class DialogContentItemFXMLController implements Initializable {
                         LocalDate.now().toString(),
                         statusComboBox.getValue().name());
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQLContentitem);
-                System.out.println("ContentItem successfully created.");
 
                 String selectSQLId = "SELECT contentItemId FROM contentItems ORDER BY contentItemId desc";
                 ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), selectSQLId);
                 rs.next();
-                System.out.println("PUTN");
                 DataShare.getInstance().setContentItemId(Integer.valueOf(rs.getString("contentItemId")));
 
                 String insertSQLModule = String.format("INSERT INTO Webcast (contentitemId , titel, tijdsDuur, datumPublicatie, url, naamSpreker, organisatieSpreker) VALUES ('%s','%s', '%s', '%s', '%s', '%s', '%s')",
@@ -290,7 +285,6 @@ public class DialogContentItemFXMLController implements Initializable {
                 );
 
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQLModule);
-                System.out.println("Webcast successfully created.");
                 return true;
 
             }
@@ -325,7 +319,6 @@ public class DialogContentItemFXMLController implements Initializable {
                             + "', titel = '" + ModuleTitelColumnInput.getText()
                             + "', status = '" + statusComboBox.getValue()
                             + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
-                    System.out.println("ContentItem Updated!");
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "UPDATE Module SET"
                             + " titel = '" + ModuleTitelColumnInput.getText()
                             + "', versie = '" + ModuleVersieColumnInput.getText()
@@ -333,7 +326,6 @@ public class DialogContentItemFXMLController implements Initializable {
                             + "', emailContactPersoon = '" + ModuleEmailContactColumnInput.getText()
                             + "', volgNr = '" + ModuleVolgNrColumnInput.getValue()
                             + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
-                    System.out.println("Module Updated!");
                     return true;
                 }
             } catch (SQLException ex) {
@@ -360,7 +352,6 @@ public class DialogContentItemFXMLController implements Initializable {
                             + "', titel = '" + WebcastTitelColumnInput.getText()
                             + "', status = '" + statusComboBox.getValue()
                             + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
-                    System.out.println("ContentItem Updated!");
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "UPDATE Webcast SET"
                             + " titel = '" + WebcastTitelColumnInput.getText()
                             + "', tijdsDuur = '" + Integer.valueOf(WebcastTijdsDuurColumnInput.getText())
@@ -369,7 +360,6 @@ public class DialogContentItemFXMLController implements Initializable {
                             + "', naamSpreker = '" + WebcastNaamSprekerColumnInput.getText()
                             + "', organisatieSpreker = '" + WebcastOrganisatieSprekerColumnInput.getText()
                             + "' WHERE contentItemId = '" + DataShare.getInstance().getContentItemId() + "'");
-                    System.out.println("Webcast Updated!");
                     return true;
                 }
             } catch (SQLException ex) {

@@ -38,7 +38,6 @@ public class HomeScreenFXMLController implements Initializable {
     
     @FXML
     void CertificatenButtonClicked(MouseEvent event) throws IOException {
-        System.out.println("Certificaat");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/certificaatScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -49,7 +48,6 @@ public class HomeScreenFXMLController implements Initializable {
     
     @FXML
     void ContentItemButtonClicked(MouseEvent event) throws IOException {
-        System.out.println("Content-Item");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/contentItemsScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -60,7 +58,6 @@ public class HomeScreenFXMLController implements Initializable {
     
     @FXML
     void CursistenButtonClicked(MouseEvent event) throws IOException {
-        System.out.println("Cursist");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/cursistScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -71,7 +68,6 @@ public class HomeScreenFXMLController implements Initializable {
     
     @FXML
     void CursusButtonClicked(MouseEvent event) throws IOException {
-        System.out.println("Cursus");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/cursusScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -82,7 +78,6 @@ public class HomeScreenFXMLController implements Initializable {
     
     @FXML
     void PersoonButtonClicked(MouseEvent event) throws IOException {
-        System.out.println("Inschrijven");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/persoonScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -93,7 +88,6 @@ public class HomeScreenFXMLController implements Initializable {
     
     @FXML
     void OverzichtButtonClicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/overzichtScreenAdmin.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

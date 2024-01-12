@@ -1,14 +1,10 @@
 package Controllers;
 
 import Java2Database.DataShare;
-
-import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Validatie.DataValidatie;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -46,19 +42,17 @@ public class DialogCertificaatFXMLController implements Initializable {
 
     //       @FXML
     boolean ValidateAndCreateCertificaat() {
-        System.out.println("punt 1");
+
         if (DataValidatie.InsertCertificaatValid(
                 CertificaatBeoordeling.getText(),
                 CertificaatNaamMedewerker.getText(),
                 inschrijfIdSelectBox.getValue()
         )) {
-            System.out.println("2");
             try {
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Certificaat (beoordeling, medewerkerNaam, inschrijfId) VALUES('"
                         + CertificaatBeoordeling.getText()
                         + "',  '" + CertificaatNaamMedewerker.getText()
                         + "',  '" + inschrijfIdSelectBox.getValue() + "')");
-                System.out.println("Certificaat succesful created");
                 return true;
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -66,7 +60,6 @@ public class DialogCertificaatFXMLController implements Initializable {
                 System.out.println(e);
             }
         }
-        System.out.println("FALSE CODE");
         return false;
 
     }

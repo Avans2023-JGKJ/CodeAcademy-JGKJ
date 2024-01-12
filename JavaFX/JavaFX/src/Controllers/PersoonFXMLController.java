@@ -217,7 +217,6 @@ public class PersoonFXMLController implements Initializable {
                 if (rs.next()) {
                     DataShare.getInstance().setRol(Rol.valueOf(rs.getString("Rol")));
                     DataShare.getInstance().setPersoonUserName(rs.getString("UserName"));
-                    System.out.println("USERNAME is "+(rs.getString("UserName")));
                     DataShare.getInstance().setPassWord(rs.getString("PassWord"));
                     DataShare.getInstance().setEmail(rs.getString("Email"));
                 } else {

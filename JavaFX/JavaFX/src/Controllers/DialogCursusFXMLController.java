@@ -75,7 +75,6 @@ public class DialogCursusFXMLController {
                         introductieTekstCursusColumnInput.getText(),
                         niveauComboBox.getValue().name());
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQL);
-                System.out.println("Cursus successfully created.");
                 return true;
             } catch (SQLException ex) {
                 Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,7 +102,6 @@ public class DialogCursusFXMLController {
             } catch (SQLException ex) {
                 Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("Cursus successfully updated.");
             return true;
 
         } else {

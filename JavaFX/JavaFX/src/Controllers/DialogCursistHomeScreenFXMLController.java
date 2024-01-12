@@ -108,7 +108,6 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
                     rs1.next();
                     DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Inschrijven (email, naamCursus, datum, totaalVoortgang) VALUES "
                             + "('" + rs1.getString("email") + "', '" + InschrijvenNaamCursusBox.getValue() + "', '" + LocalDate.now() + "', '0')");
-                    System.out.println("Inschrijven succesvol afgerond.");
 
                     ResultSet rs2 = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT inschrijfId FROM Inschrijven ORDER BY inschrijfId DESC");
                     rs2.next();
@@ -138,7 +137,6 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
                         + "'" + inschrijfId + "', '"
                         + DataShare.getInstance().getNaamCursus() + "', '" + rs.getString("contentItemId") + "', '0')");
             }
-            System.out.println("Benodigde Tupels aangemaakt...");
         } catch (SQLException ex) {
             Logger.getLogger(DialogCursistHomeScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -153,7 +151,6 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
                 builder.append(rs.getString("naamCursus"));
                 builder.append(rs.getString("onderwerp"));
                 builder.append(rs.getString("introductieTekst"));
-                System.out.println(builder.toString());
 
                 Set<String> set1 = new HashSet<>();
                 Set<String> set2 = new HashSet<>();
@@ -175,9 +172,7 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
                         commonWords++;
                     }
                 }
-                System.out.println("Common Words = " + commonWords);
                 int totalUniqueWords = set1.size() + set2.size() - commonWords;
-                System.out.println("totalUniqueWords = " + totalUniqueWords);
                 double similarityNumber = (double) commonWords / totalUniqueWords;
 
                 similarity.put(rs.getString("naamCursus"), similarityNumber);
@@ -200,7 +195,6 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
             int count = 0;
             for (Map.Entry<Double, String> x : sortedSimilarity.entrySet()) {
                 if (count < 4) {
-                    System.out.println("Top " + (count + 1) + " Key: " + x.getValue());
                     if (!list.contains(x.getValue())) {
                         switch (count) {
                             case 0:

@@ -86,7 +86,6 @@ public class LoginFXMLController implements Initializable {
 
     @FXML
     void LoginButtonClicked(ActionEvent event) throws MalformedURLException, IOException {
-        System.out.println("Login Button Clicked");
         if (checkUserPassCombination(UserNameField.getText(), PassWordField.getText())) {
             DataShare.getInstance().setUsername(UserNameField.getText());
 

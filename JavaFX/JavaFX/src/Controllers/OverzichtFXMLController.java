@@ -45,7 +45,6 @@ public class OverzichtFXMLController implements Initializable {
 
     @FXML
     void Ov1Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 1");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov1ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -56,7 +55,6 @@ public class OverzichtFXMLController implements Initializable {
 
     @FXML
     void Ov2Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 2");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov2ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -67,19 +65,16 @@ public class OverzichtFXMLController implements Initializable {
 
     @FXML
     void Ov3Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 3");
         Error.Ov3Clicked();
     }
 
     @FXML
     void Ov4Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 4");
         Error.OV4Clicked();
     }
 
     @FXML
     void Ov5Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 5");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov5ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -90,7 +85,6 @@ public class OverzichtFXMLController implements Initializable {
 
     @FXML
     void Ov6Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 6");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov6ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -101,13 +95,11 @@ public class OverzichtFXMLController implements Initializable {
 
     @FXML
     void Ov7Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 7");
         Error.OV7Clicked();
     }
 
     @FXML
     void Ov8Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 8");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov8ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

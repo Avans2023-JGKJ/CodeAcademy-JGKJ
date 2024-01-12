@@ -2,7 +2,6 @@ package Controllers;
 
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
-import Objects.ContentItem;
 import Objects.Cursus;
 import Objects.Inschrijven;
 import Objects.Niveau;
@@ -67,7 +66,6 @@ public class CursusScreenCursistFXMLController implements Initializable {
                 Cursus cursus = new Cursus();
                 cursus.setNaamCursus(rs.getString("naamCursus"));
                 cursus.setDatum(LocalDate.parse(rs.getString("datum")));
-                System.out.println(rs.getString("datum"));
                 cursus.setAantalContentItems(rs.getShort("aantalContentItems"));
                 String niveauString = rs.getString("niveau");
                 try {

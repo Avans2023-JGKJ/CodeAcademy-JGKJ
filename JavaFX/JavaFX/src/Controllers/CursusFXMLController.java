@@ -1,10 +1,8 @@
 package Controllers;
 
-import Java2Database.DataShare;
 
 import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
-import Objects.Cursist;
 import Objects.Cursus;
 import Objects.Niveau;
 import Validatie.Error;
@@ -12,17 +10,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,7 +34,6 @@ import javafx.stage.Stage;
 import java.sql.Connection;
 import java.time.format.DateTimeParseException;
 import static Controllers.CursistFXMLController.ErrorAlert;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 

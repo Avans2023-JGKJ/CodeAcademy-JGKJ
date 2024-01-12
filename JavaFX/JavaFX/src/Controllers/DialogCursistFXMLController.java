@@ -80,7 +80,6 @@ public class DialogCursistFXMLController implements Initializable {
                         + "',   '" + cursistHuisnummerInput.getText()
                         + "',  '" + cursistWoonplaatsInput.getText()
                         + "',  '" + cursistLandCodeInput.getText() + "')");
-                System.out.println("Cursist succesfully created");
                 return true;
             } catch (SQLException ex) {
                 if (ex.getSQLState().equals("23000")) {
@@ -126,7 +125,6 @@ public class DialogCursistFXMLController implements Initializable {
                         + "', woonPlaats = '" + cursistWoonplaatsInput.getText()
                         + "', landCode = '" + cursistLandCodeInput.getText()
                         + "' WHERE email = '" + DataShare.getInstance().getCursistEmail() + "'");
-                System.out.println("Cursist succesfully updated");
                 return true;
             } catch (SQLException ex) {
                 Logger.getLogger(DialogCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);

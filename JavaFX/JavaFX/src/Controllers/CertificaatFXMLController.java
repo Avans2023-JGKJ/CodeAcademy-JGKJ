@@ -151,10 +151,7 @@ public class CertificaatFXMLController implements Initializable {
 
     public void loadTableCertificaat() {
         try {
-//            , totaalVoortgang
-            System.out.println("test");
             initTable();
-            System.out.println("test");
             try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT certificaatId, beoordeling, medewerkerNaam, inschrijfId FROM Certificaat").executeQuery()) {
                 while (rs.next()) {
                     Certificaat Certificaat = new Certificaat();
@@ -163,15 +160,11 @@ public class CertificaatFXMLController implements Initializable {
                     Certificaat.setMedeWerkerNaam(rs.getString("medewerkerNaam"));
                     Certificaat.setInschrijfId(rs.getInt("inschrijfId"));
 
-                    System.out.println(Certificaat.getNaamCursist());
-
                     observableCertificaat.add(Certificaat);
                 }
             }
-            System.out.println("PUNT 4");
             CertificaatTableView.setItems(observableCertificaat);
             CertificaatTableView.refresh();
-            System.out.println("PUNT 5");
 
         } catch (SQLException ex) {
             Logger.getLogger(CertificaatFXMLController.class.getName()).log(Level.SEVERE, null, ex);

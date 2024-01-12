@@ -52,7 +52,6 @@ public class InschrijvenFXMLController implements Initializable {
     @FXML
     void InschrijvenVerwijderenClicked(ActionEvent event) {
         loadTableInschrijven();
-        System.out.println("test");
     }
 
     @FXML
@@ -86,24 +85,18 @@ public class InschrijvenFXMLController implements Initializable {
     public void loadTableInschrijven() {
         try {
 //            , totaalVoortgang
-            System.out.println("test");
             initTable();
-            System.out.println("test");
             try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT email, naamCursus, inschrijfId FROM Inschrijven").executeQuery()) {
                 while (rs.next()) {
                     Inschrijven Inschrijven = new Inschrijven();
                     Inschrijven.setEmail(rs.getString("email"));
                     Inschrijven.setNaamCursus(rs.getString("naamCursus"));
                     Inschrijven.setInschrijfId(rs.getInt("inschrijfId"));
-//                    Inschrijven.setEmail//totaalVoortgang maar deze is nog niet af
-        //(rs.getString("email"));
         observableInschrijven.add(Inschrijven); 
                 }
             }
-            System.out.println("PUNT 4");
             InschrijvenTableView.setItems(observableInschrijven);
             InschrijvenTableView.refresh();
-            System.out.println("PUNT 5");
 
         } catch (SQLException ex) {
             Logger.getLogger(InschrijvenFXMLController.class.getName()).log(Level.SEVERE, null, ex);

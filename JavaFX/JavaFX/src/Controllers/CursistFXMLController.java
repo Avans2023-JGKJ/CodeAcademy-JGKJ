@@ -1,8 +1,6 @@
 package Controllers;
 
 import Java2Database.DataShare;
-
-import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Validatie.Error;
 import Objects.Cursist;

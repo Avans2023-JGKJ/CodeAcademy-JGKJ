@@ -6,10 +6,6 @@ import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Objects.ContentItem;
 import Objects.Status;
-//import Objects.Module;
-//import Objects.Webcast;
-//import Objects.Inschrijven;
-//import Objects.Status;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -36,7 +32,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -189,22 +184,6 @@ public class ContentItemFXMLController implements Initializable {
                 ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.naamCursus,c.contentItemId,c.beschrijving,c.titel,c.datum,c.status, m.versie, m.naamContactPersoon, m.emailContactPersoon, m.volgNr, w.datumPublicatie, w.url, w.naamSpreker, w.organisatieSpreker, w.tijdsDuur FROM contentItems c LEFT JOIN Module m ON m.contentItemId = c.contentItemId LEFT JOIN Webcast w ON w.contentItemId = c.contentItemId WHERE c.contentItemId = '" + clickedContentItem.getContentItemId() + "'");
 
                 if (rs.next()) {
-                    System.out.println("naamCursus: " + rs.getString("naamCursus"));
-                    System.out.println("contentItemId: " + rs.getInt("contentItemId"));
-                    System.out.println("beschrijving: " + rs.getString("beschrijving"));
-                    System.out.println("titel: " + rs.getString("titel"));
-                    System.out.println("datum: " + rs.getString("datum"));
-                    System.out.println("status: " + rs.getString("status"));
-                    System.out.println("versie: " + rs.getString("versie"));
-                    System.out.println("naamContactPersoon: " + rs.getString("naamContactPersoon"));
-                    System.out.println("emailContactPersoon: " + rs.getString("emailContactPersoon"));
-                    System.out.println("volgNr: " + rs.getShort("volgNr"));
-                    System.out.println("datumPublicatie: " + rs.getString("datumPublicatie"));
-                    System.out.println("url: " + rs.getString("url"));
-                    System.out.println("naamSpreker: " + rs.getString("naamSpreker"));
-                    System.out.println("organisatieSpreker: " + rs.getString("organisatieSpreker"));
-                    System.out.println("tijdsDuur: " + rs.getShort("tijdsDuur"));
-
                     DataShare.getInstance().setNaamCursus(rs.getString("naamCursus"));
                     DataShare.getInstance().setContentItemId(rs.getInt("contentItemId"));
                     DataShare.getInstance().setModuleBeschrijving(rs.getString("beschrijving"));
@@ -215,7 +194,6 @@ public class ContentItemFXMLController implements Initializable {
                     DataShare.getInstance().setNaamContactPersoon(rs.getString("naamContactPersoon"));
                     DataShare.getInstance().setEmailContactPersoon(rs.getString("emailContactPersoon"));
                     DataShare.getInstance().setVolgordeNr(rs.getShort("volgNr"));
-                    System.out.println(rs.getByte("volgNr"));
                     if (rs.getString("datumPublicatie") != null) {
                         DataShare.getInstance().setDatumPublicatie(LocalDate.parse(rs.getString("datumPublicatie")));
                     }

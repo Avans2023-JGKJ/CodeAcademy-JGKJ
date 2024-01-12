@@ -82,7 +82,6 @@ public class DialogPersoonFXMLController implements Initializable {
                             + "', PassWord = '" + PersoonPassWordInput.getText()
                             + "', Email = null"
                             + " WHERE UserName = '" + DataShare.getInstance().getPersoonUserName() + "'");
-                    System.out.println("Persoon succesfully updated.\n Rol = ADMIN");
                     return true;
                 } else if (Rol.CURSIST.equals(PersoonRoleInput.getValue())) {
 
@@ -99,7 +98,6 @@ public class DialogPersoonFXMLController implements Initializable {
                             + "', Email = '" + email
                             + "' WHERE UserName = '" + DataShare.getInstance().getPersoonUserName() + "'");
 
-                    System.out.println("Persoon succesfully updated.\n Rol = CURSIST");
                     return true;
                 }
 
