@@ -4,19 +4,18 @@ import Validatie.DataValidatie;
 
 public class CheckPercentageTest {
 
-    @Test
+    @Test //Valid Test
     public void testCheckPercentageWithValidValues() {
         assertTrue(DataValidatie.checkPercentage((short) 0));
         assertTrue(DataValidatie.checkPercentage((short) 50));
         assertTrue(DataValidatie.checkPercentage((short) 100));
     }
 
-    @Test
+    @Test //Invalid Test
     public void testCheckPercentageWithInvalidValues() {
         assertFalse(DataValidatie.checkPercentage((short) -1)); // Below 0
         assertFalse(DataValidatie.checkPercentage((short) 101)); // Above 100
     }
 
-    // You can add more specific tests based on your requirements.
 }
 

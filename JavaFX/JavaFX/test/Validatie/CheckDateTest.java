@@ -5,13 +5,13 @@ import Validatie.DataValidatie;
 
 public class CheckDateTest {
 
-    @Test
+    @Test //Valide Test
     public void testCheckDateWithValidMonth() {
         LocalDate validDate = LocalDate.of(2022, 6, 15); // June is a valid month
         assertTrue(DataValidatie.checkDate(validDate));
     }
 
-    @Test
+    @Test //Invalide Test
     public void testCheckDateWithInvalidMonth() {
         LocalDate invalidDate = LocalDate.of(2022, 13, 15); // Invalid month (greater than 12)
         assertFalse(DataValidatie.checkDate(invalidDate));
@@ -20,6 +20,5 @@ public class CheckDateTest {
         assertFalse(DataValidatie.checkDate(invalidDate));
     }
 
-    // You can add more specific tests based on your requirements.
 }
 

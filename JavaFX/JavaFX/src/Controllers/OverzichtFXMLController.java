@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import Validatie.Error;
@@ -21,10 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-/**
- *
- * @author gijsv
- */
 public class OverzichtFXMLController implements Initializable {
 
     private Stage stage;
@@ -43,9 +34,8 @@ public class OverzichtFXMLController implements Initializable {
         WelcomeLabelHomeScreen.setText("Hallo, " + DataShare.getInstance().getUsername());
     }
 
-    @FXML
+    @FXML //Methode toont ov1 scherm
     void Ov1Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 1");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov1ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -54,9 +44,8 @@ public class OverzichtFXMLController implements Initializable {
         stage.show();
     }
 
-    @FXML
+    @FXML //Methode toont ov2 scherm
     void Ov2Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 2");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov2ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -65,21 +54,18 @@ public class OverzichtFXMLController implements Initializable {
         stage.show();
     }
 
-    @FXML
+    @FXML //Methode toont  ov3 error
     void Ov3Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 3");
         Error.Ov3Clicked();
     }
 
-    @FXML
+    @FXML //Methode toont  ov4 error
     void Ov4Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 4");
         Error.OV4Clicked();
     }
 
-    @FXML
+    @FXML //Methode toont ov5 scherm
     void Ov5Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 5");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov5ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -88,9 +74,8 @@ public class OverzichtFXMLController implements Initializable {
         stage.show();
     }
 
-    @FXML
+    @FXML //Methode toont ov6 scherm
     void Ov6Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 6");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov6ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -99,15 +84,13 @@ public class OverzichtFXMLController implements Initializable {
         stage.show();
     }
 
-    @FXML
+    @FXML //Methode toont ov7 error
     void Ov7Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 7");
         Error.OV7Clicked();
     }
 
-    @FXML
+    @FXML //Methode toont  ov8 scherm
     void Ov8Clicked(MouseEvent event) throws IOException {
-        System.out.println("Overzicht 8");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/ov8ScreenAdmin.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -116,7 +99,7 @@ public class OverzichtFXMLController implements Initializable {
         stage.show();
     }
 
-    @FXML
+    @FXML //Methode toont homescreen als je terug wilt
     void OverzichtBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
         root = loader.load();

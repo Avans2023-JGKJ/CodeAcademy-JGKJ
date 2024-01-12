@@ -1,4 +1,5 @@
 package Objects;
+
 public class Module {
 
     private String versie;
@@ -9,38 +10,26 @@ public class Module {
 
     // CONSTRUCTORS -----------------------------------------------------------------
     public Module(String versie, String Beschrijving, String naamContactPersoon) {
-        if (contactPersoonControle(naamContactPersoon)) {
-            this.versie = versie;
-            this.Beschrijving = Beschrijving;
-            this.naamContactPersoon = naamContactPersoon;
-            this.emailContactPersoon = "CONNECTIE MET DATABASE, COMBINATIE VAN NAAM!";
-        } else {
-            System.out.println("ERROR contactPersoonControle METHODE");
-        }
+
+        this.versie = versie;
+        this.Beschrijving = Beschrijving;
+        this.naamContactPersoon = naamContactPersoon;
+        this.emailContactPersoon = "CONNECTIE MET DATABASE, COMBINATIE VAN NAAM!";
+
     }
 
     public Module(String versie, String Beschrijving, String naamContactPersoon, String emailContactPersoon) {
-        if (contactPersoonControle(naamContactPersoon)) {
-            this.versie = versie;
-            this.Beschrijving = Beschrijving;
-            this.naamContactPersoon = naamContactPersoon;
-            this.emailContactPersoon = emailContactPersoon;
-        } else {
-            System.out.println("ERROR contactPersoonControle METHODE");
-        }
+
+        this.versie = versie;
+        this.Beschrijving = Beschrijving;
+        this.naamContactPersoon = naamContactPersoon;
+        this.emailContactPersoon = emailContactPersoon;
+
     }
 
     @Override
     public String toString() {
         return "Module{" + "versie=" + versie + ", Beschrijving=" + Beschrijving + ", naamContactPersoon=" + naamContactPersoon + ", emailContactPersoon=" + emailContactPersoon + ", volgordeNr=" + volgordeNr + '}';
-    }
-
-    // PRIVE METHODE -----------------------------------------------------------------
-    private boolean contactPersoonControle(String naamContact) {
-        return true;
-        // HIER KOMT PROGRAMMA
-        // Naam van contactpersoon wordt gecontroleerd in database, indien aanwezig, geeft true terug. 
-        // Indien naam niet aanwezig, return false.
     }
 
     // GETTERS -----------------------------------------------------------------

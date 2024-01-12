@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 public class CheckURLTest {
 
-    @Test
+    @Test //Valid URL Test
     public void testCheckURLWithValidURLs() {
         assertTrue(DataValidatie.checkURL("https://www.example.com"));
         assertTrue(DataValidatie.checkURL("http://subdomain.domain.com"));
     }
 
-    @Test
+    @Test //Invalid URL test
     public void testCheckURLWithInvalidURLs() {
         assertFalse(DataValidatie.checkURL("invalid-url")); // No protocol and domain
         assertFalse(DataValidatie.checkURL("ftp://www.example.com")); // Unsupported protocol
@@ -24,6 +24,5 @@ public class CheckURLTest {
         assertFalse(DataValidatie.checkURL("")); // Empty string
     }
 
-    // You can add more specific tests based on your requirements.
 }
 

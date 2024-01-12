@@ -18,13 +18,7 @@ import javafx.scene.control.DialogPane;
 
 public class DialogChooseFXMLController implements Initializable {
 
-    private ContentItemFXMLController ContentItemFXMLController = new ContentItemFXMLController();
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
-
+//Deze methode stuurt je door naar het aanmaakscherm voor een webcast
     @FXML
     void CreateWebcast(ActionEvent event) {
         DataShare.getInstance().resetContentItem();
@@ -58,7 +52,7 @@ public class DialogChooseFXMLController implements Initializable {
             Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+//Deze methode stuurt je door naar het aanmaakscherm voor een module
     @FXML
     void CreateModule(ActionEvent event) {
         DataShare.getInstance().resetContentItem();
@@ -91,5 +85,10 @@ public class DialogChooseFXMLController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

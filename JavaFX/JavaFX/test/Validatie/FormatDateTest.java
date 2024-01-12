@@ -4,13 +4,13 @@ import Validatie.DataValidatie;
 
 public class FormatDateTest {
 
-    @Test
+    @Test //Valide waarde test
     public void testFormatDateWithValidDate() {
         String validDate = "2022-01-01";
         assertTrue(DataValidatie.formatDate(validDate));
     }
 
-    @Test
+    @Test //Niet valide waarde test
     public void testFormatDateWithInvalidDate() {
         String invalidDate = "2022-13-01"; // Invalid month (greater than 12)
         assertFalse(DataValidatie.formatDate(invalidDate));
@@ -19,11 +19,10 @@ public class FormatDateTest {
         assertFalse(DataValidatie.formatDate(invalidDate));
     }
 
-    @Test
+    @Test //Een NULL test
     public void testFormatDateWithNullDate() {
         assertFalse(DataValidatie.formatDate(null));
     }
 
-    // You can add more specific tests based on your requirements.
 }
 

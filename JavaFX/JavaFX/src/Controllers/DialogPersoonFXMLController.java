@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import Validatie.DataValidatie;
-import Validatie.Error;
 import Objects.Rol;
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
@@ -25,10 +19,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-/**
- *
- * @author gijsv
- */
 public class DialogPersoonFXMLController implements Initializable {
 
     @FXML
@@ -54,6 +44,7 @@ public class DialogPersoonFXMLController implements Initializable {
 
     private ObservableList<String> CursistEmailList = FXCollections.observableArrayList();
 
+    //Methode Valideerd NULL en spreekt Validatie aan, daarna Data naar DataBase
     boolean ValidateAndUpdatePersoon() {
         if (PersoonEmailInput.getText() == null || PersoonEmailInput.getText().isEmpty()) {
             email = String.valueOf(PersoonEmailComboBox.getValue()).toLowerCase();
@@ -82,7 +73,6 @@ public class DialogPersoonFXMLController implements Initializable {
                             + "', PassWord = '" + PersoonPassWordInput.getText()
                             + "', Email = null"
                             + " WHERE UserName = '" + DataShare.getInstance().getPersoonUserName() + "'");
-                    System.out.println("Persoon succesfully updated.\n Rol = ADMIN");
                     return true;
                 } else if (Rol.CURSIST.equals(PersoonRoleInput.getValue())) {
 
@@ -99,7 +89,6 @@ public class DialogPersoonFXMLController implements Initializable {
                             + "', Email = '" + email
                             + "' WHERE UserName = '" + DataShare.getInstance().getPersoonUserName() + "'");
 
-                    System.out.println("Persoon succesfully updated.\n Rol = CURSIST");
                     return true;
                 }
 
@@ -111,6 +100,7 @@ public class DialogPersoonFXMLController implements Initializable {
         return false;
     }
 
+    //Methode Validatie aan, daarna Data naar DataBase op selected PK
     boolean ValidateAndCreatePersoon() {
         if (DataValidatie.InsertPersoonValid(
                 PersoonRoleInput.getValue().toString(),
@@ -151,6 +141,7 @@ public class DialogPersoonFXMLController implements Initializable {
         return false;
     }
 
+    //Refres data in de tableview
     private void loadData() {
         PersoonEmailComboBox.setItems(CursistEmailList);
         PersoonRoleInput.setValue((DataShare.getInstance().getRol()));
@@ -170,7 +161,7 @@ public class DialogPersoonFXMLController implements Initializable {
         }
     }
 
-    @Override
+    @Override //Methode wordt aangesproken bij inladen pagina, laad combobox, setvisible methodes
     public void initialize(URL arg0, ResourceBundle arg1) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT email FROM Cursist");
@@ -194,7 +185,7 @@ public class DialogPersoonFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Checkt welke rol is geselecteerd, veranderd de input velden op basis van keuze
     void checkRolHide(ActionEvent event) {
         if (Rol.ADMIN.equals(PersoonRoleInput.getValue())) {
             PersoonEmailLabel.setVisible(false);
@@ -218,6 +209,7 @@ public class DialogPersoonFXMLController implements Initializable {
         }
     }
 
+    //Methode reset of Persoon update is ja of nee
     public static void setIsUpdatePersoon(boolean x) {
         isPersoonUpdate = x;
     }

@@ -12,11 +12,13 @@ import javafx.scene.image.Image;
 
 public class JavaFXApplication extends Application {
 
+    //Main methode, zorgt voor de start van de applicatie
     public static void main(String[] args) throws SQLException {
         launch(args);
     }
+         
 
-    @Override
+    @Override //Start methode zorgt voor de weergave van het eerste scherm: Login
     public void start(Stage primaryStage) throws Exception {
         
         FXMLLoader loader = new FXMLLoader();

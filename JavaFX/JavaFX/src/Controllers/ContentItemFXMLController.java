@@ -6,10 +6,6 @@ import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Objects.ContentItem;
 import Objects.Status;
-//import Objects.Module;
-//import Objects.Webcast;
-//import Objects.Inschrijven;
-//import Objects.Status;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -36,7 +32,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -47,15 +42,27 @@ public class ContentItemFXMLController implements Initializable {
     private Scene scene;
     private Parent root;
 
+    @FXML
+    private TableView<ContentItem> ContentItemTableView;
+    @FXML
+    TableColumn<ContentItem, Integer> contentItemsIdColumn;
+    @FXML
+    TableColumn<ContentItem, String> contentItemsTitelColumn;
+    @FXML
+    TableColumn<ContentItem, LocalDate> contentItemsDatumColumn;
+    @FXML
+    TableColumn<ContentItem, String> contentItemsStatusColumn;
+
+    ObservableList<ContentItem> observableContentItem;
+
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableContentItem();
     }
 
-    @FXML
-    private TableView<ContentItem> ContentItemTableView;
-
+    //Deze methode wordt gebruikt voor het inladen van de Pop up om een contentitem aan te maken
     @FXML
     void ContentItemsAanmakenClicked(MouseEvent event) {
 
@@ -78,6 +85,7 @@ public class ContentItemFXMLController implements Initializable {
         }
     }
 
+    //Deze methode wordt gebruikt voor het inladen van de Pop up om een contentitem aan te passen
     @FXML
     void ContentItemsAanpassenClicked(MouseEvent event) {
         if (DataShare.getInstance().getVersie() == null) {
@@ -136,6 +144,7 @@ public class ContentItemFXMLController implements Initializable {
 
     }
 
+    //Deze methode verwijdert de data van een geselecteerde rij in de tableview
     @FXML
     void ContentItemsVerwijderenClicked(MouseEvent event) {
         ContentItem selectedContentItem = ContentItemTableView.getSelectionModel().getSelectedItem();
@@ -151,6 +160,7 @@ public class ContentItemFXMLController implements Initializable {
         }
     }
 
+    //Deze methode geeft een waarschuwing bij het verwijderen van data
     private boolean removeContentItemAlert(int ContentItemId, String ContentItemTitel) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("ContentItem Verwijderen!");
@@ -169,17 +179,7 @@ public class ContentItemFXMLController implements Initializable {
         return result.isPresent() && result.get() == buttonTypeYes;
     }
 
-    @FXML
-    TableColumn<ContentItem, Integer> contentItemsIdColumn;
-    @FXML
-    TableColumn<ContentItem, String> contentItemsTitelColumn;
-    @FXML
-    TableColumn<ContentItem, LocalDate> contentItemsDatumColumn;
-    @FXML
-    TableColumn<ContentItem, String> contentItemsStatusColumn;
-
-    ObservableList<ContentItem> observableContentItem;
-
+    //Deze methode haalt de data van een geselecteerde rij op
     @FXML
     void rowClicked(MouseEvent event) {
         try {
@@ -189,22 +189,6 @@ public class ContentItemFXMLController implements Initializable {
                 ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.naamCursus,c.contentItemId,c.beschrijving,c.titel,c.datum,c.status, m.versie, m.naamContactPersoon, m.emailContactPersoon, m.volgNr, w.datumPublicatie, w.url, w.naamSpreker, w.organisatieSpreker, w.tijdsDuur FROM contentItems c LEFT JOIN Module m ON m.contentItemId = c.contentItemId LEFT JOIN Webcast w ON w.contentItemId = c.contentItemId WHERE c.contentItemId = '" + clickedContentItem.getContentItemId() + "'");
 
                 if (rs.next()) {
-                    System.out.println("naamCursus: " + rs.getString("naamCursus"));
-                    System.out.println("contentItemId: " + rs.getInt("contentItemId"));
-                    System.out.println("beschrijving: " + rs.getString("beschrijving"));
-                    System.out.println("titel: " + rs.getString("titel"));
-                    System.out.println("datum: " + rs.getString("datum"));
-                    System.out.println("status: " + rs.getString("status"));
-                    System.out.println("versie: " + rs.getString("versie"));
-                    System.out.println("naamContactPersoon: " + rs.getString("naamContactPersoon"));
-                    System.out.println("emailContactPersoon: " + rs.getString("emailContactPersoon"));
-                    System.out.println("volgNr: " + rs.getShort("volgNr"));
-                    System.out.println("datumPublicatie: " + rs.getString("datumPublicatie"));
-                    System.out.println("url: " + rs.getString("url"));
-                    System.out.println("naamSpreker: " + rs.getString("naamSpreker"));
-                    System.out.println("organisatieSpreker: " + rs.getString("organisatieSpreker"));
-                    System.out.println("tijdsDuur: " + rs.getShort("tijdsDuur"));
-
                     DataShare.getInstance().setNaamCursus(rs.getString("naamCursus"));
                     DataShare.getInstance().setContentItemId(rs.getInt("contentItemId"));
                     DataShare.getInstance().setModuleBeschrijving(rs.getString("beschrijving"));
@@ -215,7 +199,6 @@ public class ContentItemFXMLController implements Initializable {
                     DataShare.getInstance().setNaamContactPersoon(rs.getString("naamContactPersoon"));
                     DataShare.getInstance().setEmailContactPersoon(rs.getString("emailContactPersoon"));
                     DataShare.getInstance().setVolgordeNr(rs.getShort("volgNr"));
-                    System.out.println(rs.getByte("volgNr"));
                     if (rs.getString("datumPublicatie") != null) {
                         DataShare.getInstance().setDatumPublicatie(LocalDate.parse(rs.getString("datumPublicatie")));
                     }
@@ -235,6 +218,7 @@ public class ContentItemFXMLController implements Initializable {
         }
     }
 
+    //Deze methode bepaalt de kolommen van de tableview
     private void initTable() {
         observableContentItem = FXCollections.observableArrayList(); // Initialize the list
         contentItemsIdColumn.setCellValueFactory(new PropertyValueFactory<>("contentItemId"));
@@ -243,6 +227,7 @@ public class ContentItemFXMLController implements Initializable {
         contentItemsStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
+    //Deze methode laad de tableview met de gewenste data
     void loadTableContentItem() {
         try {
             initTable();
@@ -261,11 +246,12 @@ public class ContentItemFXMLController implements Initializable {
             ContentItemTableView.refresh();
 
         } catch (SQLException ex) {
-            Logger.getLogger(InschrijvenFXMLController.class
+            Logger.getLogger(ContentItemFXMLController.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    //De terugknop voor de pagina
     @FXML
     void ContentItemsBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));

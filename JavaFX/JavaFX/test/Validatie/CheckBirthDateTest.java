@@ -5,13 +5,13 @@ import Validatie.DataValidatie;
 
 public class CheckBirthDateTest {
 
-    @Test
+    @Test //Valide test
     public void testCheckBirthDateWithValidDate() {
         LocalDate validDate = LocalDate.now().minusYears(DataValidatie.getMinimaleLeeftijdCursist() + 1);
         assertTrue(DataValidatie.checkBirthDate(validDate));
     }
 
-    @Test
+    @Test //Invalide Date
     public void testCheckBirthDateWithInvalidDate() {
         LocalDate futureDate = LocalDate.now().plusYears(1);
         assertFalse(DataValidatie.checkBirthDate(futureDate)); // Date in the future
@@ -20,6 +20,5 @@ public class CheckBirthDateTest {
         assertFalse(DataValidatie.checkBirthDate(underageDate)); // Underage date
     }
 
-    // You can add more specific tests based on your requirements.
 }
 

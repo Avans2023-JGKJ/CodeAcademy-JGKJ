@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
-import Controllers.OverzichtFXMLController;
 import java.sql.ResultSet;
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
@@ -16,8 +10,6 @@ import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,15 +17,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
-/**
- *
- * @author gijsv
- */
 public class OV1OverzichtFXMLController implements Initializable {
 
     private Stage stage;
@@ -56,14 +43,15 @@ public class OV1OverzichtFXMLController implements Initializable {
 
     @FXML
     private ProgressBar ProgressMan;
-    
-    @Override
+
+    @Override //Methode Spreekt methodes aan bij inladen, zet WelcomeLabel
     public void initialize(URL url, ResourceBundle rb) {
         calcPercentageVrouwCertificaat();
         calcPercentageManCertificaat();
         WelcomeLabelHomeScreen.setText("Hallo, " + DataShare.getInstance().getUsername());
     }
 
+    //Methode calculeerd percentage bij vrouwen
     void calcPercentageVrouwCertificaat() {
         try {
             // TODO
@@ -93,6 +81,7 @@ public class OV1OverzichtFXMLController implements Initializable {
         }
     }
 
+    //Methode calculeerd percentage bij mannen
     void calcPercentageManCertificaat() {
         try {
             // TODO
@@ -118,7 +107,7 @@ public class OV1OverzichtFXMLController implements Initializable {
                 ProgressMan.setProgress(0);
             } else {
                 float CertPercentage = (manCert / manTot) * 100;
-                 DecimalFormat perct = new DecimalFormat("#.##");
+                DecimalFormat perct = new DecimalFormat("#.##");
                 percentageDisplayM.setText(perct.format(CertPercentage) + "%");
                 ProgressMan.setProgress(CertPercentage / 100);
             }
@@ -128,7 +117,7 @@ public class OV1OverzichtFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode toont overzichtScreen als je terug wilt
     void OverzichtBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/OverzichtScreenAdmin.fxml"));
         root = loader.load();

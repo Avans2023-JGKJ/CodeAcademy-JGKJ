@@ -1,19 +1,14 @@
 package Controllers;
 
 import Java2Database.DataShare;
-
-import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Validatie.DataValidatie;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -42,23 +37,19 @@ public class DialogCertificaatFXMLController implements Initializable {
     @FXML
     private ObservableList<String> inschrijfIdList = FXCollections.observableArrayList();
 
-    public static Connection dbConnection;
-
-    //       @FXML
+//Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
     boolean ValidateAndCreateCertificaat() {
-        System.out.println("punt 1");
+
         if (DataValidatie.InsertCertificaatValid(
                 CertificaatBeoordeling.getText(),
                 CertificaatNaamMedewerker.getText(),
                 inschrijfIdSelectBox.getValue()
         )) {
-            System.out.println("2");
             try {
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), "INSERT INTO Certificaat (beoordeling, medewerkerNaam, inschrijfId) VALUES('"
                         + CertificaatBeoordeling.getText()
                         + "',  '" + CertificaatNaamMedewerker.getText()
                         + "',  '" + inschrijfIdSelectBox.getValue() + "')");
-                System.out.println("Certificaat succesful created");
                 return true;
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -66,17 +57,17 @@ public class DialogCertificaatFXMLController implements Initializable {
                 System.out.println(e);
             }
         }
-        System.out.println("FALSE CODE");
         return false;
 
     }
+
+        //Initialize wordt aangeroepen bij het inladen van de pagina
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ResultSet rs = null;
         try {
             loadData();
-            dbConnection = DataBaseSQL.createConnection(dbConnection);
             rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT inschrijfId \n"
                     + "FROM inschrijven \n"
                     + "WHERE totaalVoortgang = '100' AND  inschrijfid NOT IN(SELECT inschrijfId\n"
@@ -97,7 +88,7 @@ public class DialogCertificaatFXMLController implements Initializable {
         }
 
     }
-
+//Deze methode laad de geselecteerde data in
     private void loadData() {
         if ((DataShare.getInstance().getBeoordeling()) != -1) {
             CertificaatBeoordeling.setText(String.valueOf(DataShare.getInstance().getBeoordeling()));

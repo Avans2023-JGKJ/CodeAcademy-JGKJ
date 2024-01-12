@@ -1,8 +1,9 @@
 package Objects;
+
 import java.time.LocalDate;
 
-
 public class ContentItem {
+
     private Integer contentItemId;
     private String titel;
     private LocalDate datum;
@@ -26,7 +27,7 @@ public class ContentItem {
         this.status = Status.valueOf(Status);
     }
 
-    public ContentItem() {  
+    public ContentItem() {
     }
 
     public Integer getContentItemId() {
@@ -92,8 +93,6 @@ public class ContentItem {
     public void setPercentage(Short percentage) {
         this.percentage = percentage;
     }
-    
-    
 
     public void setContentItemId(Integer contentItemId) {
         this.contentItemId = contentItemId;
@@ -150,9 +149,7 @@ public class ContentItem {
     public void setVolgNr(int volgNr) {
         this.volgNr = volgNr;
     }
-    
-    
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -163,5 +160,5 @@ public class ContentItem {
         sb.append('}');
         return sb.toString();
     }
-    
+
 }

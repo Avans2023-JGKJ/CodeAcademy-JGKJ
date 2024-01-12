@@ -5,19 +5,15 @@ import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Validatie.Error;
 import Objects.ContentItem;
-import Objects.Cursist;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Controllers.CursistFXMLController;
-import Controllers.DialogCursistFXMLController;
 import java.util.Random;
-import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +23,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -70,6 +65,7 @@ public class CursusInformatieFXMLController implements Initializable {
 
     private ContentItem clickedContentItem;
 
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -78,7 +74,6 @@ public class CursusInformatieFXMLController implements Initializable {
             rs.next();
             DataShare.getInstance().setInschrijfId(rs.getInt("inschrijfId"));
             loadTableContentItems();
-            
 
 //        LoadDataCursus();
         } catch (SQLException ex) {
@@ -88,6 +83,7 @@ public class CursusInformatieFXMLController implements Initializable {
 
     }
 
+    //Deze methode bepaalt de kolommen van de tableview
     private void initTable() {
         observableContentItems = FXCollections.observableArrayList();
         ContentItemTitelColumn.setCellValueFactory(new PropertyValueFactory<>("titel"));
@@ -96,6 +92,7 @@ public class CursusInformatieFXMLController implements Initializable {
         ContentItemPercentageColumn.setCellValueFactory(new PropertyValueFactory<>("percentage"));
     }
 
+    //Deze methode laad de tableview met de gewenste data
     private void loadTableContentItems() {
         try {
             initTable();
@@ -125,6 +122,7 @@ public class CursusInformatieFXMLController implements Initializable {
         }
     }
 
+    //Deze methode laad de totale voortgang in van een geslecteerde cursus
     public void LoadDataCursus() {
 
         double progress = 0.0;
@@ -140,6 +138,7 @@ public class CursusInformatieFXMLController implements Initializable {
 
     }
 
+    //Deze methode ververst de pagina in zijn geheel
     private void refreshTotalProgress() {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT COUNT(*) AS row, SUM(v.voortgangsPercentage) AS totalPerc  FROM "
@@ -164,6 +163,7 @@ public class CursusInformatieFXMLController implements Initializable {
         }
     }
 
+    //Deze methode haalt de data van een geselecteerde rij op
     @FXML
     void rowClicked(MouseEvent event) {
         try {
@@ -202,6 +202,7 @@ public class CursusInformatieFXMLController implements Initializable {
             refreshTotalProgress();
         }
     }
+    //De terugknop voor de pagina
 
     @FXML
     void CursusInformatieBackClicked(ActionEvent event) throws IOException {
@@ -212,6 +213,7 @@ public class CursusInformatieFXMLController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    //De terugknop voor de pagina
 
     @FXML
     void CursusInformatieLogoClicked(MouseEvent event) throws IOException {

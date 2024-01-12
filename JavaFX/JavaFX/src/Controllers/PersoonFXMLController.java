@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import static Controllers.CursistFXMLController.ErrorAlert;
@@ -10,11 +5,9 @@ import Controllers.DialogPersoonFXMLController;
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
 import Objects.Persoon;
-import Objects.Niveau;
 import Objects.Rol;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.format.DateTimeParseException;
@@ -36,17 +29,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-/**
- *
- * @author gijsv
- */
 public class PersoonFXMLController implements Initializable {
 
     @FXML
@@ -60,7 +48,7 @@ public class PersoonFXMLController implements Initializable {
 
     @FXML
     private TableColumn<Persoon, String> emailPersoonColumn;
-    
+
     @FXML
     private ObservableList<Persoon> observablePersoon;
 
@@ -75,12 +63,13 @@ public class PersoonFXMLController implements Initializable {
     private Scene scene;
     private Parent root;
 
-    @Override
+    @Override //Methode laad de Table and daarna de Data
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTablePersoon();
     }
 
+    //Laad de table in met data uit database
     public void loadTablePersoon() {
         try {
             initTable();
@@ -104,7 +93,7 @@ public class PersoonFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode wordt gebruikt als je een Persoon wilt aanmaken
     void PersoonAanmakenClicked(MouseEvent event) {
         DialogPersoonFXMLController.setIsUpdatePersoon(false);
         DataShare.getInstance().resetPersoon();
@@ -140,7 +129,7 @@ public class PersoonFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode wordt gebruikt als je een Persoon wilt aanpassen
     void PersoonAanpassenClicked(MouseEvent event) {
         DialogPersoonFXMLController.setIsUpdatePersoon(true);
         try {
@@ -175,7 +164,7 @@ public class PersoonFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode wordt gebruikt als je een Persoon wilt verwijdren
     void PersoonVerwijderenClicked(MouseEvent event) {
         Persoon selectedPersoon = PersoonTableView.getSelectionModel().getSelectedItem();
         if (selectedPersoon != null && removePersoonAlert(selectedPersoon.getUserName())) {
@@ -190,6 +179,7 @@ public class PersoonFXMLController implements Initializable {
         }
     }
 
+    //Methode wordt gebruikt om Alert te plaatsen op scherm, confirmation
     private boolean removePersoonAlert(String userName) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Persoon Verwijderen!");
@@ -206,7 +196,7 @@ public class PersoonFXMLController implements Initializable {
         return result.isPresent() && result.get() == buttonTypeYes;
     }
 
-    @FXML
+    @FXML //Methode wordt gebruikt als je op een Row klikt
     void rowClicked(MouseEvent event) {
         try {
             Persoon clickedPersoon = PersoonTableView.getSelectionModel().getSelectedItem();
@@ -217,7 +207,6 @@ public class PersoonFXMLController implements Initializable {
                 if (rs.next()) {
                     DataShare.getInstance().setRol(Rol.valueOf(rs.getString("Rol")));
                     DataShare.getInstance().setPersoonUserName(rs.getString("UserName"));
-                    System.out.println("USERNAME is "+(rs.getString("UserName")));
                     DataShare.getInstance().setPassWord(rs.getString("PassWord"));
                     DataShare.getInstance().setEmail(rs.getString("Email"));
                 } else {
@@ -231,7 +220,7 @@ public class PersoonFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode wordt gebruikt als je een op de backbutton drukt
     void PersoonBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
         root = loader.load();

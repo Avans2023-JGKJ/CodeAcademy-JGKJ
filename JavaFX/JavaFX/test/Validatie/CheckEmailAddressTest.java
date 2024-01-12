@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 public class CheckEmailAddressTest {
 
-    @Test
+    @Test //Valide Test
     public void testCheckEmailAddressWithValidEmail() {
         assertTrue(DataValidatie.checkEmailAddress("test@example.com"));
         assertTrue(DataValidatie.checkEmailAddress("user123@gmail.com"));
     }
 
-    @Test
+    @Test //Invalide Tests
     public void testCheckEmailAddressWithInvalidEmail() {
         assertFalse(DataValidatie.checkEmailAddress("invalid.email@")); // Missing top-level domain
         assertFalse(DataValidatie.checkEmailAddress("user@.com")); // Missing domain
@@ -26,6 +26,6 @@ public class CheckEmailAddressTest {
         assertFalse(DataValidatie.checkEmailAddress("")); // Empty string
     }
 
-    // You can add more specific tests based on your requirements.
+
 }
 

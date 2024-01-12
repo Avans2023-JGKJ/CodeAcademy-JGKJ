@@ -1,8 +1,6 @@
 package Controllers;
 
 import Java2Database.DataShare;
-
-import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Objects.Niveau;
 import java.sql.SQLException;
@@ -12,14 +10,13 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import Controllers.CursusFXMLController;
 import Validatie.DataValidatie;
-import Validatie.SQLValid;
-import java.sql.Connection;
-import javafx.event.ActionEvent;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-public class DialogCursusFXMLController {
+public class DialogCursusFXMLController implements Initializable {
 
     @FXML
     private TextField naamCursusCursusColumnInput;
@@ -36,11 +33,7 @@ public class DialogCursusFXMLController {
     @FXML
     private ComboBox<Niveau> niveauComboBox;
 
-    public void initialize() {
-        loadData();
-        niveauComboBox.setItems(FXCollections.observableArrayList(Niveau.values()));
-    }
-
+//Deze methode laad de geselecteerde data in
     private void loadData() {
         naamCursusCursusColumnInput.setText(String.valueOf(DataShare.getInstance().getNaamCursus()));
         if ((DataShare.getInstance().getAantalContentItems()) != -1) {
@@ -59,6 +52,7 @@ public class DialogCursusFXMLController {
         }
 
     }
+    //Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
 
     public boolean validateAndCreateCursus() {
         if (DataValidatie.InsertCursusValid(
@@ -75,7 +69,6 @@ public class DialogCursusFXMLController {
                         introductieTekstCursusColumnInput.getText(),
                         niveauComboBox.getValue().name());
                 DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), insertSQL);
-                System.out.println("Cursus successfully created.");
                 return true;
             } catch (SQLException ex) {
                 Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,6 +78,7 @@ public class DialogCursusFXMLController {
         return false;
     }
 
+    //Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
     @FXML
     boolean validateAndUpdateCursus() {
         if (DataValidatie.UpdateCursusValid(naamCursusCursusColumnInput.getText(),
@@ -103,7 +97,6 @@ public class DialogCursusFXMLController {
             } catch (SQLException ex) {
                 Logger.getLogger(DialogCursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("Cursus successfully updated.");
             return true;
 
         } else {
@@ -112,10 +105,18 @@ public class DialogCursusFXMLController {
 
     }
 
+    //Deze methode sluit de geselecteerde dialog 
     @FXML
     void handleClose() {
         // Close the dialog window
         Stage stage = (Stage) naamCursusCursusColumnInput.getScene().getWindow();
         stage.close();
+    }
+    //Initialize wordt aangeroepen bij het inladen van de pagina
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        loadData();
+        niveauComboBox.setItems(FXCollections.observableArrayList(Niveau.values()));
     }
 }

@@ -19,10 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-/**
- *
- * @author gijsv
- */
 public class OV6OverzichtFXMLController implements Initializable {
 
     private Stage stage;
@@ -41,6 +37,7 @@ public class OV6OverzichtFXMLController implements Initializable {
     @FXML
     private Label thirdCursusDisplay;
 
+    //Methode toont de Certificaten per Cursus inc Database data
     void DisplayCertificaatPerCursus() throws SQLException {
         ResultSet certcurs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT COUNT(*) AS CertPerCur ,naamCursus\n"
                 + "FROM Inschrijven\n"
@@ -63,7 +60,7 @@ public class OV6OverzichtFXMLController implements Initializable {
         }
     }
 
-    @Override
+    @Override //Methode zet Welcome label, en Spreekt methode aan
     public void initialize(URL arg0, ResourceBundle arg1) {
         WelcomeLabelHomeScreen.setText("Hallo, " + DataShare.getInstance().getUsername());
         try {
@@ -73,7 +70,7 @@ public class OV6OverzichtFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode toont overzcihtScreen als je terug wilt
     void OverzichtBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/OverzichtScreenAdmin.fxml"));
         root = loader.load();

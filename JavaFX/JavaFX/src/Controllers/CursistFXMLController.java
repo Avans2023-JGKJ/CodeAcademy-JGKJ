@@ -1,8 +1,6 @@
 package Controllers;
 
 import Java2Database.DataShare;
-
-import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Validatie.Error;
 import Objects.Cursist;
@@ -29,12 +27,16 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static Controllers.DialogCursistFXMLController.cursistDbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class CursistFXMLController implements Initializable {
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    private Error Error = new Error();
     @FXML
     private TableView<Cursist> CursistTableView;
 
@@ -52,19 +54,14 @@ public class CursistFXMLController implements Initializable {
 
     private ObservableList<Cursist> observableCursist;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    
-    private Error Error = new Error();
-
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableCursist();
-        cursistDbConnection = DataBaseSQL.createConnection(cursistDbConnection);
     }
 
+    //Deze methode bepaalt de kolommen van de tableview
     private void initTable() {
         observableCursist = FXCollections.observableArrayList();
         naamCursistColumn.setCellValueFactory(new PropertyValueFactory<>("naam"));
@@ -73,10 +70,11 @@ public class CursistFXMLController implements Initializable {
         postCodeCursistColumn.setCellValueFactory(new PropertyValueFactory<>("postCode"));
     }
 
+    //Deze methode laad de tableview met de gewenste data
     public void loadTableCursist() {
         try {
             initTable();
-            try ( ResultSet rs = DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection).prepareStatement("SELECT naam, geboorteDatum, geslacht, postCode, email FROM Cursist").executeQuery()) {
+            try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT naam, geboorteDatum, geslacht, postCode, email FROM Cursist").executeQuery()) {
                 while (rs.next()) {
                     Cursist cursist = new Cursist();
                     cursist.setNaam(rs.getString("naam"));
@@ -98,6 +96,7 @@ public class CursistFXMLController implements Initializable {
         }
     }
 
+    //Deze methode wordt gebruikt voor het inladen van de Pop up om een cursist aan te passen
     @FXML
     void CursistAanpassenClicked(MouseEvent event) {
         try {
@@ -109,7 +108,7 @@ public class CursistFXMLController implements Initializable {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
             dialog.setTitle("Cursist aanpassen");
-            
+
             dialog.getDialogPane().getButtonTypes().clear();
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
@@ -131,6 +130,7 @@ public class CursistFXMLController implements Initializable {
         }
     }
 
+    //Deze methode wordt gebruikt voor het inladen van de Pop up om een contentitem aan te maken
     @FXML
     void CursistAanmakenClicked(MouseEvent event) {
         DataShare.getInstance().resetCursist();
@@ -165,13 +165,14 @@ public class CursistFXMLController implements Initializable {
         }
     }
 
+    //Deze methode verwijdert de data van een geselecteerde rij in de tableview
     @FXML
     void CursistVerwijderenClicked(MouseEvent event) {
         if (Error.removeCursistAlert(DataShare.getInstance().getCursistEmail())) {
             try {
 
                 String delete = "DELETE FROM Cursist WHERE email = '" + DataShare.getInstance().getCursistEmail() + "'";
-                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), delete);
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), delete);
             } catch (SQLException ex) {
                 //Alert NIET GEVONDEN OF NIET VOLTOOID
                 Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,6 +181,7 @@ public class CursistFXMLController implements Initializable {
         loadTableCursist();
     }
 
+    //De terugknop voor de pagina
     @FXML
     void CursistBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
@@ -190,25 +192,14 @@ public class CursistFXMLController implements Initializable {
         stage.show();
     }
 
-    @FXML
-    void FinishButtonCreateCursistClicked(ActionEvent event) {
-        // Handle finish button click
-
-    }
-
-    @FXML
-    void CloseButtonCreateCursistClicked(ActionEvent event) {
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.hide();
-    }
-
+    //Deze methode haalt de data van een geselecteerde rij op
     @FXML
     void rowClicked(MouseEvent event) {
         try {
             Cursist clickedCursist = CursistTableView.getSelectionModel().getSelectedItem();
 
             if (clickedCursist != null) {
-                ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(DialogCursistFXMLController.cursistDbConnection), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
+                ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT * FROM Cursist WHERE email = '" + clickedCursist.getEmail() + "'");
 
                 if (rs.next()) {
                     DataShare.getInstance().setCursistEmail(rs.getString("email"));
@@ -230,6 +221,7 @@ public class CursistFXMLController implements Initializable {
         }
     }
 
+    //Deze methode geeft een waarschuwing bij het verwijderen van data
     boolean removeAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
@@ -248,6 +240,7 @@ public class CursistFXMLController implements Initializable {
         return result.isPresent() && result.get() == buttonTypeYes;
     }
 
+    //Deze methode configureert de datum naar een leesbare String
     public static LocalDate parseDate(String dateString) {
 
         String[] formats = {"yyyy-MM-dd", "yyyy-dd-MM", "dd-MM-yyyy", "MM-dd-yyyy"};
@@ -287,6 +280,7 @@ public class CursistFXMLController implements Initializable {
         return null;
     }
 
+    //Deze methode geeft een error waarschuwing voor als iets wordt afgevangen door een restrictie
     public static void ErrorAlert(String message, String header) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
