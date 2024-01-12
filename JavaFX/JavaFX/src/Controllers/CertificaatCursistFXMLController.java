@@ -24,8 +24,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import static Controllers.DialogCursistFXMLController.cursistDbConnection;
-
 
 public class CertificaatCursistFXMLController implements Initializable {
 
@@ -35,23 +33,6 @@ public class CertificaatCursistFXMLController implements Initializable {
 
     @FXML
     private TableView<Certificaat> CertificaatTableView;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        initTable();
-        loadTableCertificaat();
-        cursistDbConnection = DataBaseSQL.createConnection(cursistDbConnection);
-    }
-    @FXML
-    void CertificaatBackClicked(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenCursist.fxml"));
-        root = loader.load();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     @FXML
     TableColumn<Certificaat, String> NaamCursusCertificaatColumn;
     @FXML
@@ -61,6 +42,14 @@ public class CertificaatCursistFXMLController implements Initializable {
 
     ObservableList<Certificaat> observableCertificaat;
 
+    //Initialize wordt aangeroepen bij het inladen van de pagina
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        initTable();
+        loadTableCertificaat();
+    }
+
+    //Deze methode bepaalt de kolommen van de tableview
     private void initTable() {
         observableCertificaat = FXCollections.observableArrayList();
         NaamCursusCertificaatColumn.setCellValueFactory(new PropertyValueFactory<>("naamCursus"));
@@ -68,12 +57,13 @@ public class CertificaatCursistFXMLController implements Initializable {
         MedewerkerNummerCertificaatColumn.setCellValueFactory(new PropertyValueFactory<>("medeWerkerNaam"));
     }
 
+    //Deze methode laad de tableview met de gewenste data
     public void loadTableCertificaat() {
         try {
             initTable();
             try ( ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT naamCursus, beoordeling, medewerkerNaam "
                     + "FROM Certificaat c JOIN Inschrijven i ON i.inschrijfId = c.inschrijfId "
-                    + "WHERE i.email = '"+DataShare.getInstance().getCursistEmail()+"'").executeQuery()) {
+                    + "WHERE i.email = '" + DataShare.getInstance().getCursistEmail() + "'").executeQuery()) {
                 while (rs.next()) {
                     Certificaat Certificaat = new Certificaat();
                     Certificaat.setNaamCursus(rs.getString("naamCursus"));
@@ -88,6 +78,16 @@ public class CertificaatCursistFXMLController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(CertificaatCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+        //De terugknop voor de pagina
+    @FXML
+    void CertificaatBackClicked(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenCursist.fxml"));
+        root = loader.load();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

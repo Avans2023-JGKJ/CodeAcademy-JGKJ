@@ -42,15 +42,27 @@ public class ContentItemFXMLController implements Initializable {
     private Scene scene;
     private Parent root;
 
+    @FXML
+    private TableView<ContentItem> ContentItemTableView;
+    @FXML
+    TableColumn<ContentItem, Integer> contentItemsIdColumn;
+    @FXML
+    TableColumn<ContentItem, String> contentItemsTitelColumn;
+    @FXML
+    TableColumn<ContentItem, LocalDate> contentItemsDatumColumn;
+    @FXML
+    TableColumn<ContentItem, String> contentItemsStatusColumn;
+
+    ObservableList<ContentItem> observableContentItem;
+
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableContentItem();
     }
 
-    @FXML
-    private TableView<ContentItem> ContentItemTableView;
-
+    //Deze methode wordt gebruikt voor het inladen van de Pop up om een contentitem aan te maken
     @FXML
     void ContentItemsAanmakenClicked(MouseEvent event) {
 
@@ -73,6 +85,7 @@ public class ContentItemFXMLController implements Initializable {
         }
     }
 
+    //Deze methode wordt gebruikt voor het inladen van de Pop up om een contentitem aan te passen
     @FXML
     void ContentItemsAanpassenClicked(MouseEvent event) {
         if (DataShare.getInstance().getVersie() == null) {
@@ -131,6 +144,7 @@ public class ContentItemFXMLController implements Initializable {
 
     }
 
+    //Deze methode verwijdert de data van een geselecteerde rij in de tableview
     @FXML
     void ContentItemsVerwijderenClicked(MouseEvent event) {
         ContentItem selectedContentItem = ContentItemTableView.getSelectionModel().getSelectedItem();
@@ -146,6 +160,7 @@ public class ContentItemFXMLController implements Initializable {
         }
     }
 
+    //Deze methode geeft een waarschuwing bij het verwijderen van data
     private boolean removeContentItemAlert(int ContentItemId, String ContentItemTitel) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("ContentItem Verwijderen!");
@@ -164,17 +179,7 @@ public class ContentItemFXMLController implements Initializable {
         return result.isPresent() && result.get() == buttonTypeYes;
     }
 
-    @FXML
-    TableColumn<ContentItem, Integer> contentItemsIdColumn;
-    @FXML
-    TableColumn<ContentItem, String> contentItemsTitelColumn;
-    @FXML
-    TableColumn<ContentItem, LocalDate> contentItemsDatumColumn;
-    @FXML
-    TableColumn<ContentItem, String> contentItemsStatusColumn;
-
-    ObservableList<ContentItem> observableContentItem;
-
+    //Deze methode haalt de data van een geselecteerde rij op
     @FXML
     void rowClicked(MouseEvent event) {
         try {
@@ -213,6 +218,7 @@ public class ContentItemFXMLController implements Initializable {
         }
     }
 
+    //Deze methode bepaalt de kolommen van de tableview
     private void initTable() {
         observableContentItem = FXCollections.observableArrayList(); // Initialize the list
         contentItemsIdColumn.setCellValueFactory(new PropertyValueFactory<>("contentItemId"));
@@ -221,6 +227,7 @@ public class ContentItemFXMLController implements Initializable {
         contentItemsStatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
+    //Deze methode laad de tableview met de gewenste data
     void loadTableContentItem() {
         try {
             initTable();
@@ -244,6 +251,7 @@ public class ContentItemFXMLController implements Initializable {
         }
     }
 
+    //De terugknop voor de pagina
     @FXML
     void ContentItemsBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));

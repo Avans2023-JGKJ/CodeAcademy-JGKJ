@@ -33,6 +33,11 @@ import javafx.collections.ObservableList;
 
 public class CursistFXMLController implements Initializable {
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    private Error Error = new Error();
     @FXML
     private TableView<Cursist> CursistTableView;
 
@@ -50,12 +55,7 @@ public class CursistFXMLController implements Initializable {
 
     private ObservableList<Cursist> observableCursist;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    
-    private Error Error = new Error();
-
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
@@ -63,6 +63,7 @@ public class CursistFXMLController implements Initializable {
         cursistDbConnection = DataBaseSQL.createConnection(cursistDbConnection);
     }
 
+    //Deze methode bepaalt de kolommen van de tableview
     private void initTable() {
         observableCursist = FXCollections.observableArrayList();
         naamCursistColumn.setCellValueFactory(new PropertyValueFactory<>("naam"));
@@ -71,6 +72,7 @@ public class CursistFXMLController implements Initializable {
         postCodeCursistColumn.setCellValueFactory(new PropertyValueFactory<>("postCode"));
     }
 
+    //Deze methode laad de tableview met de gewenste data
     public void loadTableCursist() {
         try {
             initTable();
@@ -107,7 +109,7 @@ public class CursistFXMLController implements Initializable {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(pane);
             dialog.setTitle("Cursist aanpassen");
-            
+
             dialog.getDialogPane().getButtonTypes().clear();
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
@@ -178,6 +180,7 @@ public class CursistFXMLController implements Initializable {
         loadTableCursist();
     }
 
+    //De terugknop voor de pagina
     @FXML
     void CursistBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));
