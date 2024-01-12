@@ -14,7 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-
 import java.sql.ResultSet;
 import java.time.format.DateTimeParseException;
 import Validatie.DataValidatie;
@@ -84,7 +83,7 @@ public class LoginFXMLController implements Initializable {
 
     }
 
-    @FXML
+    @FXML //Methode wordt aangesproken wanneer iemand wilt inloggen.
     void LoginButtonClicked(ActionEvent event) throws MalformedURLException, IOException {
         if (checkUserPassCombination(UserNameField.getText(), PassWordField.getText())) {
             DataShare.getInstance().setUsername(UserNameField.getText());
@@ -107,7 +106,7 @@ public class LoginFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode Wanneer iemand op de registreren knop drukt
     void RegistrerenButtonClicked(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/loginRegistreren.fxml"));
@@ -121,7 +120,7 @@ public class LoginFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode Controleer de data, plaats in database, toon Alert(succes)
     void RegistrerenKlaarButtonClicked(ActionEvent event) {
         try {
             if (PassWordFieldRegistreren.getText().equals(PassWordFieldRegistreren2.getText())) {
@@ -172,6 +171,7 @@ public class LoginFXMLController implements Initializable {
         }
     }
 
+    //Methode Check de RadioButtons
     public char RadioButtonGeslachtCheck() {
         if (RadioButtonCursistMan.isSelected()) {
             return 'm';
@@ -181,12 +181,12 @@ public class LoginFXMLController implements Initializable {
         return 0;
     }
 
-    @FXML
+    @FXML //Methode om applicatie af te sluiten
     void AfsluitenButtonClicked(ActionEvent event) {
         Platform.exit();
     }
 
-    @FXML
+    @FXML //Methode toont de login button, als je terug wilt
     void BackButtonClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/login.fxml"));
         root = loader.load();
@@ -196,6 +196,7 @@ public class LoginFXMLController implements Initializable {
         stage.show();
     }
 
+    //Methode controleerd de username en password tegen de database
     boolean checkUserPassCombination(String InputUsername, String InputPassword) {
         try {
             ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM Persoon WHERE UserName='" + InputUsername + "' AND PassWord='" + InputPassword + "'").executeQuery();
@@ -211,6 +212,7 @@ public class LoginFXMLController implements Initializable {
         return false;
     }
 
+    //Methode checkt voor de rol van Username
     boolean checkRole(String InputUsername, String InputPassword) {
         try {
             ResultSet rs = DataBaseSQL.createConnection().prepareStatement("SELECT * FROM Persoon WHERE UserName='" + InputUsername + "' AND PassWord='" + InputPassword + "' AND Rol = 'Admin'").executeQuery();
@@ -226,6 +228,7 @@ public class LoginFXMLController implements Initializable {
         return false;
     }
 
+    //Methode zet email in DataShare als cursist
     private void setEmail() {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT c.email FROM Cursist c JOIN Persoon p ON p.Email = c.email WHERE p.UserName = '" + DataShare.getInstance().getUsername() + "'");

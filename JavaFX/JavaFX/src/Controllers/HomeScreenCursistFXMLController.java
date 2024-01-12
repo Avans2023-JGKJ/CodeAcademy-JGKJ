@@ -1,22 +1,17 @@
 package Controllers;
 
-import Java2Database.DataShare;
-
 import Java2Database.DataBaseSQL;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import Java2Database.DataShare;
-import static Controllers.DialogCursistFXMLController.cursistDbConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
-
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -32,18 +27,6 @@ import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 
 public class HomeScreenCursistFXMLController implements Initializable {
-
-    @FXML
-    private Label CertificatenLabel;
-
-    @FXML
-    private Rectangle CertificatenRechthoek;
-
-    @FXML
-    private Label InschrijvenLabel;
-
-    @FXML
-    private Rectangle InschrijvenRechthoek;
 
     @FXML
     private Label CursusDrieLabel;
@@ -79,13 +62,13 @@ public class HomeScreenCursistFXMLController implements Initializable {
     private Scene scene;
     private Parent root;
 
-    @Override
+    @Override //Methode toont welcome label, laad de RecenCursussen
     public void initialize(URL url, ResourceBundle rb) {
         WelcomeLabelHomeScreen.setText("Hallo, " + DataShare.getInstance().getUsername());
-//        visibleEen(false);
         loadRecentCursussen();
     }
 
+    //Methode toont Laad insgeschreven cursussen van cursist in
     void loadRecentCursussen() {
         try {
             String command = "SELECT Cursus.naamCursus, Cursus.onderwerp, Cursus.introductieTekst "
@@ -131,7 +114,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode toont inschrijvenDialog op click
     void InschrijvenClicked(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/inschrijvenCursistDialog.fxml"));
@@ -164,7 +147,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode toont certificaatScreen op click
     void CertificaatClicked(MouseEvent event) {
         try {
             DataShare.getInstance().setNaamCursus(DataShare.getInstance().getNaamCursusEen());
@@ -179,25 +162,28 @@ public class HomeScreenCursistFXMLController implements Initializable {
         }
     }
 
+    //Methode zet visibility op true of false
     private void visibleEen(boolean x) {
         CursusEenTitel.setVisible(x);
         CursusEenLabel.setVisible(x);
         CursusEenRechthoek.setVisible(x);
     }
 
+    //Methode zet visibility op true of false
     private void visibleTwee(boolean x) {
         CursusTweeTitel.setVisible(x);
         CursusTweeLabel.setVisible(x);
         CursusTweeRechthoek.setVisible(x);
     }
 
+    //Methode zet visibility op true of false
     private void visibleDrie(boolean x) {
         CursusDrieTitel.setVisible(x);
         CursusDrieLabel.setVisible(x);
         CursusDrieRechthoek.setVisible(x);
     }
 
-    @FXML
+    @FXML //Methode laad alle ingeschreven cursussen scherm
     void BekijkAlleCursussenCursistClicked(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/cursusScreenCursist.fxml"));
@@ -211,7 +197,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode laad CurusInformatie van 1
     void CursusEenClicked(MouseEvent event) {
         try {
             DataShare.getInstance().setNaamCursus(DataShare.getInstance().getNaamCursusEen());
@@ -226,7 +212,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode laad Cursusinformatie van 2
     void CursusTweeClicked(MouseEvent event) {
         try {
             DataShare.getInstance().setNaamCursus(DataShare.getInstance().getNaamCursusTwee());
@@ -241,7 +227,7 @@ public class HomeScreenCursistFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML  //Methode laad Cursusinformatie van 3
     void CursusDrieClicked(MouseEvent event) {
         try {
             DataShare.getInstance().setNaamCursus(DataShare.getInstance().getNaamCursusDrie());

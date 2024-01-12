@@ -246,7 +246,7 @@ public class ContentItemFXMLController implements Initializable {
             ContentItemTableView.refresh();
 
         } catch (SQLException ex) {
-            Logger.getLogger(InschrijvenFXMLController.class
+            Logger.getLogger(ContentItemFXMLController.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }

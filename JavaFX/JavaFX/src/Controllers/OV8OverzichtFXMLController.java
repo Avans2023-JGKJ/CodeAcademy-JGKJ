@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import Java2Database.DataBaseSQL;
@@ -27,10 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
-/**
- *
- * @author gijsv
- */
 public class OV8OverzichtFXMLController implements Initializable {
 
     private Stage stage;
@@ -47,6 +38,7 @@ public class OV8OverzichtFXMLController implements Initializable {
     @FXML
     private ObservableList<String> naamCursusList = FXCollections.observableArrayList();
 
+    //Methode selecteerd de naamCursus vanuit database
     void selecteerNaamCursus() {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT COUNT(*) AS CertPerCur ,naamCursus\n"
@@ -65,7 +57,7 @@ public class OV8OverzichtFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode zet het aantal certificaten 
     void SetAantalCertificaten(ActionEvent event) {
         try {
             ResultSet Certpercur = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT COUNT(*) AS CertPerCur ,naamCursus\n"
@@ -82,13 +74,13 @@ public class OV8OverzichtFXMLController implements Initializable {
         }
     }
 
-    @Override
+    @Override //Methode zet de WelcomeLabel en spreekt ander Methode in
     public void initialize(URL arg0, ResourceBundle arg1) {
         WelcomeLabelHomeScreen.setText("Hallo, " + DataShare.getInstance().getUsername());
         selecteerNaamCursus();
     }
 
-    @FXML
+    @FXML //Methode zorgt dat je terug kunt naar OverzichtScreen
     void OverzichtBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/OverzichtScreenAdmin.fxml"));
         root = loader.load();

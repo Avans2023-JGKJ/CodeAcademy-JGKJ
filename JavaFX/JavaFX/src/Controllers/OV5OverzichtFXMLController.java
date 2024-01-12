@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import Java2Database.DataBaseSQL;
@@ -24,10 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-/**
- *
- * @author gijsv
- */
 public class OV5OverzichtFXMLController implements Initializable {
 
     private Stage stage;
@@ -46,6 +37,7 @@ public class OV5OverzichtFXMLController implements Initializable {
     @FXML
     private Label thirdWebcastDisplay;
 
+    //Methode toont de webcasts inc database data
     void DisplayWebcasts() throws SQLException {
         ResultSet webcasts = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT COUNT(*) AS #Webcasts_Bekeken, Voortgang.naamCursus, contentItems.titel\n"
                 + "FROM contentItems\n"
@@ -69,7 +61,7 @@ public class OV5OverzichtFXMLController implements Initializable {
         }
     }
 
-    @Override
+    @Override //Methode zet Welcome label, en spreekt Methode aan DisplayWebcast
     public void initialize(URL arg0, ResourceBundle arg1) {
         WelcomeLabelHomeScreen.setText("Hallo, " + DataShare.getInstance().getUsername());
         try {
@@ -79,7 +71,7 @@ public class OV5OverzichtFXMLController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML //Methode toont overzichtScreen als je terug wilt
     void OverzichtBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/OverzichtScreenAdmin.fxml"));
         root = loader.load();
