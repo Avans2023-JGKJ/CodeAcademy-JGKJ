@@ -55,6 +55,7 @@ public class CursusScreenCursistFXMLController implements Initializable {
     @FXML
     private ObservableList<Cursus> observableCursus;
 
+    //Deze methode laad de tableview met de gewenste data
     private void loadTableCursus() {
         try {
             initTable();
@@ -87,6 +88,7 @@ public class CursusScreenCursistFXMLController implements Initializable {
             Logger.getLogger(CursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //De terugknop voor de pagina
 
     @FXML
     void CursusBackClicked(ActionEvent event) throws IOException {
@@ -97,6 +99,7 @@ public class CursusScreenCursistFXMLController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    //Deze methode haalt de data van een geselecteerde rij op
 
     @FXML
     void rowClicked(MouseEvent event) throws IOException {
@@ -108,10 +111,12 @@ public class CursusScreenCursistFXMLController implements Initializable {
         stage.show();
     }
 
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         loadTableCursus();
     }
+    //Deze methode bepaalt de kolommen van de tableview
 
     private void initTable() {
         observableCursus = FXCollections.observableArrayList();

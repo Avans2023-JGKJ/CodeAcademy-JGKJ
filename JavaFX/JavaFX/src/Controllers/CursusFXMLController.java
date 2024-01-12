@@ -1,6 +1,5 @@
 package Controllers;
 
-
 import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Objects.Cursus;
@@ -31,10 +30,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import java.sql.Connection;
 import java.time.format.DateTimeParseException;
 import static Controllers.CursistFXMLController.ErrorAlert;
-import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 
 public class CursusFXMLController implements Initializable {
@@ -60,18 +57,7 @@ public class CursusFXMLController implements Initializable {
     @FXML
     private ObservableList<Cursus> observableCursus;
 
-    @FXML
-    private Menu CursusAanmakenButton;
-
-    @FXML
-    private Menu CursusAanpassenButton;
-
-    @FXML
-    private Menu CursusVerwijderenButton;
-
-    @FXML
-    private static Connection cursusDbConnection;
-
+    //Deze methode bepaalt de kolommen van de tableview
     private void initTable() {
         observableCursus = FXCollections.observableArrayList();
         naamCursusCursusColumn.setCellValueFactory(new PropertyValueFactory<>("naamCursus"));
@@ -85,12 +71,13 @@ public class CursusFXMLController implements Initializable {
     private Scene scene;
     private Parent root;
 
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
         loadTableCursus();
-        cursusDbConnection = DataBaseSQL.createConnection(cursusDbConnection);
     }
+    //Deze methode laad de tableview met de gewenste data
 
     public void loadTableCursus() {
         try {
@@ -126,6 +113,7 @@ public class CursusFXMLController implements Initializable {
         }
     }
 
+    //Deze methode wordt gebruikt voor het inladen van de Pop up om een cursus aan te maken
     @FXML
     void CursusAanmakenClicked(MouseEvent event) {
         DataShare.getInstance().resetCursus();
@@ -160,6 +148,7 @@ public class CursusFXMLController implements Initializable {
         }
     }
 
+    //Deze methode wordt gebruikt voor het inladen van de Pop up om een contentitem aan te passen
     @FXML
     void CursusAanpassenClicked(MouseEvent event) {
         try {
@@ -193,6 +182,7 @@ public class CursusFXMLController implements Initializable {
         }
     }
 
+    //Deze methode verwijdert de data van een geselecteerde rij in de tableview
     @FXML
     void CursusVerwijderenClicked(MouseEvent event) {
         Error Error = new Error();
@@ -200,7 +190,7 @@ public class CursusFXMLController implements Initializable {
         if (selectedCursus != null && Error.removeCursusAlert(selectedCursus.getNaamCursus())) {
             try {
                 String delete = "DELETE FROM Cursus WHERE naamCursus = '" + selectedCursus.getNaamCursus() + "'";
-                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(cursusDbConnection), delete);
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(), delete);
             } catch (SQLException ex) {
                 // Behandel fouten hier
                 Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,8 +198,7 @@ public class CursusFXMLController implements Initializable {
             loadTableCursus();
         }
     }
-
-    
+    //Deze methode haalt de data van een geselecteerde rij op
 
     @FXML
     void rowClicked(MouseEvent event) {
@@ -236,6 +225,7 @@ public class CursusFXMLController implements Initializable {
         }
     }
 
+    //De terugknop voor de pagina
     @FXML
     void CursusBackClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/homeScreenAdmin.fxml"));

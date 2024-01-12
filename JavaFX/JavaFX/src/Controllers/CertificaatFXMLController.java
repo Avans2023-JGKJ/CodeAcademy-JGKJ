@@ -31,7 +31,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import static Controllers.DialogCursistFXMLController.cursistDbConnection;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -60,8 +59,7 @@ public class CertificaatFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initTable();
-        loadTableCertificaat();
-        cursistDbConnection = DataBaseSQL.createConnection(cursistDbConnection);
+        loadTableCertificaat();;
     }
 
     //Deze methode wordt gebruikt voor het inladen van de Pop up om een certificaat aan te maken

@@ -1,37 +1,24 @@
-// NIET AF MOMENTEEL ALLE DATA IS CURSUS!!!!!
 package Controllers;
-
-import Java2Database.DataShare;
 
 import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
 import Objects.Status;
-import Objects.Niveau;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static Controllers.DialogCursistFXMLController.cursistDbConnection;
 import Validatie.DataValidatie;
-import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyEvent;
 
 public class DialogContentItemFXMLController implements Initializable {
 
@@ -92,6 +79,7 @@ public class DialogContentItemFXMLController implements Initializable {
     private boolean checkId;
     private short VolgNrInput;
 
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -110,6 +98,7 @@ public class DialogContentItemFXMLController implements Initializable {
 
     }
 
+    //Deze methode kijkt welke volgnr nog beschikbaar zijn na het kiezen van een volgnr 
     @FXML
     void refreshVolgNr(ActionEvent event) {
         volgNrList.clear();
@@ -132,6 +121,8 @@ public class DialogContentItemFXMLController implements Initializable {
             Logger.getLogger(DialogContentItemFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+        //Deze methode kijkt welke volgnr nog beschikbaar zijn na het kiezen van een volgnr 
 
     void refreshVolgNr() {
         volgNrList.clear();
@@ -157,6 +148,7 @@ public class DialogContentItemFXMLController implements Initializable {
         }
     }
 
+    //Deze methode laad de geselecteerde data in
     private void loadData() {
         contentItemsNaamCursusComboBoxInput.setValue(DataShare.getInstance().getNaamCursus());
         statusComboBox.setValue(DataShare.getInstance().getStatus());
@@ -191,12 +183,13 @@ public class DialogContentItemFXMLController implements Initializable {
 
     }
 
+//Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
+
     boolean ValidateAndCreateModule() {
         try {
             if (ModuleVolgNrColumnInput.getValue() == null) {
                 VolgNrInput = -1;
-            }
-            else{
+            } else {
                 VolgNrInput = ModuleVolgNrColumnInput.getValue();
             }
 
@@ -243,6 +236,7 @@ public class DialogContentItemFXMLController implements Initializable {
         }
         return false;
     }
+//Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
 
     boolean ValidateAndCreateWebcast() {
         try {
@@ -295,6 +289,8 @@ public class DialogContentItemFXMLController implements Initializable {
             return false;
         }
     }
+
+    //Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
 
     public boolean validateAndUpdateContentItem() {
         //VALIDATE ALL FIELDS

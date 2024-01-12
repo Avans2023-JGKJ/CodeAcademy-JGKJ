@@ -1,26 +1,18 @@
 package Controllers;
 
-import Java2Database.DataShare;
 
 import Java2Database.DataShare;
 import Java2Database.DataBaseSQL;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Connection;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static Controllers.CursistFXMLController.parseDate;
 import Validatie.DataValidatie;
 import javafx.scene.control.DatePicker;
 
@@ -55,9 +47,8 @@ public class DialogCursistFXMLController implements Initializable {
 
     ToggleGroup group = new ToggleGroup();
 
-    public static Connection cursistDbConnection;
+//Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
 
-    //       @FXML
     boolean ValidateAndCreateCursist() {
         if (DataValidatie.InsertCursistValid(
                 cursistNaamColumninput.getText(),
@@ -71,7 +62,7 @@ public class DialogCursistFXMLController implements Initializable {
                 cursistLandCodeInput.getText()
         )) {
             try {
-                DataBaseSQL.sendCommand(cursistDbConnection, "INSERT INTO Cursist (naam, postCode, email, geboorteDatum, geslacht, huisNummer, woonPlaats, landCode) VALUES("
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),"INSERT INTO Cursist (naam, postCode, email, geboorteDatum, geslacht, huisNummer, woonPlaats, landCode) VALUES("
                         + "  '" + cursistNaamColumninput.getText()
                         + "',  '" + cursistPostcodeInput.getText()
                         + "',  '" + cursistEmailInput.getText().toLowerCase()
@@ -94,6 +85,7 @@ public class DialogCursistFXMLController implements Initializable {
         return false;
     }
 
+    //Deze methode controleerd of de knoppen zijn geselecteerd
     public char RadioButtonGeslachtCheck() {
         if (radioButtonCursistMan.isSelected()) {
             return 'm';
@@ -102,6 +94,7 @@ public class DialogCursistFXMLController implements Initializable {
         }
         return 0;
     }
+//Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
 
     boolean ValidateAndUpdateCursist() {
         if (DataValidatie.UpdateCursistValid(
@@ -115,7 +108,7 @@ public class DialogCursistFXMLController implements Initializable {
                 cursistLandCodeInput.getText()
         )) {
             try {
-                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(cursistDbConnection),
+                DataBaseSQL.sendCommand(DataBaseSQL.createConnection(),
                         "UPDATE Cursist SET"
                         + " naam = '" + cursistNaamColumninput.getText()
                         + "', postCode = '" + cursistPostcodeInput.getText()
@@ -134,15 +127,18 @@ public class DialogCursistFXMLController implements Initializable {
         return false;
     }
 
+            //Initialize wordt aangeroepen bij het inladen van de pagina
+
     @Override
     public void initialize(URL url, ResourceBundle rb
     ) {
         loadData();
         radioButtonCursistMan.setToggleGroup(group);
         radioButtonCursistVrouw.setToggleGroup(group);
-        cursistDbConnection = DataBaseSQL.createConnection(cursistDbConnection);
 
     }
+
+    //Deze methode laad de geselecteerde data in
 
     private void loadData() {
         cursistNaamColumninput.setText(String.valueOf(DataShare.getInstance().getCursistNaam()));

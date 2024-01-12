@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -38,9 +37,7 @@ public class DialogCertificaatFXMLController implements Initializable {
     @FXML
     private ObservableList<String> inschrijfIdList = FXCollections.observableArrayList();
 
-    public static Connection dbConnection;
-
-    //       @FXML
+//Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
     boolean ValidateAndCreateCertificaat() {
 
         if (DataValidatie.InsertCertificaatValid(
@@ -64,12 +61,13 @@ public class DialogCertificaatFXMLController implements Initializable {
 
     }
 
+        //Initialize wordt aangeroepen bij het inladen van de pagina
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ResultSet rs = null;
         try {
             loadData();
-            dbConnection = DataBaseSQL.createConnection(dbConnection);
             rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT inschrijfId \n"
                     + "FROM inschrijven \n"
                     + "WHERE totaalVoortgang = '100' AND  inschrijfid NOT IN(SELECT inschrijfId\n"
@@ -90,7 +88,7 @@ public class DialogCertificaatFXMLController implements Initializable {
         }
 
     }
-
+//Deze methode laad de geselecteerde data in
     private void loadData() {
         if ((DataShare.getInstance().getBeoordeling()) != -1) {
             CertificaatBeoordeling.setText(String.valueOf(DataShare.getInstance().getBeoordeling()));

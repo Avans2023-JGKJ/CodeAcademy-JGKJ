@@ -7,15 +7,12 @@ package Controllers;
 
 import Java2Database.DataBaseSQL;
 import Java2Database.DataShare;
-import Objects.Status;
-
 import Validatie.Error;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,11 +56,13 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
 
     HashMap<String, Double> similarity = new HashMap<String, Double>();
 
+    //Initialize wordt aangeroepen bij het inladen van de pagina
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         setUpInschrijvenNaamCursus();
     }
 
+    //Deze methode vult de combobox die bij deze dialog hoort
     void setUpInschrijvenNaamCursus() {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus "
@@ -99,6 +98,8 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
         }
     }
 
+    //Deze methode voert de tests uit op de ingevoerde data en stuurt deze naar de database
+
     boolean ValidateAndSignUp() {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus FROM Cursus");
@@ -129,6 +130,7 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
 
     }
 
+    //Deze methode vult de voortgang in aan de hand van de content items tabel
     private void createAccessories(int inschrijfId) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT contentItemId FROM contentItems WHERE naamCursus = '" + DataShare.getInstance().getNaamCursus() + "'");
@@ -142,6 +144,7 @@ public class DialogCursistHomeScreenFXMLController implements Initializable {
         }
     }
 
+    //Deze methode berekent welke cursussen lijken op elkaar
     private void setMostSimilar(String cursus1) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT naamCursus, onderwerp, introductieTekst  "
