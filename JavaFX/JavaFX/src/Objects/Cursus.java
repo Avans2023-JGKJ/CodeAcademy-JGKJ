@@ -1,10 +1,14 @@
 package Objects;
+
+import java.time.LocalDate;
+
 public class Cursus {
     private String naamCursus;
     private short aantalContentItems;
     private String onderwerp;
     private String introductieTekst;
     private Niveau niveau;
+    private LocalDate datum;
     
     public Cursus(String naamCursus, short aantalContentItems, String onderwerp, String introductieTekst, Niveau niveau) {
         this.naamCursus = naamCursus;
@@ -57,6 +61,14 @@ public class Cursus {
 
     public void setNiveau(Niveau niveau) {
         this.niveau = niveau;
+    }
+
+    public LocalDate getDatum() {
+        return datum;
+    }
+
+    public void setDatum(LocalDate datum) {
+        this.datum = datum;
     }
 
     @Override

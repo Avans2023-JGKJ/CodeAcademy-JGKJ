@@ -117,7 +117,7 @@ public class CursusFXMLController implements Initializable {
                         cursus.setNiveau(niveau);
                     } catch (IllegalArgumentException e) {
                         Logger.getLogger(CursusFXMLController.class.getName()).log(Level.SEVERE,
-                                "Niveuwaarde uit de database komt niet overeen met enige enum-constanten " + niveauString, e);
+                                "Niveauwaarde uit de database komt niet overeen met enige enum-constanten " + niveauString, e);
                         continue; // toevoegen van deze cursus (aan de lijst) overslaan
                     }
 
