@@ -41,7 +41,7 @@
             <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="176.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="WebcastNaamSprekerColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <TextField fx:id="WebcastOrganisatieSprekerColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <DatePicker fx:id="WebcastDatumPublicatieColumnInput" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="WebcastDatumPublicatieColumnInput" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="WebcastTijdsDuurColumnInput" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Publicatie Datum" GridPane.rowIndex="4" />
             <Label text="Tijdsduur in minuten" GridPane.rowIndex="6" />

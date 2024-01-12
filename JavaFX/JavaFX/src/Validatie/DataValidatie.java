@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.lang.String;
 
 public class DataValidatie {
 
@@ -344,7 +345,7 @@ public class DataValidatie {
         return false;
     }
 
-    private static boolean containsUnicodeCharacter(String str) {
+    public static boolean containsUnicodeCharacter(String str) {
         // Use a regular expression to check if the string contains any Unicode
         // character
         return Pattern
@@ -356,7 +357,7 @@ public class DataValidatie {
         return postCode.matches("[1-9]{1}[0-9]{3} [A-Z]{2}");
     }
 
-    private static boolean checkValidNumber(String str, int limit) {
+    public static boolean checkValidNumber(String str, int limit) {
         if (str != null && !str.isEmpty()) {
             try {
 
@@ -434,10 +435,6 @@ public class DataValidatie {
             return true;
         }
         return false;
-    }
-
-    private static boolean checkForNull(String a) {
-        return a != null && !a.isEmpty();
     }
 
     private static boolean checkForNull(String a, String b) {
@@ -621,5 +618,10 @@ public class DataValidatie {
         }
         return false;
     }
+
+    public static int getMinimaleLeeftijdCursist() {
+        return minimaleLeeftijdCursist;
+    }
+
 
 }
