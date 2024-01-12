@@ -19,13 +19,6 @@ public class Inschrijven {
 
     public Inschrijven() {
     }
-    
-    public static void calcVoortgangsPercentage(//Voortgang voortgang
-    ){
-        // Hier komt code die data uit de voortgangs tabel gebruikt 
-        // om het totale voortgangspercentage te berekenen
-
-    }
     public String getEmail() {
         return email;
     }
