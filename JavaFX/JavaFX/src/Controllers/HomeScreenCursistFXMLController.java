@@ -166,7 +166,17 @@ public class HomeScreenCursistFXMLController implements Initializable {
 
     @FXML
     void CertificaatClicked(MouseEvent event) {
-
+        try {
+            DataShare.getInstance().setNaamCursus(DataShare.getInstance().getNaamCursusEen());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_Bestanden/certificaatScreenCursist.fxml"));
+            root = loader.load();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(HomeScreenCursistFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void visibleEen(boolean x) {
