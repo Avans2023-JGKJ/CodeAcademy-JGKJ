@@ -12,6 +12,7 @@ import Java2Database.DataShare;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,7 +85,8 @@ public class OV1OverzichtFXMLController implements Initializable {
             VCERT.next();
             float vrouwCert = VCERT.getInt("VCERT");
             float CertPercentage = (vrouwCert / vrouwTot) * 100;
-            percentageDisplayV.setText((CertPercentage) + "%");
+            DecimalFormat perct = new DecimalFormat("#.##");
+            percentageDisplayV.setText(perct.format(CertPercentage) + "%");
             ProgressVrouw.setProgress(CertPercentage / 100);
         } catch (SQLException ex) {
             Logger.getLogger(OV1OverzichtFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,7 +118,8 @@ public class OV1OverzichtFXMLController implements Initializable {
                 ProgressMan.setProgress(0);
             } else {
                 float CertPercentage = (manCert / manTot) * 100;
-                percentageDisplayM.setText((CertPercentage) + "%");
+                 DecimalFormat perct = new DecimalFormat("#.##");
+                percentageDisplayM.setText(perct.format(CertPercentage) + "%");
                 ProgressMan.setProgress(CertPercentage / 100);
             }
 
