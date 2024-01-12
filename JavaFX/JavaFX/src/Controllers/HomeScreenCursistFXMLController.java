@@ -1,9 +1,6 @@
 package Controllers;
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 import Java2Database.DataBaseSQL;
 import java.io.IOException;
 import java.net.URL;

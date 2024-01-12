@@ -5,9 +5,11 @@
         <group>
             <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Validatie/Error.java</file>
             <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogCertificaatFXMLController.java</file>
-            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/ContentItemFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogCursusFXMLController.java</file>
             <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Java2Database/DataBaseSQL.java</file>
-            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/CursistFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/HomeScreenCursistFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/DialogCursistHomeScreenFXMLController.java</file>
+            <file>file:/C:/Users/gijsv/Documents/GitHub/CodeAcademy-JGKJ/JavaFX/JavaFX/src/Controllers/CursusFXMLController.java</file>
         </group>
     </open-files>
 </project-private>
