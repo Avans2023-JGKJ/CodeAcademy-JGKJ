@@ -4,13 +4,13 @@ import Validatie.DataValidatie;
 
 public class CheckCijferTest {
 
-    @Test
+    @Test //Valide test
     public void testCheckCijferWithValidCijfer() {
         short validCijfer = 5;
         assertTrue(DataValidatie.checkCijfer(validCijfer));
     }
 
-    @Test
+    @Test //Invalide test
     public void testCheckCijferWithInvalidCijfer() {
         short invalidCijfer = 0; // Less than the minimum allowed value
         assertFalse(DataValidatie.checkCijfer(invalidCijfer));
@@ -19,7 +19,7 @@ public class CheckCijferTest {
         assertFalse(DataValidatie.checkCijfer(invalidCijfer));
     }
 
-    @Test
+    @Test //Valide Boudaries
     public void testCheckCijferWithBoundaryValues() {
         short minValue = 1;
         short maxValue = 10;
@@ -28,6 +28,5 @@ public class CheckCijferTest {
         assertTrue(DataValidatie.checkCijfer(maxValue));
     }
 
-    // You can add more specific tests based on your requirements.
 }
 

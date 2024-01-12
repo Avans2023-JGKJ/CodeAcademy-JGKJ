@@ -5,23 +5,22 @@ import Validatie.DataValidatie;
 
 public class CheckLegalDateTest {
 
-    @Test
+    @Test //Valide Datum
     public void testCheckLegalDateWithValidDate() {
         LocalDate validDate = LocalDate.now().minusDays(1);
         assertTrue(DataValidatie.checkLegalDate(validDate));
     }
 
-    @Test
+    @Test //Invalide NULL Test
     public void testCheckLegalDateWithNullDate() {
         assertFalse(DataValidatie.checkLegalDate(null));
     }
 
-    @Test
+    @Test //Invalide Toekomst test
     public void testCheckLegalDateWithFutureDate() {
         LocalDate futureDate = LocalDate.now().plusDays(1);
         assertFalse(DataValidatie.checkLegalDate(futureDate));
     }
 
-    // You can add more specific tests based on your requirements.
 }
 

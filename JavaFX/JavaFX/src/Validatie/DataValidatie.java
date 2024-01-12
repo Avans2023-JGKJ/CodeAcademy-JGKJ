@@ -72,6 +72,7 @@ public class DataValidatie {
     private static int volgNrModuleMax = 255;
     private static int volgNrModuleMin = 1;
 
+    //Methode wordt aangesproken als een cursus wordt aangemaakt, controleerd alle velden.
     public static boolean InsertCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro, Niveau niveau) {
         if (checkForNull(naamCursus, aantalItems, onderwerp, intro)) {
             if (checkPKCursus(naamCursus)) {
@@ -81,7 +82,6 @@ public class DataValidatie {
                         if (checkNVarChar(onderwerp, onderwerpCursusLength)) {
                             if (checkNVarChar(intro, introductieTekstCursusLength)) {
                                 if (niveau != null && niveau.name() != "" && !niveau.name().isEmpty()) {
-                                    System.out.println("VALIDATION SUCCEEDED");
                                     return true;
                                 } else {
                                     Error.ErrorNull("Niveau kan niet leeg zijn.");
@@ -107,6 +107,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangesproken als een cursist wordt aangepast, controleerd alle velden.
     public static boolean UpdateCursusValid(String naamCursus, String aantalItems, String onderwerp, String intro, Niveau niveau) {
         if (InsertCursusValid(naamCursus, aantalItems, onderwerp, intro, niveau)) {
             return true;
@@ -114,6 +115,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangesproken als een Cursist wordt aangemaakt, controleerd alle velden.
     public static boolean InsertCursistValid(String naamCursist, String postCode, String email, LocalDate geboorteDatum,
             boolean man, boolean vrouw, String huisnr, String woonplaats, String landcode) {
         if (checkForNull(naamCursist, postCode, email, String.valueOf(geboorteDatum), huisnr, woonplaats, landcode)) {
@@ -130,7 +132,6 @@ public class DataValidatie {
                                                 if (checkNVarChar(huisnr, huisNummerCursistLenght)) {
                                                     if (checkNVarChar(woonplaats, woonPlaatsCursistLenght)) {
                                                         if (checkNVarChar(landcode, landCodeCursistLenght)) {
-                                                            System.out.println("VERIFICATION SUCCEEDED!");
                                                             isUpdate = false;
                                                             return true;
                                                         } else {
@@ -176,6 +177,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangeproken wanneer een cursist wordt geupdated, controleerd alle velden.
     public static boolean UpdateCursistValid(String naamCursist, String postCode, String email, boolean man,
             boolean vrouw, String huisnr, String woonplaats, String landcode) {
         isUpdate = true;
@@ -186,6 +188,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangesproken wanneer er een certificaat wordt aangemaakt, controleerd alle velden.
     public static boolean InsertCertificaatValid(String Beoordeling, String naamMedewerker, String inschrijfId) {
         if (checkForNull(Beoordeling, naamMedewerker, inschrijfId)) {
             if (checkNVarChar(naamMedewerker, naamMedewerkerCertificaatLenght)) {
@@ -193,7 +196,6 @@ public class DataValidatie {
                         && Integer.valueOf(Beoordeling) >= BeoordelingCertificaatMin) {
                     if (checkFK1Certificaat(naamMedewerker)) {
                         if (checkFK2Certificaat(inschrijfId)) {
-                            System.out.println("VALIDATION SUCCEEDED");
                             return true;
                         } else {
                             Error.ErrorFKViolation(inschrijfId, "Inschrijving", "inschrijfId");
@@ -214,6 +216,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangesproken wanneer een content item wordt aangepast, controleerd alle velden
     public static boolean AlterContentItemValid(String naamCursus, String beschrijving, String titel, Status status) {
         if (checkForNull(naamCursus, titel)) {
             if (checkNVarChar(naamCursus, naamCursusContentItemLength)) {
@@ -222,7 +225,6 @@ public class DataValidatie {
                     if (checkNVarChar(titel, titelContentItemLength)) {
                         if (status != null && status.name() != "" && !status.name().isEmpty()) {
                             if (checkVarChar(status.name(), statusContentItemLength)) {
-                                System.out.println("VERIFICATION SUCCEEDED!");
                                 return true;
                             } else {
                                 Error.ErrorLength(status.name(), statusContentItemLength);
@@ -246,6 +248,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangesproken wanneer een webcast wordt aangepast, controleerd alle velden.
     public static boolean AlterWebcastValid(String titel, String tijdsDuur, LocalDate publicatieDatum, String URL,
             String naamSpreker, String organisatieSpreker) {
         if (checkMinModule(DataShare.getInstance().getNaamCursus())) {
@@ -258,7 +261,6 @@ public class DataValidatie {
                                     if (checkNVarChar(naamSpreker, naamSprekerWebcastLength)) {
                                         if (organisatieSpreker == null || organisatieSpreker.isEmpty()
                                                 || checkNVarChar(organisatieSpreker, organisatieSprekerWebcastLength)) {
-                                            System.out.println("VERIFICATION SUCCEEDED!");
                                             return true;
                                         } else {
                                             Error.ErrorLength(organisatieSpreker, organisatieSprekerWebcastLength);
@@ -291,6 +293,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangesproken wanneer een modeule wordt aangepast, controleerd alle velden.
     public static boolean AlterModuleValid(String titel, String versie, String naamContact, String emailContact,
             short volgNr) {
         if (checkForNull(titel, versie) && volgNr != -1) {
@@ -299,7 +302,6 @@ public class DataValidatie {
                     if (checkNVarChar(naamContact, naamContactModuleLength)) {
                         if (checkNVarChar(emailContact, emailContactModuleLength)) {
                             if (volgNr <= volgNrModuleMax && volgNr >= volgNrModuleMin) {
-                                System.out.println("VERIFICATION SUCCEEDED!");
                                 return true;
                             } else {
                                 Error.ErrorLimit(volgNr, volgNrModuleMax, volgNrModuleMin);
@@ -322,6 +324,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode checkt voor VarChar tegen bepaalde lengte
     public static boolean checkVarChar(String str, int lgh) {
         if (str != null) {
             if (str.length() <= lgh) {
@@ -335,6 +338,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode checkt voor NVarChar tegen bepaalde lengte
     public static boolean checkNVarChar(String str, Integer lgh) {
         if (str != "") {
             if (str.length() < lgh + 1) {
@@ -345,6 +349,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode checkt string tegen unicode characters
     public static boolean containsUnicodeCharacter(String str) {
         // Use a regular expression to check if the string contains any Unicode
         // character
@@ -353,10 +358,12 @@ public class DataValidatie {
                 .matcher(str).find();
     }
 
+    //Methode controleerd de format van een postcode
     public static boolean checkPostcode(String postCode) {
         return postCode.matches("[1-9]{1}[0-9]{3} [A-Z]{2}");
     }
 
+    //Methode check of een number onder een limiet blijft.
     public static boolean checkValidNumber(String str, int limit) {
         if (str != null && !str.isEmpty()) {
             try {
@@ -373,6 +380,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode check of een email adress correct is geformateerd
     public static boolean checkEmailAddress(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         Pattern p = Pattern.compile(ePattern);
@@ -380,6 +388,7 @@ public class DataValidatie {
         return m.matches();
     }
 
+    //Methode check of een URL wel valide is tegen een bepaalde format
     public static boolean checkURL(String url) {
         String urlPattern = "^(https?://)?[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+$";
         Pattern p = Pattern.compile(urlPattern);
@@ -387,6 +396,7 @@ public class DataValidatie {
         return m.matches();
     }
 
+    //Methode checkt een percentage tussen 0 en 100
     public static boolean checkPercentage(short perct) {
         if (perct <= 100 && perct >= 0) {
             return true;
@@ -395,6 +405,7 @@ public class DataValidatie {
         }
     }
 
+    //Methode check of je wel oud genoeg bent voor de applicatie
     public static boolean checkBirthDate(LocalDate date) {
         if (date.isBefore(LocalDate.now())) {
             if (LocalDate.now().getYear() - date.getYear() >= minimaleLeeftijdCursist) {
@@ -404,6 +415,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt gecontroleerd tegen een aantal maanden
     public static boolean checkDate(LocalDate date) {
         if (date.getMonthValue() <= 12 && date.getMonthValue() >= 1) {
             return true;
@@ -412,6 +424,7 @@ public class DataValidatie {
 
     }
 
+    //Methode check of je wel een geldige datum hebt ingevuld, niet toekomst
     public static boolean checkLegalDate(LocalDate date) {
         if (date != null && date.isBefore(LocalDate.now())) {
             return true;
@@ -420,6 +433,7 @@ public class DataValidatie {
 
     }
 
+    //Methode controleerd of een String KAN worden omgezet naar Localdate
     public static boolean formatDate(String date) {
         LocalDate parsedDate = parseDate(date);
         String formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -430,6 +444,7 @@ public class DataValidatie {
         }
     }
 
+    //Methode check of een ingevoerd cijfer wel 0-10  is
     public static boolean checkCijfer(short cijfer) {
         if (cijfer >= 1 && cijfer <= 10) {
             return true;
@@ -437,26 +452,32 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode checkt tegen een NULL value of LEEG
     private static boolean checkForNull(String a, String b) {
         return a != null && !a.isEmpty() && b != null && !b.isEmpty();
     }
 
+    //Methode checkt tegen een NULL value of LEEG
     private static boolean checkForNull(String a, String b, String c) {
         return a != null && !a.isEmpty() && b != null && !b.isEmpty() && c != null && !c.isEmpty();
     }
 
+    //Methode checkt tegen een NULL value of LEEG
     private static boolean checkForNull(String a, String b, String c, String d) {
         return a != null && !a.isEmpty() && b != null && !b.isEmpty() && c != null && !c.isEmpty() && d != null && !d.isEmpty();
     }
 
+    //Methode checkt tegen een NULL value of LEEG
     private static boolean checkForNull(String a, String b, String c, String d, String e) {
         return a != null && !a.isEmpty() && b != null && !b.isEmpty() && c != null && !c.isEmpty() && d != null && !d.isEmpty() && e != null && !e.isEmpty();
     }
 
+    //Methode checkt tegen een NULL value of LEEG
     private static boolean checkForNull(String a, String b, String c, String d, String e, String f, String g) {
         return a != null && !a.isEmpty() && b != null && !b.isEmpty() && c != null && !c.isEmpty() && d != null && !d.isEmpty() && e != null && !e.isEmpty() && f != null && !f.isEmpty() && g != null && !g.isEmpty();
     }
 
+    //Methode checkt of de PK wel geldig is
     private static boolean checkPKCursus(String naamCursus) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
@@ -473,6 +494,7 @@ public class DataValidatie {
         return false;
     }
 
+    
     private static boolean checkPKCursist(String email) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
@@ -491,6 +513,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode checkt of de FK wel geldig is
     private static boolean checkFK1Certificaat(String naamMedewerker) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
@@ -506,6 +529,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode checkt of de FK wel geldig is
     private static boolean checkFK2Certificaat(String inschrijfId) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
@@ -521,6 +545,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode checkt of de PK wel geldig is
     private static boolean checkPKPersoon(String UserName) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
@@ -537,6 +562,7 @@ public class DataValidatie {
 
     }
 
+    //Methode checkt of de FK wel geldig is
     private static boolean checkFK1Persoon(String email) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(),
@@ -552,6 +578,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangesproken waneer een persoon wordt aangemaakt, controleerd alle velden.
     public static boolean InsertPersoonValid(String rol, String userName, String passWord, String email, boolean isUpdatePersoon) {
         if (checkForNull(rol, userName, passWord)) {
             if (checkPKPersoon(userName)) {
@@ -590,6 +617,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode wordt aangesproken wanneer er een Persoon wordt geupdated, controleerd alle velden.
     public static boolean UpdatePersoonValid(String rol, String userName, String passWord, String email, String newEmail) {
         if (InsertPersoonValid(rol, userName, passWord, email, true)) {
             if (newEmail.equals(email) || checkPKCursist(newEmail)) {
@@ -603,6 +631,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Methode checkt of een Cursus al een Module heeft.
     private static boolean checkMinModule(String naamCursus) {
         try {
             ResultSet rs = DataBaseSQL.sendCommandReturn(DataBaseSQL.createConnection(), "SELECT m.versie FROM Module m "
@@ -619,6 +648,7 @@ public class DataValidatie {
         return false;
     }
 
+    //Return de Minimale Leeftijd voor een Cursist
     public static int getMinimaleLeeftijdCursist() {
         return minimaleLeeftijdCursist;
     }

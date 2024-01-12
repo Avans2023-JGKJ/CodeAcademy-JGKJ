@@ -1,6 +1,5 @@
 package Objects;
 
-
 import java.time.LocalDate;
 
 /**
@@ -26,25 +25,12 @@ public class Webcast {
     }
 
     public Webcast(short Tijdsduur, LocalDate DatumPublicatie, String URL, String Beschrijving, String NaamSpreker, String OrganisatieSpreker) {
-        if (sprekerControle(NaamSpreker)) {
-            this.Tijdsduur = Tijdsduur;
-            this.DatumPublicatie = DatumPublicatie;
-            this.URL = URL;
-            this.Beschrijving = Beschrijving;
-            this.NaamSpreker = NaamSpreker;
-            this.OrganisatieSpreker = "CONNECTIE MET DATABASE, COMBINATIE VAN NAAM!";
-        } else {
-            System.out.println("ERROR sprekerControle METHODE");
-        }
-    }
-
-    // PRIVE METHODE -----------------------------------------------------------------
-    private boolean sprekerControle(String NaamSpreker) {
-        return true;
-        // HIER KOMT PROGRAMMA
-        // Naam van spreker wordt gecontroleerd in database, indien aanwezig, geeft true terug. 
-        // Indien naam niet aanwezig, return false.
-
+        this.Tijdsduur = Tijdsduur;
+        this.DatumPublicatie = DatumPublicatie;
+        this.URL = URL;
+        this.Beschrijving = Beschrijving;
+        this.NaamSpreker = NaamSpreker;
+        this.OrganisatieSpreker = "";
     }
 
 // GETTERS -----------------------------------------------------------------

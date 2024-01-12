@@ -4,25 +4,24 @@ import static org.junit.Assert.*;
 
 public class ContainsUnicodeCharacterTest {
 
-    @Test
+    @Test //String MET unicode test
     public void testContainsUnicodeCharacterWithUnicodeCharacter() {
         assertTrue(DataValidatie.containsUnicodeCharacter("Hello😊"));
     }
 
-    @Test
+    @Test //String zonder Unicode test
     public void testContainsUnicodeCharacterWithoutUnicodeCharacter() {
         assertFalse(DataValidatie.containsUnicodeCharacter("Hello"));
     }
 
-    @Test
+    @Test //String met NULL
     public void testContainsUnicodeCharacterWithNullInput() {
         assertFalse(DataValidatie.containsUnicodeCharacter(null));
     }
 
-    @Test
+    @Test //Een lege String test
     public void testContainsUnicodeCharacterWithEmptyString() {
         assertFalse(DataValidatie.containsUnicodeCharacter(""));
     }
 
-    // You can add more specific tests based on your requirements.
 }

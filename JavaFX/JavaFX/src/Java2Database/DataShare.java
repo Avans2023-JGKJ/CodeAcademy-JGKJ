@@ -1,22 +1,14 @@
 package Java2Database;
 
-import Java2Database.DataBaseSQL;
-import Objects.Cursist;
 import Objects.Niveau;
 import Objects.Status;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import static Controllers.CursistFXMLController.ErrorAlert;
 import Objects.Rol;
 
 public class DataShare {
 
     private static final DataShare instance = new DataShare();
 
-    //Cursist DONE
-    // Certificaat 
     // Username Inlog
     private String username;
 

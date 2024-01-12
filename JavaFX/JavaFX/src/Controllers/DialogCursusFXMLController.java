@@ -14,7 +14,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import Controllers.CursusFXMLController;
 import Validatie.DataValidatie;
-import Validatie.SQLValid;
 import java.sql.Connection;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;

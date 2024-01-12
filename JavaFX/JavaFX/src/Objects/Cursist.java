@@ -1,7 +1,6 @@
 package Objects;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class Cursist {
 
@@ -91,9 +90,5 @@ public class Cursist {
     public void setLandCode(String landCode) {
         this.landCode = landCode;
     }
-
-
-
-  
 
 }

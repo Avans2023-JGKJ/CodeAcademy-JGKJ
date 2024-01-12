@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 public class CheckValidNumberTest {
 
-    @Test
+    @Test //Valide test
     public void testCheckValidNumberWithValidInput() {
         assertTrue(DataValidatie.checkValidNumber("5", 10));
         assertTrue(DataValidatie.checkValidNumber("10", 10));
     }
 
-    @Test
+    @Test //Invalid Test
     public void testCheckValidNumberWithInvalidInput() {
         assertFalse(DataValidatie.checkValidNumber("0", 10)); // Zero is not allowed
         assertFalse(DataValidatie.checkValidNumber("-5", 10)); // Negative number is not allowed
@@ -20,6 +20,5 @@ public class CheckValidNumberTest {
         assertFalse(DataValidatie.checkValidNumber("11", 10)); // Exceeds the limit
     }
 
-    // You can add more specific tests based on your requirements.
 }
 

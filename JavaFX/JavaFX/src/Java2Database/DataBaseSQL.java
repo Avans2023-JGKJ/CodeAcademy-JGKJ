@@ -22,7 +22,6 @@ public class DataBaseSQL {
             Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
             return connection;
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("An ERROR has occured, trying to connect to the database:");
             e.printStackTrace(); // Als er een exeptie optreed, mooi afhandelen.
             return null;
         }
@@ -37,7 +36,6 @@ public class DataBaseSQL {
                 // Create database connection
                 dbConnection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
             } catch (ClassNotFoundException | SQLException e) {
-                System.out.println("An ERROR has occurred while trying to connect to the database:");
                 e.printStackTrace(); // Handle the exception appropriately
             }
         }
@@ -45,24 +43,16 @@ public class DataBaseSQL {
     }
 
     public static void sendCommand(Connection connection, String command) throws SQLException {
-        if (isSafe(command)) {
-            try ( Statement statement = connection.createStatement()) {
-                statement.executeUpdate(command);
-            }
-        } else {
-            System.out.println("This Command is not accepted!");
+        try ( Statement statement = connection.createStatement()) {
+            statement.executeUpdate(command);
         }
     }
 
     public static ResultSet sendCommandReturn(Connection connection, String command) throws SQLException {
-        if (isSafe(command)) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(command);
-            return resultSet;
-        } else {
-            System.out.println("This Command is not accepted!");
-            return null;
-        }
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(command);
+        return resultSet;
+
     }
 
     public static void closeStatementAndResultSet(Statement statement, ResultSet resultSet) {
@@ -76,11 +66,6 @@ public class DataBaseSQL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private static boolean isSafe(String str) {
-        return true;
-
     }
 
 }
